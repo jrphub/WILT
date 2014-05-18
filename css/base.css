@@ -1,0 +1,99 @@
+/* Sticky footer styles
+-------------------------------------------------- */
+
+html,
+body {
+  height: 100%;
+  /* The html and body elements cannot have any padding or margin. */
+}
+
+/* Wrapper for page content to push down footer */
+#wrap {
+  min-height: 100%;
+  height: auto !important;
+  height: 100%;
+  /* Negative indent footer by it's height */
+  margin: 0 auto -60px;
+}
+
+/* Set the fixed height of the footer here */
+#push,
+#footer {
+  height: 60px;
+}
+#footer {
+  background-color: #f5f5f5;
+  padding: 0;
+}
+
+/* Lastly, apply responsive CSS fixes as necessary */
+@media (max-width: 767px) {
+  #footer {
+    margin-left: -20px;
+    margin-right: -20px;
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+}
+
+/* Custom page CSS
+-------------------------------------------------- */
+/* Not required for template or sticky footer method. */
+
+#wrap > .container {
+  padding-top: 60px;
+}
+.container .credit {
+  margin: 20px 0;
+}
+
+/*code {
+  font-size: 80%;
+}*/
+
+#slidebox-eop{
+    width:400px;
+    height:100px;
+    padding:10px;
+    background-color:#fff;
+    border-top:3px solid #E28409;
+    position:fixed;
+    bottom:0px;
+    right:-430px;
+    -moz-box-shadow:-2px 0px 5px #aaa;
+    -webkit-box-shadow:-2px 0px 5px #aaa;
+    box-shadow:-2px 0px 5px #aaa;
+}
+
+#slidebox-eop p, a.more{
+    font-size:11px;
+    text-transform:uppercase;
+    font-family: Arial,Helvetica,sans-serif;
+    letter-spacing:1px;
+    color:#555;
+}
+a.more{
+    cursor:pointer;
+    color:#E28409;
+}
+a.more:hover{
+    text-decoration:underline;
+}
+#slidebox-eop h2{
+    color:#E28409;
+    font-size:18px;
+    margin:10px 20px 10px 0px;
+}
+
+a.close{
+    background:transparent url(../images/close.png) no-repeat top left;
+    width:13px;
+    height:13px;
+    position:absolute;
+    cursor:pointer;
+    top:10px;
+    right:10px;
+}
+a.close:hover{
+    background-position:0px -13px;
+}

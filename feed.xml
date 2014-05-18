@@ -1,0 +1,1822 @@
+<?xml version="1.0"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>JBake</title>
+    <link>http://jrphub.github.io/jrpwilt/</link>
+    <atom:link href="http://jrphub.github.io/jrpwilt//feed.xml" rel="self" type="application/rss+xml" />
+    <description>JBake Bootstrap Template</description>
+    <language>en-gb</language>
+    <pubDate>Sun, 18 May 2014 20:56:45 +0530</pubDate>
+    <lastBuildDate>Sun, 18 May 2014 20:56:45 +0530</lastBuildDate>
+
+    <item>
+      <title>Inner classes in java</title>
+      <link>http://jrphub.github.io/jrpwilt//blog/2014/inner-classes-in-java.html</link>
+      <pubDate>Mon, 3 Mar 2014 00:00:00 +0530</pubDate>
+      <guid isPermaLink="false">blog/2014/inner-classes-in-java.html</guid>
+      	<description>
+	&lt;p&gt;Nested class are of two types&lt;/p&gt;
+&lt;ol&gt;
+	&lt;li&gt;Non static nested class or inner class&lt;/li&gt;
+	&lt;li&gt;Static Nested Class&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;Let&apos;s start with inner class&lt;/p&gt;
+&lt;p&gt;Inner class are of 3 types:&lt;/p&gt;
+&lt;ol&gt;
+	&lt;li&gt;Member Inner class&lt;/li&gt;
+	&lt;li&gt;Anonymous Inner class&lt;/li&gt;
+	&lt;li&gt;Local Inner Class&lt;/li&gt;
+&lt;/ol&gt;
+&lt;b&gt;Member Inner class&lt;/b&gt;
+&lt;p&gt;A &quot;regular&quot; inner class is declared inside the curly braces of another class, but outside any method or other code block&lt;/p&gt;
+&lt;pre class=&quot;prettyprint&quot;&gt;
+&lt;code&gt;
+class ParentInnerMemberClass {
+	private int data = 30;
+
+	class Inner {
+		void msg() {
+			System.out.println(&quot;data is &quot; + data);
+		}
+	}
+
+	void display() {
+		Inner in = new Inner(); //member class is invoked inside the class
+		in.msg();
+	}
+
+	public static void main(String args[]) {
+		ParentInnerMemberClass obj = new ParentInnerMemberClass();
+		obj.display();
+	}
+}
+&lt;/code&gt;
+&lt;/pre&gt;
+&lt;p&gt;&lt;b&gt;Member Inner class - 2&lt;/b&gt;&lt;/p&gt;
+&lt;pre class=&quot;prettyprint&quot;&gt;
+&lt;code&gt;
+class ParentInnerMemberOutsideClass {
+	private int data = 30;
+
+	class Inner {
+		void msg() {
+			System.out.println(&quot;data is&quot; + data);
+		}
+	}
+}
+
+class Test {
+	public static void main(String args[]) {
+		ParentInnerMemberOutsideClass obj = new ParentInnerMemberOutsideClass();
+		ParentInnerMemberOutsideClass.Inner in = obj.new Inner(); //member class is invoked outside the class
+		in.msg();
+	}
+}
+&lt;/code&gt;
+&lt;/pre&gt;
+&lt;p&gt;Few Points:&lt;/p&gt;
+&lt;ol&gt;
+	&lt;li&gt;An inner class is a full fledged member of the enclosing (outer) class, o it can be marked with an access modifier as well as the &quot;abstract&quot; or &quot;final&quot; modifiers&lt;/li&gt;
+	&lt;li&gt;From code within the inner class, the keyword &quot;this&quot; holds a reference to the inner class instance. To reference the outer this, use like as follows
+	&quot;ParentInnerMemberOutsideClass.this()&quot;&lt;/li&gt;
+
+&lt;/ol&gt;
+&lt;b&gt;Method-local inner class&lt;/b&gt;
+&lt;p&gt;It is defined within a method of the enclosing class&lt;/p&gt;
+&lt;pre class=&quot;prettyprint&quot;&gt;
+&lt;code&gt;
+class ParentLocalInnerClass {
+	private int data = 30;// instance variable
+
+	void display() {
+		//if there is local variable defined here, even not parameters if any
+		//it must be final
+		class Local { // Can be abstract or final
+			void msg() {
+				System.out.println(data);
+			}
+		}
+		Local l = new Local(); //Must be within the same method, but after the class definition
+		l.msg();
+	}
+
+	public static void main(String args[]) {
+		ParentLocalInnerClass obj = new ParentLocalInnerClass();
+		obj.display();
+	}
+}
+&lt;/code&gt;
+&lt;/pre&gt;
+&lt;p&gt;&lt;b&gt;Anonymous Inner Class&lt;/b&gt;&lt;/p&gt;
+&lt;p&gt;Anonymous inner classes have no name, and their type must be either a subclass of named type or an implement if the named interface&lt;/p&gt;
+&lt;p&gt;Anonymous inner class can extend an abstract class or can implement an interface, but can&apos;t do both at a time like a normal class&lt;/p&gt;
+&lt;pre class=&quot;prettyprint&quot;&gt;
+&lt;code&gt;
+abstract class ParentAnnonymousClass {
+	abstract void eat();
+}
+
+class Emp {
+	public static void main(String args[]) {
+		ParentAnnonymousClass p = new ParentAnnonymousClass() {
+			void eat() {
+				System.out.println(&quot;nice fruits&quot;);
+			}
+		};
+		/*
+		 * Behind the screen - A class is created but its name is decided by the
+		 * compiler which extends the Person class and provides the
+		 * implementation of the eat() method.
+		 */
+
+		p.eat();
+	}
+}
+&lt;/code&gt;
+&lt;/pre&gt;
+&lt;p&gt;&lt;b&gt;Anonymous Inner Class - 2 &lt;/b&gt;&lt;/p&gt;
+&lt;pre class=&quot;prettyprint&quot;&gt;
+&lt;code&gt;
+interface Eatable {
+	void eat();
+}
+
+class ParentAnnonymousInterface {
+	public static void main(String args[]) {
+
+		Eatable e = new Eatable() {
+			public void eat() {
+				System.out.println(&quot;nice fruits&quot;);
+			}
+		};
+
+		/*
+		 * Behind the screen - A class is created but its name is decided by the
+		 * compiler which implements the Eatable interface and provides the
+		 * implementation of the eat() method.
+		 */
+		e.eat();
+	}
+}
+&lt;/code&gt;
+&lt;/pre&gt;
+&lt;p id=&quot;last&quot;&gt;&lt;b&gt;Static Nested Class &lt;/b&gt;&lt;/p&gt;
+&lt;pre class=&quot;prettyprint&quot;&gt;
+&lt;code&gt;
+/**
+ * @author jyotipatt
+ * 
+ *         A static class that is created inside a class is known as static
+ *         nested class. It cannot access the non-static members. 1) It can
+ *         access static data members of outer class including private. 2)static
+ *         nested class cannot access non-static (instance) data member or
+ *         method.
+ */
+class ParentStaticNestedClass {
+	static int data = 30;
+
+	static class Inner {
+		void msg() {
+			System.out.println(&quot;data is &quot; + data);
+		}
+	}
+
+	/*
+	 * In this example, you need to create the instance of static nested class
+	 * because it has instance method msg(). But you don&apos;t need to create the
+	 * object of Outer class because nested class is static and static
+	 * properties, methods or classes can be accessed without object.
+	 */
+	public static void main(String args[]) {
+		ParentStaticNestedClass.Inner obj = new ParentStaticNestedClass.Inner();
+		obj.msg();
+	}
+}
+&lt;/code&gt;
+&lt;/pre&gt;
+&lt;p&gt;&lt;b&gt;Static Nested Class - 2 &lt;/b&gt;&lt;/p&gt;
+&lt;pre class=&quot;prettyprint&quot;&gt;
+&lt;code&gt;
+class ParentStaticNestedClassTwo {
+	static int data = 30;
+
+	static class Inner {
+		static void msg() {
+			System.out.println(&quot;data is &quot; + data);
+		}
+	}
+
+	public static void main(String args[]) {
+		ParentStaticNestedClassTwo.Inner.msg();// no need to create the instance of static nested
+							// class
+	}
+}
+&lt;/code&gt;
+&lt;/pre&gt;
+
+	</description>
+    </item>
+    <item>
+      <title>Overriding Equals</title>
+      <link>http://jrphub.github.io/jrpwilt//blog/2014/overriding-equals.html</link>
+      <pubDate>Fri, 21 Feb 2014 00:00:00 +0530</pubDate>
+      <guid isPermaLink="false">blog/2014/overriding-equals.html</guid>
+      	<description>
+	&lt;p&gt;As we know,&lt;/p&gt;
+&lt;p&gt;&lt;b&gt; Two equal objects MUST have same hash code, but two objects having same hashcode MAY NOT BE EQUAL&lt;/b&gt;&lt;/p&gt;
+&lt;p&gt;From Javadoc&lt;/p&gt;
+&lt;b&gt;&lt;u&gt;equals&lt;/u&gt;&lt;/b&gt;
+&lt;pre class=&quot;prettyprint&quot;&gt;
+&lt;code&gt;
+public boolean equals(Object obj)
+&lt;/code&gt;
+&lt;/pre&gt;
+&lt;p&gt;Indicates whether some other object is &quot;equal to&quot; this one.&lt;/p&gt;
+&lt;p&gt;The equals method implements an equivalence relation on non-null object references:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;It is reflexive: for any non-null reference value x, x.equals(x) should return true.&lt;/li&gt;
+&lt;li&gt;It is symmetric: for any non-null reference values x and y, x.equals(y) should return true if and only if y.equals(x) returns true.&lt;/li&gt;
+&lt;li&gt;It is transitive: for any non-null reference values x, y, and z, if x.equals(y) returns true and y.equals(z) returns true, then x.equals(z) should return true.&lt;/li&gt;
+&lt;li&gt;It is consistent: for any non-null reference values x and y, multiple invocations of x.equals(y) consistently return true or consistently return false, provided no information used in equals comparisons on the objects is modified.&lt;/li&gt;
+&lt;li&gt;For any non-null reference value x, x.equals(null) should return false.&lt;/li&gt;
+
+&lt;li&gt;The equals method for class Object implements the most discriminating possible equivalence relation on objects; that is, for any non-null reference values x and y, this method returns true if and only if x and y refer to the same object (x == y has the value true).&lt;/li&gt;
+&lt;/ol&gt;
+&lt;b&gt;Note that it is generally necessary to override the hashCode method whenever this method is overridden, so as to maintain the general contract for the hashCode method, which states that equal objects must have equal hash codes.&lt;/b&gt;
+&lt;p&gt;&lt;/p&gt;
+&lt;h5&gt;&lt;b&gt;&lt;u&gt;Hashcode&lt;/u&gt;&lt;/b&gt;&lt;/h5&gt;
+&lt;p&gt;Returns a hash code value for the object. This method is supported for the benefit of hash tables such as those provided by HashMap.&lt;/p&gt;
+&lt;p&gt;The general contract of hashCode is:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Whenever it is invoked on the same object more than once during an execution of a Java application, the hashCode method must consistently return the same integer, provided no information used in equals comparisons on the object is modified. This integer need not remain consistent from one execution of an application to another execution of the same application.&lt;/li&gt;
+&lt;li&gt;If two objects are equal according to the equals(Object) method, then calling the hashCode method on each of the two objects must produce the same integer result.&lt;/li&gt;
+&lt;li&gt;It is not required that if two objects are unequal according to the equals(java.lang.Object) method, then calling the hashCode method on each of the two objects must produce distinct integer results. However, the programmer should be aware that producing distinct integer results for unequal objects may improve the performance of hash tables.
+As much as is reasonably practical, the hashCode method defined by class Object does return distinct integers for distinct objects. &lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;Enough Theory!!!&lt;/p&gt;
+&lt;p&gt;Now how to follow this contract , if we are over riding equals()&lt;/p&gt;
+&lt;p&gt;Here, I am explaining a simple scenario. The code is self explanatory&lt;/p&gt;
+&lt;b&gt;&lt;u&gt;Songs.java&lt;/u&gt;&lt;/b&gt;
+&lt;pre class=&quot;prettyprint&quot;&gt;
+&lt;code&gt;
+public class Songs {
+    private String music;
+    private String lyrics;
+    private String singer;
+
+    public Songs(String music, String lyrics, String singer) {
+	this.setMusic(music);
+	this.setLyrics(lyrics);
+	this.setSinger(singer);
+    }
+
+    public String getMusic() {
+	return music;
+    }
+
+    public void setMusic(String music) {
+	this.music = music;
+    }
+
+    public String getLyrics() {
+	return lyrics;
+    }
+
+    public void setLyrics(String lyrics) {
+	this.lyrics = lyrics;
+    }
+
+    public String getSinger() {
+	return singer;
+    }
+
+    public void setSinger(String singer) {
+	this.singer = singer;
+    }
+
+    // If music and lyrics of both the songs are equal, we will say the songs
+    // are same irrespective of singer who has sung the song
+
+    @Override
+    public boolean equals(Object object) {
+	boolean result = false;
+	if (object == null || object.getClass() != getClass()) {
+	    result = false;
+	} else {
+	    Songs song = (Songs) object;
+	    if (this.getMusic() == song.getMusic()
+		    &amp;&amp; this.getLyrics() == song.getLyrics()) {
+		result = true;
+	    }
+	}
+
+	return result;
+    }
+
+    // As per the contract, if equals() is overridden, hashcode() has to be
+    // overridden
+    // why?
+    /*
+     * Reason: Default implementation given is hashCode() method in Object class
+     * uses the internal address of the object and converts it into integer and
+     * returns it. This is the lowest form of equality implementation and
+     * provides guaranteed results for hastables implementation. When we
+     * override equals() and change the meaning of equality for an object then
+     * the same should be reflected by overriding the hashCode method.
+     */
+
+    @Override
+    public int hashCode() {
+	int hash = 3;
+	hash = 7 * hash + this.music.hashCode();
+	hash = 7 * hash + this.lyrics.hashCode();
+	return hash;
+    }
+&lt;/code&gt;
+&lt;/pre&gt;
+&lt;b&gt;&lt;u&gt;OverridingEquals.java&lt;/u&gt;&lt;/b&gt;
+&lt;pre class=&quot;prettyprint&quot;&gt;
+&lt;code&gt;
+public class OverridingEquals {
+
+    public static void main(String[] args) {
+	Songs song1 = new Songs(&quot;Yo Yo&quot;, &quot;Sunny Sunny&quot;, &quot;Yo Yo&quot;);
+	Songs song2 = new Songs(&quot;Yo Yo&quot;, &quot;Sunny Sunny&quot;, &quot;Sunny Leone&quot;);
+	Songs song3 = new Songs(&quot;Yo Yo&quot;, &quot;Blue Eyes&quot;, &quot;Yo Yo&quot;);
+
+	System.out.println(&quot;song1 and song2 are equal?&quot; + song1.equals(song2)); // true
+	System.out.println(&quot;song1 and song3 are equal?&quot; + song1.equals(song3)); // false
+
+	System.out.println(&quot;Hash code of song1:&quot; + song1.hashCode()); // -1547358271
+	System.out.println(&quot;Hash code of song2:&quot; + song2.hashCode()); // -1547358271
+	System.out.println(&quot;Hash Code of song3:&quot; + song3.hashCode()); // 197801883
+    }
+
+}
+&lt;/code&gt;
+&lt;/pre&gt;
+&lt;p&gt;Hope, now you got the basic idea &lt;/p&gt;
+
+	</description>
+    </item>
+    <item>
+      <title>Scenario: Display words by their count in a file</title>
+      <link>http://jrphub.github.io/jrpwilt//blog/2014/scenario-display-words-by-count.html</link>
+      <pubDate>Thu, 20 Feb 2014 00:00:00 +0530</pubDate>
+      <guid isPermaLink="false">blog/2014/scenario-display-words-by-count.html</guid>
+      	<description>
+	&lt;p&gt;&lt;b&gt;Scenario:&lt;/b&gt;&lt;/p&gt;
+&lt;p&gt;There are few sentences in a file. We have to order the words as per the count in the most efficient way&lt;/p&gt;
+&lt;b&gt;&lt;u&gt;WordBucket.java&lt;/u&gt;&lt;/b&gt;
+&lt;pre class=&quot;prettyprint&quot;&gt;
+&lt;code&gt;
+public class WordBucket {
+
+    public static void main(String[] args) {
+	// 1. Build the string
+	StringBuilder sb = new StringBuilder();
+
+	try {
+	    BufferedReader bfr = new BufferedReader(new FileReader(
+		    &quot;resources/CountWords.txt&quot;));
+	    String line = null;
+	    while ((line = bfr.readLine()) != null) {
+		sb.append(line);
+	    }
+	    bfr.close();
+	} catch (IOException e) {
+	    e.printStackTrace();
+	}
+	// Make an array of words
+	String[] strArr = sb.toString().split(&quot; &quot;);
+
+	// Populate a HashMap&lt;word, counts&gt;
+	Map&lt;String, int[]&gt; counter = new HashMap&lt;String, int[]&gt;();
+	for (String s : strArr) {
+	    int[] eachArray = counter.get(s);
+	    if (eachArray == null) {
+		counter.put(s, new int[] { 1 });
+	    } else {
+		eachArray[0]++;
+	    }
+	}
+
+	// Now HashMap is ready, we have to compare counts of each word and sort
+	// in descending order, for that we will use Comparator Interface
+	CountComparator cc = new CountComparator(counter);
+
+	// Comparator will comapare words according to theri count and put the
+	// words in a tree map, which will arrange the orders according to the
+	// count
+	Map&lt;String, int[]&gt; tm = new TreeMap&lt;String, int[]&gt;(cc);
+	tm.putAll(counter);
+
+	// Let&apos;s traverse the tree map and display the words and their counts
+	for (Map.Entry&lt;String, int[]&gt; eachEntry : tm.entrySet()) {
+	    System.out.println(eachEntry.getKey() + &quot;:&quot;
+		    + eachEntry.getValue()[0]);
+	}
+    }
+
+}
+&lt;/code&gt;
+&lt;/pre&gt;
+&lt;b&gt;&lt;u&gt;CountComparator.java&lt;/u&gt;&lt;/b&gt;
+&lt;pre class=&quot;prettyprint&quot;&gt;
+&lt;code&gt;
+public class CountComparator implements Comparator&lt;String&gt; {
+    Map&lt;String, int[]&gt; counterMap;
+
+    public CountComparator(Map&lt;String, int[]&gt; counterMap) {
+	this.counterMap = counterMap;
+    }
+
+    @Override
+    public int compare(String word1, String word2) {
+    //Comparing the count of words
+	return counterMap.get(word2)[0] - counterMap.get(word1)[0];
+    }
+}
+&lt;/code&gt;
+&lt;/pre&gt;
+&lt;b&gt;&lt;u&gt;CountWords.txt&lt;/u&gt;&lt;/b&gt;
+&lt;pre class=&quot;prettyprint&quot;&gt;
+&lt;code&gt;
+one two ka four four four four four two ka one one one two 
+one two ka four four four four four two ka one one one two 
+one two ka four four four four four two ka one one one two 
+one two ka four four four four four two ka one one one two 
+one two ka four four four four four two ka one one one two 
+one two ka four four four four four two ka one one one two 
+one two ka four four four four four two ka one one one two
+&lt;/code&gt;
+&lt;/pre&gt;
+&lt;b&gt;&lt;u&gt;Output&lt;/u&gt;&lt;/b&gt;&lt;br&gt;
+&lt;p&gt;four:35&lt;/p&gt;
+&lt;p&gt;one:28&lt;/p&gt;
+&lt;p&gt;two:21&lt;/p&gt;
+&lt;p&gt;ka:14&lt;/p&gt;
+(solved)
+
+	</description>
+    </item>
+    <item>
+      <title>String to date Conversion in Java</title>
+      <link>http://jrphub.github.io/jrpwilt//blog/2014/string-to-date.html</link>
+      <pubDate>Wed, 19 Feb 2014 00:00:00 +0530</pubDate>
+      <guid isPermaLink="false">blog/2014/string-to-date.html</guid>
+      	<description>
+	&lt;b&gt;String to date conversion&lt;/b&gt;
+&lt;pre class=&quot;prettyprint&quot;&gt;
+&lt;code&gt;
+public class StringToDate {
+
+	public static void main(String[] args) {
+		String dateStr1 = &quot;Mon Monday,11 11 Nov November, 11 11, 13 13 2013, 11:32:34 AM IST&quot;;
+		SimpleDateFormat date1 = new SimpleDateFormat(&quot;E EEEE,MM M MMM MMMM, d dd, y yy yyyy, h:m:s a z&quot; , Locale.ENGLISH);
+		try {
+			Date formattedDate1 = date1.parse(dateStr1);
+			System.out.println(dateStr1+&quot;----&gt;&quot;+formattedDate1);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+
+	}
+
+}
+/*SimpleDateFormat can be used to control the date/time display format:
+E (day of week): 3E or fewer (in text xxx), &gt;3E (in full text)
+M (month): M (in number), MM (in number with leading zero)
+3M: (in text xxx), &gt;3M: (in full text full)
+d or dd for date of month
+y or yy for 2 digit year, yyyy for 4 digit year
+h (hour): h, hh (with leading zero)
+m (minute)
+s (second)
+a (AM/PM)
+H (hour in 0 to 23)
+z (time zone)*/
+&lt;/code&gt;
+&lt;/pre&gt;
+&lt;b&gt;Output&lt;/b&gt;
+&lt;pre class=&quot;prettyprint&quot;&gt;
+&lt;code&gt;
+Mon Monday,11 11 Nov November, 11 11, 13 13 2013, 11:32:34 AM IST----&gt;Mon Nov 11 11:32:34 IST 2013
+&lt;/code&gt;
+&lt;/pre&gt;
+
+	</description>
+    </item>
+    <item>
+      <title>Java Overview</title>
+      <link>http://jrphub.github.io/jrpwilt//blog/2014/Java-overview.html</link>
+      <pubDate>Fri, 14 Feb 2014 00:00:00 +0530</pubDate>
+      <guid isPermaLink="false">blog/2014/Java-overview.html</guid>
+      	<description>
+	&lt;p&gt;I was going through a few slides prepared by Oracle Academy and found some slides really useful. So I am sharing those. Click on &quot;Oracle Academy&quot; below to load and to view those on fullscreen, click on the slide.&lt;/p&gt;
+
+
+&lt;!-- Slideshow --&gt;
+&lt;ul class=&quot;slideshow&quot;&gt;
+&lt;li&gt;&lt;img src=&quot;/images/ora/1.jpg&quot; width=&quot;550&quot; height=&quot;350&quot; /&gt;&lt;/li&gt;
+&lt;li&gt;&lt;img src=&quot;/images/ora/2.jpg&quot; width=&quot;550&quot; height=&quot;350&quot; /&gt;&lt;/li&gt;
+&lt;li&gt;&lt;img src=&quot;/images/ora/3.jpg&quot; width=&quot;550&quot; height=&quot;350&quot; /&gt;&lt;/li&gt;
+&lt;li&gt;&lt;img src=&quot;/images/ora/4.jpg&quot; width=&quot;550&quot; height=&quot;350&quot; /&gt;&lt;/li&gt;
+&lt;li&gt;&lt;img src=&quot;/images/ora/5.jpg&quot; width=&quot;550&quot; height=&quot;350&quot; /&gt;&lt;/li&gt;
+&lt;li&gt;&lt;img src=&quot;/images/ora/6.jpg&quot; width=&quot;550&quot; height=&quot;350&quot; /&gt;&lt;/li&gt;
+&lt;li&gt;&lt;img src=&quot;/images/ora/7.jpg&quot; width=&quot;550&quot; height=&quot;350&quot; /&gt;&lt;/li&gt;
+&lt;li&gt;&lt;img src=&quot;/images/ora/8.jpg&quot; width=&quot;550&quot; height=&quot;350&quot; /&gt;&lt;/li&gt;
+&lt;li&gt;&lt;img src=&quot;/images/ora/9.jpg&quot; width=&quot;550&quot; height=&quot;350&quot; /&gt;&lt;/li&gt;
+&lt;li&gt;&lt;img src=&quot;/images/ora/10.jpg&quot; width=&quot;550&quot; height=&quot;350&quot; /&gt;&lt;/li&gt;
+&lt;li&gt;&lt;img src=&quot;/images/ora/11.jpg&quot; width=&quot;550&quot; height=&quot;350&quot; /&gt;&lt;/li&gt;
+&lt;li&gt;&lt;img src=&quot;/images/ora/12.jpg&quot; width=&quot;550&quot; height=&quot;350&quot; /&gt;&lt;/li&gt;
+&lt;li&gt;&lt;img src=&quot;/images/ora/13.jpg&quot; width=&quot;550&quot; height=&quot;350&quot; /&gt;&lt;/li&gt;
+&lt;li&gt;&lt;img src=&quot;/images/ora/14.jpg&quot; width=&quot;550&quot; height=&quot;350&quot; /&gt;&lt;/li&gt;
+&lt;li&gt;&lt;img src=&quot;/images/ora/15.jpg&quot; width=&quot;550&quot; height=&quot;350&quot; /&gt;&lt;/li&gt;
+&lt;li&gt;&lt;img src=&quot;/images/ora/16.jpg&quot; width=&quot;550&quot; height=&quot;350&quot; /&gt;&lt;/li&gt;
+&lt;li&gt;&lt;img src=&quot;/images/ora/17.jpg&quot; width=&quot;550&quot; height=&quot;350&quot; /&gt;&lt;/li&gt;
+&lt;li&gt;&lt;img src=&quot;/images/ora/18.jpg&quot; width=&quot;550&quot; height=&quot;350&quot; /&gt;&lt;/li&gt;
+&lt;li&gt;&lt;img src=&quot;/images/ora/19.jpg&quot; width=&quot;550&quot; height=&quot;350&quot; /&gt;&lt;/li&gt;
+&lt;li&gt;&lt;img src=&quot;/images/ora/20.jpg&quot; width=&quot;550&quot; height=&quot;350&quot; /&gt;&lt;/li&gt;
+&lt;li&gt;&lt;img src=&quot;/images/ora/21.jpg&quot; width=&quot;550&quot; height=&quot;350&quot; /&gt;&lt;/li&gt;
+&lt;li&gt;&lt;img src=&quot;/images/ora/22.jpg&quot; width=&quot;550&quot; height=&quot;350&quot; /&gt;&lt;/li&gt;
+&lt;li&gt;&lt;img src=&quot;/images/ora/23.jpg&quot; width=&quot;550&quot; height=&quot;350&quot; /&gt;&lt;/li&gt;
+&lt;li&gt;&lt;img src=&quot;/images/ora/24.jpg&quot; width=&quot;550&quot; height=&quot;350&quot; /&gt;&lt;/li&gt;
+&lt;li&gt;&lt;img src=&quot;/images/ora/25.jpg&quot; width=&quot;550&quot; height=&quot;350&quot; /&gt;&lt;/li&gt;
+&lt;li&gt;&lt;img src=&quot;/images/ora/26.jpg&quot; width=&quot;550&quot; height=&quot;350&quot; /&gt;&lt;/li&gt;
+&lt;li&gt;&lt;img src=&quot;/images/ora/27.jpg&quot; width=&quot;550&quot; height=&quot;350&quot; /&gt;&lt;/li&gt;
+&lt;li&gt;&lt;img src=&quot;/images/ora/28.jpg&quot; width=&quot;550&quot; height=&quot;350&quot; /&gt;&lt;/li&gt;
+&lt;li&gt;&lt;img src=&quot;/images/ora/29.jpg&quot; width=&quot;550&quot; height=&quot;350&quot; /&gt;&lt;/li&gt;
+&lt;li&gt;&lt;img src=&quot;/images/ora/30.jpg&quot; width=&quot;550&quot; height=&quot;350&quot; /&gt;&lt;/li&gt;
+&lt;li&gt;&lt;img src=&quot;/images/ora/31.jpg&quot; width=&quot;550&quot; height=&quot;350&quot; /&gt;&lt;/li&gt;
+
+&lt;/ul&gt;
+
+
+	</description>
+    </item>
+    <item>
+      <title>Comparator in Java explained with simple examples</title>
+      <link>http://jrphub.github.io/jrpwilt//blog/2014/Comparator-in-java.html</link>
+      <pubDate>Thu, 6 Feb 2014 00:00:00 +0530</pubDate>
+      <guid isPermaLink="false">blog/2014/Comparator-in-java.html</guid>
+      	<description>
+	&lt;pre class=&quot;prettyprint&quot;&gt;
+&lt;code&gt;
+
+public class HDTV {
+	private String name;
+	private int size;
+	public HDTV(String name, int size) {
+		this.name = name;
+		this.size = size;		
+	}
+	
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	public int getSize() {
+		return size;
+	}
+	public void setSize(int size) {
+		this.size = size;
+	}
+	
+}
+&lt;/code&gt;
+&lt;/pre&gt;
+&lt;p&gt;&lt;/p&gt;
+&lt;pre class=&quot;prettyprint&quot;&gt;
+&lt;code&gt;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
+/*
+ * Comparator is capable of comparing two DIFFERENT types of objects. 
+ * The method required for implementation is compare(). 
+ * Now let�s use another way to compare those TVs size. 
+ * The common use of Comparator is sorting. 
+ * Both Collections and Arrays classes provide a sort method which use a Comparator.
+ * 
+*/
+
+public class TestComparator {
+
+	public static void main(String[] args) {
+		HDTV tv1 = new HDTV (&quot;Sony&quot;, 45);
+		HDTV tv2 = new HDTV (&quot;Samsung&quot;, 55);
+		HDTV tv3 = new HDTV (&quot;Onida&quot;, 65);
+		
+		List&lt;HDTV&gt; tvs = new ArrayList&lt;&gt;();
+		tvs.add(tv1);
+		tvs.add(tv2);
+		tvs.add(tv3);
+		
+		Collections.sort(tvs, new SizeComparator());
+		System.out.println(&quot;Sorted by Size&quot;);
+		for (HDTV eachTV : tvs) {
+			System.out.println(eachTV.getName()+&quot;(&quot;+eachTV.getSize()+&quot;)&quot;);
+		}
+		
+		Collections.sort(tvs, new NameComparator());
+		System.out.println(&quot;\nSorted by Name&quot;);
+		for (HDTV eachTV : tvs) {
+			System.out.println(eachTV.getName()+&quot;(&quot;+eachTV.getSize()+&quot;)&quot;);
+		}
+	}
+}
+&lt;/code&gt;
+&lt;/pre&gt;
+&lt;p&gt;&lt;/p&gt;
+&lt;pre class=&quot;prettyprint&quot;&gt;
+&lt;code&gt;
+import java.util.Comparator;
+
+public class NameComparator implements Comparator&lt;HDTV&gt;{
+
+	@Override
+	public int compare(HDTV tv1, HDTV tv2) {
+		return tv1.getName().compareTo(tv2.getName());
+	}
+}
+&lt;/code&gt;
+&lt;/pre&gt;
+&lt;/p&gt;&lt;/p&gt;
+&lt;pre class=&quot;prettyprint&quot;&gt;
+&lt;code&gt;
+import java.util.Comparator;
+
+public class SizeComparator implements Comparator&lt;HDTV&gt;{
+	@Override
+	public int compare(HDTV o1, HDTV o2) {
+		
+		//Ascending order
+		return o1.getSize() - o2.getSize();
+		
+		//Descending Order
+		//return o2.getSize() - o1.getSize();
+	}
+}
+
+&lt;/code&gt;
+&lt;/pre&gt;
+
+	</description>
+    </item>
+    <item>
+      <title>A simple example of Comparable in Java</title>
+      <link>http://jrphub.github.io/jrpwilt//blog/2014/Comparable-in-Java.html</link>
+      <pubDate>Wed, 5 Feb 2014 00:00:00 +0530</pubDate>
+      <guid isPermaLink="false">blog/2014/Comparable-in-Java.html</guid>
+      	<description>
+	&lt;p&gt;&lt;b&gt;HDTV.java&lt;/b&gt;&lt;/p&gt;
+&lt;pre class=&quot;prettyprint&quot;&gt;
+&lt;code&gt;
+package com.java.comparable;
+
+public class HDTV implements Comparable&lt;HDTV&gt; {
+
+	private String name;
+	private int size;
+
+	// Constructor
+	public HDTV(String name, int size) {
+		this.name = name;
+		this.size = size;
+	}
+
+	// getter/setter
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public int getSize() {
+		return size;
+	}
+
+	public void setSize(int size) {
+		this.size = size;
+	}
+
+	// Now when we compare two HDTV objects, both should be compared wrt. their
+	// size
+	@Override
+	public int compareTo(HDTV tv) {
+
+		return this.size - tv.size;
+
+		// Alternative way
+		/*
+		 * if (this.size &gt; tv.size) { return 1; } else if (this.size &lt; tv.size)
+		 * { return -1; } else { return 0; }
+		 */
+	}
+
+}
+&lt;/code&gt;
+&lt;/pre&gt;
+
+&lt;p&gt;&lt;b&gt;TestComparable.java&lt;/b&gt;&lt;/p&gt;
+&lt;pre class=&quot;prettyprint&quot;&gt;
+&lt;code&gt;
+package com.java.comparable;
+
+/*
+ * Comparable is implemented by a class in order to be able to comparing object of itself with some other objects. 
+ * The class itself must implement the interface in order to be able to compare its instance(s). 
+ * The method required for implementation is compareTo().
+ */
+public class TestComparable {
+
+	public static void main(String[] args) {
+		HDTV tv1 = new HDTV(&quot;Sony&quot;, 55);
+		HDTV tv2 = new HDTV(&quot;Samsung&quot;, 45);
+		if (tv1.compareTo(tv2) &gt; 0) {
+			System.out.println(&quot;Sony is better&quot;);
+		} else if (tv1.compareTo(tv2) &lt; 0) {
+			System.out.println(&quot;Samsung is better&quot;);
+		} else {
+			System.out.println(&quot;Both Sony and Samsung are equal&quot;);
+		}
+	}
+}
+
+//Output:
+//Sony is better
+&lt;/code&gt;
+&lt;/pre&gt;
+
+&lt;p&gt;Now Let&apos;s do one more task. How comparable behaves in Treeset&lt;/p&gt;
+&lt;pre class=&quot;prettyprint&quot;&gt;
+&lt;code&gt;
+package com.java.comparable;
+
+import java.util.Iterator;
+import java.util.TreeSet;
+
+public class ComparableTreeSet {
+
+	static HDTV hdtvObj= null;
+	public static void main(String[] args) {
+		TreeSet&lt;HDTV&gt; tvTree = new TreeSet&lt;&gt;();
+		tvTree.add(new HDTV(&quot;Samsung&quot;, 15));
+		tvTree.add(new HDTV(&quot;Sony&quot;, 20));
+		tvTree.add(new HDTV(&quot;Onida&quot;, 15));
+		tvTree.add(new HDTV(&quot;Samsung&quot;, 15));
+		
+		Iterator&lt;HDTV&gt; iter = tvTree.iterator();
+		
+		while (iter.hasNext()) {
+			hdtvObj =  iter.next();
+			System.out.println(hdtvObj.getName()+&quot;(&quot;+hdtvObj.getSize()+&quot;)&quot;);
+			
+		}
+	}
+
+}
+
+//Output : 
+//Samsung(15)
+//Sony(20)
+&lt;/code&gt;
+&lt;/pre&gt;
+
+	</description>
+    </item>
+    <item>
+      <title>TreeSet - basic operations</title>
+      <link>http://jrphub.github.io/jrpwilt//blog/2014/tree-set-example.html</link>
+      <pubDate>Tue, 4 Feb 2014 00:00:00 +0530</pubDate>
+      <guid isPermaLink="false">blog/2014/tree-set-example.html</guid>
+      	<description>
+	&lt;pre class=&quot;prettyprint&quot;&gt;
+&lt;code&gt;
+package com.java.collection;
+
+import java.util.Iterator;
+import java.util.TreeSet;
+
+public class TreeSetExample {
+
+	/**
+	 * TreeSet is sorted
+	 * How to iterate a TreeSet
+	 * How to check empty
+	 * How to retrieve first/last element
+	 * How to remove an element
+	 */
+	public static void main(String[] args) {
+		TreeSet&lt;Integer&gt; myTree = new TreeSet&lt;&gt;();
+		myTree.add(35);
+		myTree.add(45);
+		myTree.add(25);
+		myTree.add(35);
+		
+		//Traversal of TreeSet
+		Iterator&lt;Integer&gt; iter = myTree.iterator();
+		while(iter.hasNext()) {
+			System.out.println(iter.next());  //Output : 25, 35, 45
+		}
+		
+		//EmptyChecking
+		if (myTree.isEmpty()) {
+			System.out.println(&quot;Tree is empty&quot;);
+		} else {
+			System.out.println(&quot;Tree is not empty&quot;);
+		}
+		
+		//retrieving First element
+		System.out.println(&quot;First Element: &quot;+myTree.first());
+		System.out.println(&quot;Last Element: &quot;+myTree.last());
+		
+		//Removing an element
+		myTree.remove(35);
+		Iterator&lt;Integer&gt; iter2 = myTree.iterator();
+		while(iter2.hasNext()) {
+			System.out.println(iter2.next());  //Output : 25, 45
+		}
+		
+		//Clearing the tree
+		myTree.clear();
+		if (myTree.isEmpty()) {
+			System.out.println(&quot;Tree is empty&quot;);
+		} else {
+			System.out.println(&quot;Tree is not empty&quot;);
+		}
+	}
+}
+/*Output:
+25
+35
+45
+Tree is not empty
+First Element: 25
+Last Element: 45
+25
+45
+Tree is empty
+*/
+&lt;/code&gt;
+&lt;/pre&gt;
+
+	</description>
+    </item>
+    <item>
+      <title>Notes on Java Collection</title>
+      <link>http://jrphub.github.io/jrpwilt//blog/2014/notes-on-java-collection.html</link>
+      <pubDate>Sun, 26 Jan 2014 00:00:00 +0530</pubDate>
+      <guid isPermaLink="false">blog/2014/notes-on-java-collection.html</guid>
+      	<description>
+	&lt;p&gt;This note contains the points, I often forget. It&apos;s just a quick reference and I will add to this note when I learn something new on Java Collection&lt;/p&gt;
+&lt;b&gt;Collection Framework&lt;/b&gt;
+&lt;img class=&quot;caption&quot; title=&quot;Collection framework&quot; src=&quot;/images/collection/collection_framework.PNG&quot; width=&quot;400&quot; height=&quot;350&quot; /&gt;
+&lt;p&gt;&lt;/p&gt;
+&lt;b&gt;The methods in Collection Interface&lt;/b&gt;
+&lt;br/&gt;
+&lt;img class=&quot;caption&quot; title=&quot;Methods in Collection Interface&quot; src=&quot;/images/collection/collection_methods.PNG&quot; width=&quot;400&quot; height=&quot;350&quot; /&gt;
+&lt;br/&gt;
+&lt;b&gt;How to iterate through collection&lt;/b&gt;
+&lt;img class=&quot;caption&quot; title=&quot;Iterating through Collection&quot; src=&quot;/images/collection/Iterator.PNG&quot; width=&quot;400&quot; height=&quot;350&quot; /&gt;
+
+&lt;b&gt;Iterator is fail-fast, how? &lt;/b&gt;
+&lt;img class=&quot;caption&quot; title=&quot;Iterator is fail-fast, how? &quot; src=&quot;/images/collection/iterator_fail_fast.PNG&quot; width=&quot;400&quot; height=&quot;350&quot; /&gt;
+
+&lt;b&gt;Collections is an utility class and it involves following methods&lt;/b&gt;
+&lt;img class=&quot;caption&quot; title=&quot;Collections&quot; src=&quot;/images/collection/Collections.PNG&quot; width=&quot;400&quot; height=&quot;350&quot; /&gt;
+
+&lt;b&gt;The methods for linked list with their return type&lt;/b&gt;
+&lt;ul&gt;
+&lt;li&gt;getFirst():E&lt;/li&gt;
+&lt;li&gt;getLast() : E&lt;/li&gt;
+&lt;li&gt;addFirst() : void&lt;/li&gt;
+&lt;li&gt;addLast() : void&lt;/li&gt;
+&lt;li&gt;removeFirst : E&lt;/li&gt;
+&lt;li&gt;removeLast :  E&lt;/li&gt;
+&lt;/ul&gt;
+&lt;br/&gt;
+&lt;img class=&quot;caption&quot; title=&quot;ArrayList vs LinkedList&quot; src=&quot;/images/collection/arraylist-vs-linkedlist.png&quot; width=&quot;400&quot; height=&quot;350&quot; /&gt;
+&lt;p&gt;Two equal objects MUST have same hash code, but two objects having same hashcode MAY NOT BE EQUAL&lt;/p&gt;
+&lt;pre class=&quot;prettyprint&quot;&gt;
+&lt;code&gt;
+Map&lt;K,V&gt; map = new HahMap&lt;K,V&gt;(0.75f);
+&lt;/code&gt;
+&lt;/pre&gt;s
+&lt;p&gt;This means if 75% of buckets are filled , bucket size increases and rehashing takes place&lt;/p&gt;
+&lt;b&gt;Traversing a map using advanced for loop&lt;/b&gt;
+&lt;img class=&quot;caption&quot; title=&quot;Traversing Map&quot; src=&quot;/images/collection/traversing_map.PNG&quot; width=&quot;400&quot; height=&quot;350&quot; /&gt;
+
+&lt;b&gt;Queue&lt;/b&gt;
+&lt;img class=&quot;caption&quot; title=&quot;Queue&quot; src=&quot;/images/collection/Queue.PNG&quot; width=&quot;400&quot; height=&quot;350&quot; /&gt;
+
+&lt;b&gt;Methods in Queue &lt;/b&gt;
+&lt;img class=&quot;caption&quot; title=&quot;Methods in Queue&quot; src=&quot;/images/collection/Queue_methods.PNG&quot; width=&quot;400&quot; height=&quot;350&quot; /&gt;
+
+&lt;b&gt;Special Collection Methods&lt;/b&gt;
+&lt;img class=&quot;caption&quot; title=&quot;Special Collection Methods&quot; src=&quot;/images/collection/Special_collection_methods.PNG&quot; width=&quot;400&quot; height=&quot;350&quot; /&gt;
+
+&lt;b&gt;Collection for multi-threading application&lt;/b&gt;
+&lt;img class=&quot;caption&quot; title=&quot;Collection for multi-threading application&quot; src=&quot;/images/collection/Collection_for_multithreading.PNG&quot; width=&quot;400&quot; height=&quot;350&quot; /&gt;
+
+&lt;b&gt;How to choose the right collection for your problem &lt;/b&gt;
+&lt;img class=&quot;caption&quot; title=&quot;Choose the right&quot; src=&quot;/images/collection/how _to_choose_collection.PNG&quot; width=&quot;400&quot; height=&quot;350&quot; /&gt;
+
+&lt;p&gt;&lt;b&gt;Complexity&lt;/b&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;ArrayList : Adding/Removing an element at rear end : O(1)&lt;/li&gt;
+&lt;li&gt;ArrayList : Adding/Removing an element at any position : O(n)&lt;/li&gt;
+&lt;li&gt;ArrayList : Searching an element : O(n)&lt;/li&gt;
+&lt;li&gt;HashSet (Storage method is Hash Table) : Adding/Removing/contains an element : O(1)&lt;/li&gt;
+&lt;li&gt;TreeSet (Storage method is red black Tree) : Adding/Removing/contains an element : O(logn)&lt;/li&gt;
+&lt;li&gt;LinkedHashSet ( implemented as a hash table with a linked list running through it) : Adding/Removing/contains an element : O(1) &lt;/li&gt;
+&lt;li&gt;HashMap : Adding/removing an element : O(1)&lt;/li&gt;
+&lt;li&gt;TreeMap : Adding/Removing an element : O(logn)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;b&gt;More Coming soon...&lt;/b&gt;
+
+	</description>
+    </item>
+    <item>
+      <title>String Concatenation Performance</title>
+      <link>http://jrphub.github.io/jrpwilt//blog/2014/string-concatenation-performance.html</link>
+      <pubDate>Sat, 11 Jan 2014 00:00:00 +0530</pubDate>
+      <guid isPermaLink="false">blog/2014/string-concatenation-performance.html</guid>
+      	<description>
+	&lt;h4&gt;&lt;b&gt;Scenario:&lt;/b&gt; Concatenation of Java Strings in loop&lt;/h4&gt;
+&lt;pre class=&quot;prettyprint&quot;&gt;
+&lt;code&gt;
+String[] strings = new String[]{&quot;one&quot;, &quot;two&quot;, &quot;three&quot;, &quot;four&quot;, &quot;five&quot; };
+String result = null;
+for(String string : strings) {
+    result = result + string;
+}
+&lt;/code&gt;
+&lt;/pre&gt;
+&lt;p&gt;The above code will be compiled to:&lt;/p&gt;
+&lt;pre class=&quot;prettyprint&quot;&gt;
+&lt;code&gt;
+String[] strings = new String[]{&quot;one&quot;, &quot;two&quot;, &quot;three&quot;, &quot;four&quot;, &quot;five&quot; };
+String result = null;
+for(String string : strings) {
+    result = new StringBuilder(result).append(string).toString();
+}
+&lt;/code&gt;
+&lt;/pre&gt;
+
+&lt;h4&gt;&lt;b&gt;Problem:&lt;/b&gt;&lt;/h4&gt;
+&lt;p&gt;Now, for every iteration in this loop a new StringBuilder is created. Additionally, a temporary String object is created by the toString() method.
+When the new StringBuilder(result) code is executed, the StringBuilder constructor copies all characters from the result String into the StringBuilder. The more iterations the loop has, the bigger the result String grows. The bigger the result String grows, the longer it takes to copy the characters from it into a newStringBuilder, and again copy the characters from the StringBuilder into the temporary String created by thetoString() method. In other words, the more iterations the slower each iteration becomes.&lt;/p&gt;
+&lt;h4&gt;&lt;b&gt;Solution:&lt;/b&gt;&lt;/h4&gt;
+&lt;pre class=&quot;prettyprint&quot;&gt;
+&lt;code&gt;
+String[] strings = new String[]{&quot;one&quot;, &quot;two&quot;, &quot;three&quot;, &quot;four&quot;, &quot;five&quot; };
+StringBuilder temp  = new StringBuilder();
+for(String string : strings) {
+    temp.append(string);
+}
+String result = temp.toString();
+&lt;/code&gt;
+&lt;/pre&gt;
+
+&lt;p&gt;&lt;b&gt;This code avoids both the StringBuilder and String object instantiations inside the loop, and therefore also avoids the two times copying of the characters, first into the StringBuilder and then into a String again.&lt;/b&gt;&lt;/p&gt;
+
+	</description>
+    </item>
+    <item>
+      <title>Serialization and Deserialization in Java</title>
+      <link>http://jrphub.github.io/jrpwilt//blog/2013/serialization-in-java.html</link>
+      <pubDate>Sun, 22 Dec 2013 00:00:00 +0530</pubDate>
+      <guid isPermaLink="false">blog/2013/serialization-in-java.html</guid>
+      	<description>
+	&lt;p&gt;Object Serialization in Java is a process used to convert Object into a binary format which can be persisted into disk or sent over network to any other running Java virtual machine; the reverse process of creating object from binary stream is called deserialization in Java.&lt;/p&gt;
+
+&lt;p&gt;Employee.java&lt;/p&gt;
+&lt;pre class=&quot;prettyprint&quot;&gt;
+&lt;code&gt;
+package com.jrp.serdeser;
+
+import java.io.Serializable;
+
+/**
+ * @author jrp 
+ * The class whose object&apos;s state will be serializaed and
+ * deseralized
+ */
+
+/*
+ * To serialize and deserialize an object To make any class serializable, just
+ * implement the Serializable interface. This â€œSerializableâ€� interface is a
+ * markup interface. This interface does not have any methods.
+ */
+public class Employee implements Serializable {
+
+	private static final long serialVersionUID = 1L;
+	/*
+	 * Not Mandatory,but recommended as JVM uses this value and assign this
+	 * version to the serialized objects
+	 */
+
+	int employeeNumber;
+	String employeeName;
+
+	// no static or transient fields undergo default serialization
+	public int getEmployeeNumber() {
+		return employeeNumber;
+	}
+
+	public void setEmployeeNumber(final int employeeNumber) {
+		this.employeeNumber = employeeNumber;
+	}
+
+	public String getEmployeeName() {
+		return employeeName;
+	}
+
+	public void setEmployeeName(final String employeeName) {
+		this.employeeName = employeeName;
+	}
+
+}
+&lt;/code&gt;
+&lt;/pre&gt;
+&lt;p&gt;SerializationDemo.java&lt;/p&gt;
+&lt;pre class=&quot;prettyprint&quot;&gt;
+&lt;code&gt;
+package com.jrp.serdeser;
+
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+
+/**
+ * @author jrp 
+ * The class used to serialize and deserialize Employee object&apos;s
+ * state
+ */
+public class SerializationDemo {
+	/**
+	 * @param args
+	 * @throws IOException
+	 * @throws ClassNotFoundException
+	 */
+	public static void main(final String args[]) throws IOException,
+			ClassNotFoundException {
+
+		// 1. Create an object e of Emloyee Class and set the values of its
+		// member values
+		final Employee employee1 = new Employee();
+		employee1.setEmployeeNumber(1);
+		employee1.setEmployeeName(&quot;Employee1&quot;);
+
+		/*
+		 * Now we have our employee1 object which contains data in its member
+		 * variables employeeNumber and employeeName
+		 */
+
+		// 2. Writing our object into a file using Serialization
+		final FileOutputStream fileOutputStream = new FileOutputStream(
+				&quot;resources/Employee1.ser&quot;);
+		final ObjectOutputStream objectOutputStream = new ObjectOutputStream(
+				fileOutputStream);
+		objectOutputStream.writeObject(employee1);
+		/*
+		 * Our object is serialized and saved as a file Employee1 (in the folder
+		 * resources/)
+		 */
+
+		// 3. Retrieve the object from the file D:/objects/Employee1
+		final FileInputStream fileIutputStream = new FileInputStream(
+				&quot;resources/Employee1.ser&quot;);
+		final ObjectInputStream objectInputStream = new ObjectInputStream(
+				fileIutputStream);
+		final Employee retrievedEmployee = (Employee) objectInputStream
+				.readObject();
+
+		// 4. Displaying values from the object retrieved
+		System.out.println(&quot;Employee Number Retreived : &quot;
+				+ retrievedEmployee.getEmployeeNumber());
+		System.out.println(&quot;Employee Name Retreived : &quot;
+				+ retrievedEmployee.getEmployeeName());
+
+	}
+
+}
+&lt;/code&gt;
+&lt;/pre&gt;
+&lt;b&gt;NB:&lt;/b&gt;if you don&apos;t want any field to be part of object&apos;s state then declare it either static or transient based on your need and it will not be included during Java serialization process.
+
+
+&lt;h4&gt;&lt;u&gt;FAQ&lt;/u&gt;&lt;/h4&gt;
+
+&lt;b&gt;1) What is the difference between Serializable and Externalizable interface in Java?&lt;/b&gt;
+&lt;p&gt;Externalizable provides us writeExternal() and readExternal() method which gives us flexibility to control java serialization mechanism instead of relying on Java&apos;s default serialization. Correct implementation of Externalizable interface can improve performance of application drastically.
+&lt;/p&gt;
+&lt;b&gt;2)What is serialVersionUID? What would happen if you don&apos;t define this?&lt;/b&gt;
+&lt;p&gt;SerialVersionUID is an ID which is stamped on object when it get serialized usually hashcode of object, you can use tool serialver to see serialVersionUID of a serialized object . SerialVersionUID is used for version control of object. you can specify serialVersionUID in your class file also.  Consequence of not specifying  serialVersionUID is that when you add or modify any field in class then already serialized class will not be able to recover because serialVersionUID generated for new class and for old serialized object will be different. Java serialization process relies on correct serialVersionUID for recovering state of serialized object and throws java.io.InvalidClassException in case of serialVersionUID mismatch.
+&lt;/p&gt;
+&lt;b&gt;3) What will happen if one of the members in the class doesn&apos;t implement Serializable interface?&lt;/b&gt;
+&lt;p&gt;If you try to serialize an object of a class which implements Serializable, but the object includes a reference to an non- Serializable class then a â€˜NotSerializableExceptionâ€™ will be thrown at runtime and this is why we should put a SerializableAlert  , one of the code comment best practices, to instruct developer to remember this fact while adding a new field in a Serializable class.
+&lt;/p&gt;
+&lt;b&gt;4) Can you Customize Serialization process or can you override default Serialization process in Java? &lt;/b&gt;
+&lt;p&gt;The answer is yes you can. We all know that for serializing an object ObjectOutputStream.writeObject (saveThisobject) is invoked and for reading object ObjectInputStream.readObject() is invoked but there is one more thing which Java Virtual Machine provides you is to define these two method in your class. If you define these two methods in your class then JVM will invoke these two methods instead of applying default serialization mechanism. You can customize behavior of object serialization and deserialization here by doing any kind of pre or post processing task. Important point to note is making these methods private to avoid being inherited, overridden or overloaded. Since only Java Virtual Machine can call private method integrity of your class will remain and Java Serialization will work as normal.
+&lt;/p&gt;
+
+&lt;b&gt;5) Suppose super class of a new class implement Serializable interface, how can you avoid new class to being serialized?&lt;/b&gt;
+&lt;p&gt;One of the tricky interview question in Serialization in Java. If Super Class of a Class already implements Serializable interface in Java then its already Serializable in Java, since you can not unimplemented an interface its not really possible to make it Non Serializable class but yes there is a way to avoid serialization of new class. To avoid java serialization you need to implement writeObject() and readObject() method in your Class and need to throw NotSerializableException from those method. This is another benefit of customizing java serialization process as described in above Serialization interview question and normally it asked as follow-up question as interview progresses.
+&lt;/p&gt;
+
+	</description>
+    </item>
+    <item>
+      <title>JDBC in short</title>
+      <link>http://jrphub.github.io/jrpwilt//blog/2013/JDBC-in-short.html</link>
+      <pubDate>Fri, 11 Oct 2013 00:00:00 +0530</pubDate>
+      <guid isPermaLink="false">blog/2013/JDBC-in-short.html</guid>
+      	<description>
+	&lt;b&gt;Common code of connection pool&lt;/b&gt;
+
+&lt;pre class=&quot;prettyprint&quot;&gt;
+&lt;code&gt;
+package com.db.oracle;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+
+public class DatabaseManager {
+
+	private static final String DB_DRIVER = &quot;oracle.jdbc.driver.OracleDriver&quot;;
+	private static final String DB_CONNECTION = &quot;jdbc:oracle:thin:@localhost:1521:DATABSENAME&quot;;;
+	private static final String DB_USER = &quot;user&quot;;
+	private static final String DB_PASSWORD = &quot;password&quot;;
+
+	public static Connection getDBConnection() {
+
+		Connection dbConnection = null;
+
+		try {
+			Class.forName(DB_DRIVER);
+		} catch (final ClassNotFoundException e) {
+			System.out.println(e.getMessage());
+		}
+
+		try {
+			dbConnection = DriverManager.getConnection(DB_CONNECTION, DB_USER,
+					DB_PASSWORD);
+			return dbConnection;
+		} catch (final SQLException e) {
+			System.out.println(e.getMessage());
+		}
+
+		return dbConnection;
+	}
+}
+
+&lt;/code&gt;
+&lt;/pre&gt;
+
+&lt;p&gt;We can get a connection from this class using below code in outside classes&lt;/p&gt;
+&lt;pre class=&quot;prettyprint&quot;&gt;
+&lt;code&gt;
+Connection con = DatabaseManager.getDBConnection();
+&lt;/code&gt;
+&lt;/pre&gt;
+&lt;p&gt;This &quot;con&quot; can be used in different scenarios like below&lt;/p&gt;
+
+&lt;b&gt;JDBC Statement &lt;/b&gt;
+For create/insert/update/delete
+&lt;pre class=&quot;prettyprint&quot;&gt;
+&lt;code&gt;
+Statement statement = con.createStatement();
+statement.execute(SQL);
+&lt;/code&gt;
+&lt;/pre&gt;
+
+For List of Records
+&lt;pre class=&quot;prettyprint&quot;&gt;
+&lt;code&gt;
+String selectTableSQL = &quot;SELECT USER_ID, USERNAME from DBUSER&quot;;
+Statement statement = con.createStatement();
+ResultSet rs = statement.executeQuery(selectTableSQL);
+while (rs.next()) {
+	String userid = rs.getString(&quot;USER_ID&quot;);
+	String username = rs.getString(&quot;USERNAME&quot;);	
+}
+&lt;/code&gt;
+&lt;/pre&gt;
+
+
+&lt;p&gt;For Batch Update:&lt;/p&gt;
+&lt;pre class=&quot;prettyprint&quot;&gt;
+&lt;code&gt;
+con.setAutoCommit(false);
+ 
+statement = con.createStatement();
+statement.addBatch(insertTableSQL1);
+statement.addBatch(insertTableSQL2);
+statement.addBatch(insertTableSQL3);
+ 
+statement.executeBatch();
+ 
+con.commit();
+&lt;/code&gt;
+&lt;/pre&gt;
+
+&lt;p&gt;&lt;b&gt; JDBC PreparedStatement&lt;/b&gt;&lt;/p&gt;
+Like Update, create/insert/delete
+&lt;pre class=&quot;prettyprint&quot;&gt;
+&lt;code&gt;
+String updateTableSQL = &quot;UPDATE DBUSER SET USERNAME = ? WHERE USER_ID = ?&quot;;
+PreparedStatement preparedStatement = con.prepareStatement(updateTableSQL);
+preparedStatement.setString(1, &quot;mkyong_new_value&quot;);
+preparedStatement.setInt(2, 1001);
+preparedStatement .executeUpdate();
+&lt;/code&gt;
+&lt;/pre&gt;
+
+For Select
+&lt;pre class=&quot;prettyprint&quot;&gt;
+&lt;code&gt;
+String selectSQL = &quot;SELECT USER_ID, USERNAME FROM DBUSER WHERE USER_ID = ?&quot;;
+PreparedStatement preparedStatement = con.prepareStatement(selectSQL);
+preparedStatement.setInt(1, 1001);
+ResultSet rs = preparedStatement.executeQuery(selectSQL );
+while (rs.next()) {
+	String userid = rs.getString(&quot;USER_ID&quot;);
+	String username = rs.getString(&quot;USERNAME&quot;);	
+}
+&lt;/code&gt;
+&lt;/pre&gt;
+
+&lt;p&gt;Batch update&lt;/p&gt;
+&lt;pre class=&quot;prettyprint&quot;&gt;
+&lt;code&gt;
+con.setAutoCommit(false);//commit trasaction manually
+ 
+String insertTableSQL = &quot;INSERT INTO DBUSER&quot;
+			+ &quot;(USER_ID, USERNAME, CREATED_BY, CREATED_DATE) VALUES&quot;
+			+ &quot;(?,?,?,?)&quot;;				
+PreparedStatement = con.prepareStatement(insertTableSQL);
+ 
+preparedStatement.setInt(1, 101);
+preparedStatement.setString(2, &quot;abc101&quot;);
+preparedStatement.setString(3, &quot;system&quot;);
+preparedStatement.setTimestamp(4, getCurrentTimeStamp());
+preparedStatement.addBatch();
+ 
+preparedStatement.setInt(1, 102);
+preparedStatement.setString(2, &quot;abc102&quot;);
+preparedStatement.setString(3, &quot;system&quot;);
+preparedStatement.setTimestamp(4, getCurrentTimeStamp());
+preparedStatement.addBatch();
+preparedStatement.executeBatch();
+ 
+con.commit();
+&lt;/code&gt;
+&lt;/pre&gt;
+
+&lt;p&gt;&lt;b&gt;Stored Procedure (IN/OUT) &lt;/b&gt;&lt;/p&gt;
+&lt;pre class=&quot;prettyprint&quot;&gt;
+&lt;code&gt;
+//getDBUSERByUserId is a stored procedure
+String getDBUSERByUserIdSql = &quot;{call getDBUSERByUserId(?,?,?,?)}&quot;;
+callableStatement = con.prepareCall(getDBUSERByUserIdSql);
+callableStatement.setInt(1, 10);
+callableStatement.registerOutParameter(2, java.sql.Types.VARCHAR);
+callableStatement.registerOutParameter(3, java.sql.Types.VARCHAR);
+callableStatement.registerOutParameter(4, java.sql.Types.DATE);
+ 
+// execute getDBUSERByUserId store procedure
+callableStatement.executeUpdate();
+ 
+String userName = callableStatement.getString(2);
+String createdBy = callableStatement.getString(3);
+Date createdDate = callableStatement.getDate(4);
+&lt;/code&gt;
+&lt;/pre&gt;
+
+&lt;p&gt;&lt;b&gt;Stored Procedure (Cursor)&lt;/b&gt;&lt;/p&gt;
+&lt;pre class=&quot;prettyprint&quot;&gt;
+&lt;code&gt;
+//getDBUSERCursor is a stored procedure
+String getDBUSERCursorSql = &quot;{call getDBUSERCursor(?,?)}&quot;;
+callableStatement = con.prepareCall(getDBUSERCursorSql);
+callableStatement.setString(1, &quot;abc&quot;);
+callableStatement.registerOutParameter(2, OracleTypes.CURSOR);
+ 
+// execute getDBUSERCursor store procedure
+callableStatement.executeUpdate();
+ 
+// get cursor and cast it to ResultSet
+rs = (ResultSet) callableStatement.getObject(2);
+ 
+// loop it like normal
+while (rs.next()) {
+	String userid = rs.getString(&quot;USER_ID&quot;);
+	String userName = rs.getString(&quot;USERNAME&quot;);
+}
+&lt;/code&gt;
+&lt;/pre&gt;
+
+&lt;b&gt;Transaction&lt;/b&gt;
+In simple, JDBC transaction make sure SQL statements within a transaction block are all executed successful, if either one of the SQL statement within transaction block is failed, abort and rollback everything within the transaction block.
+&lt;pre class=&quot;prettyprint&quot;&gt;
+&lt;code&gt;
+con.setAutoCommit(false); //transaction block start
+String insertTableSQL = &quot;INSERT INTO DBUSER&quot;
+			+ &quot;(USER_ID, USERNAME, CREATED_BY, CREATED_DATE) VALUES&quot;
+			+ &quot;(?,?,?,?)&quot;;
+ 
+String updateTableSQL = &quot;UPDATE DBUSER SET USERNAME =? &quot;
+			+ &quot;WHERE USER_ID = ?&quot;;
+ 
+preparedStatementInsert = con.prepareStatement(insertTableSQL);
+preparedStatementInsert.setInt(1, 999);
+preparedStatementInsert.setString(2, &quot;abc101&quot;);
+preparedStatementInsert.setString(3, &quot;system&quot;);
+preparedStatementInsert.setTimestamp(4, getCurrentTimeStamp());
+preparedStatementInsert.executeUpdate(); //data IS NOT commit yet
+ 
+preparedStatementUpdate = con.prepareStatement(updateTableSQL);
+preparedStatementUpdate.setString(1, &quot;A very very long string caused DATABASE ERROR&quot;); 
+preparedStatementUpdate.setInt(2, 999);
+preparedStatementUpdate.executeUpdate(); //Error, rollback, including the first insert statement.
+ 
+con.commit(); //transaction block end
+&lt;/code&gt;
+&lt;/pre&gt;
+
+	</description>
+    </item>
+    <item>
+      <title>Solving Out of memory error in Eclipse startup</title>
+      <link>http://jrphub.github.io/jrpwilt//blog/2013/eclipse-out-of-memory.html</link>
+      <pubDate>Sun, 6 Oct 2013 00:00:00 +0530</pubDate>
+      <guid isPermaLink="false">blog/2013/eclipse-out-of-memory.html</guid>
+      	<description>
+	&lt;p&gt;While starting up Eclipse in my Linux Mint 14 , (32 bit), I faced this error&lt;/p&gt;
+&lt;img src=&quot;/images/eclipse_running_error.png&quot;/&gt;
+&lt;p&gt;&lt;b&gt;Soultion 1:&lt;/b&gt;
+If you have m2e or other Maven plugin installed, you should check if the option at &apos;Window -&gt; Preferences -&gt; Maven -&gt; Download repository updates index on startup&apos; is enabled. Disable it 
+&lt;/p&gt;
+&lt;p&gt;Go to Terminal and run&lt;/p&gt;
+&lt;pre class=&quot;prettyprint&quot;&gt;&apos;
+&lt;code&gt;
+ eclipse -clean
+&lt;/code&gt;
+&lt;/pre&gt;
+&lt;p&gt;&lt;b&gt;Soultion 2:&lt;/b&gt;
+Go to teminal and run&lt;/p&gt;
+&lt;pre class=&quot;prettyprint&quot;&gt;&apos;
+&lt;code&gt;
+eclipse -vmargs -Xms512m -Xmx1024m -XX:PermSize=64m -XX:MaxPermSize=128m
+&lt;/code&gt;
+&lt;/pre&gt;
+
+&lt;br&gt;
+&lt;p&gt; for windows , 
+&lt;pre class=&quot;prettyprint&quot;&gt;&apos;
+&lt;code&gt;
+eclipse.exe -vmargs -Xms512m -Xmx1024m -XX:PermSize=64m -XX:MaxPermSize=128m
+&lt;/code&gt;
+&lt;/pre&gt;
+&lt;/p&gt;
+or
+&lt;p&gt; You can change the content in eclipse.ini&lt;/p&gt;
+&lt;pre class=&quot;prettyprint&quot;&gt;&apos;
+&lt;code&gt;
+-Xms512m&lt;br/&gt;
+-Xmx1024m&lt;br/&gt;
+-XX:PermSize=64m&lt;br/&gt;
+-XX:MaxPermSize=128m
+&lt;/code&gt;
+&lt;/pre&gt;
+&lt;p&gt;&lt;b&gt;*check the log in Workspace/.metadata/.log for more details of the error&lt;/b&gt;&lt;/p&gt; 
+
+	</description>
+    </item>
+    <item>
+      <title>Use static Factory Method over Constructor</title>
+      <link>http://jrphub.github.io/jrpwilt//blog/2013/use-factory-method-over-constructor.html</link>
+      <pubDate>Sat, 28 Sep 2013 00:00:00 +0530</pubDate>
+      <guid isPermaLink="false">blog/2013/use-factory-method-over-constructor.html</guid>
+      	<description>
+	&lt;p&gt; Constructor comes with Few Limitations&lt;/p&gt;
+&lt;p&gt;The advantage of Static Factory Method over Constructors are.. &lt;/p&gt;
+&lt;ol&gt;
+	&lt;li&gt;They can have different names specific to functionality contains, unlike constructors which are always named as the class name&lt;/li&gt;
+	&lt;li&gt;They are not required to create a new object each time they are invoked&lt;/li&gt;
+	&lt;li&gt;They can return an object of any subtypeof their own type, unlike constructor&lt;/li&gt;
+	&lt;li&gt;They reduce the repeatablity of creating parametrized type instance&lt;/li&gt;
+&lt;/ol&gt;
+&lt;br/&gt;
+&lt;h4&gt;&lt;b&gt;Usage&lt;/b&gt;&lt;/h4&gt;
+&lt;p&gt;Before&lt;/p&gt;
+&lt;pre class=&quot;prettyprint&quot;&gt;
+&lt;code&gt;
+// File Class.java 
+public class Class {
+    public Class(String s) {
+        ...
+    }
+}
+
+ // File AnotherClass.java 
+public class AnotherClass {
+    public void method() {
+        Class aClass = new Class(&quot;string&quot;);
+    }
+}
+&lt;/code&gt;
+&lt;/pre&gt;
+
+&lt;p&gt;After&lt;/p&gt;
+&lt;pre class=&quot;prettyprint&quot;&gt;
+&lt;code&gt;
+// File Class.java 
+public class Class {
+    private Class(String s) {
+        ...
+    }
+    public static createClass(String s) {
+        return new Class(s);
+    }
+}
+
+ // File AnotherClass.java 
+public class AnotherClass {
+    public void method() {
+        Class aClass = Class.createClass(&quot;string&quot;);
+    }
+}
+&lt;/code&gt;
+&lt;/pre&gt;
+
+&lt;b&gt;&lt;u&gt;Type Inference&lt;/u&gt;(Point 4)&lt;/b&gt;
+&lt;p&gt;&lt;u&gt;Usual Way&lt;/u&gt;&lt;/p&gt;
+&lt;pre class=&quot;prettyprint&quot;&gt;
+&lt;code&gt;
+Map&lt;String, List&lt;String&gt;&gt; map = new HashMap&lt;String, List&lt;String&gt;&gt;();
+&lt;/code&gt;
+&lt;/pre&gt;
+&lt;p&gt;You are repeating the same parameters twice on the same line of code. Wouldn’t it be nice if the right side of the assign could be inferred from the left side?&lt;br/&gt; Well, with static factories it can be&lt;/p&gt;
+&lt;pre class=&quot;prettyprint&quot;&gt;
+&lt;code&gt;
+public static &lt;K, V&gt; HashMap&lt;K, V&gt; newHashMap() {
+  return new HashMap&lt;K, V&gt;();
+}
+&lt;/code&gt;
+&lt;/pre&gt;
+
+&lt;p&gt;&lt;u&gt;Client Code&lt;/u&gt;&lt;/p&gt;
+&lt;pre class=&quot;prettyprint&quot;&gt;
+&lt;code&gt;
+Map&lt;String, List&lt;String&gt;&gt; map = Maps.newHashMap();
+&lt;/code&gt;
+&lt;/pre&gt;
+
+&lt;p&gt;&lt;u&gt;In Java 7&lt;/u&gt;&lt;p&gt;
+&lt;pre class=&quot;prettyprint&quot;&gt;
+Map&lt;String, List&lt;String&gt;&gt; map = new HashMap&lt;&gt;();
+{%endhighlight%}
+&lt;br/&gt;
+&lt;h4&gt;&lt;b&gt;References:&lt;/b&gt;&lt;/h4&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;a href=&quot;http://sourcemaking.com/refactoring/replace-constructor-with-factory-method&quot; target=&quot;_blank&quot;&gt;For useful Scenario understanding&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;http://jlordiales.wordpress.com/2012/12/26/static-factory-methods-vs-traditional-constructors/&quot; target=&quot;_blank&quot;&gt;For Constructor&apos;s limitaion and point 4&lt;/a&gt;&lt;/li&gt;
+&lt;/ol&gt;
+	
+
+
+	</description>
+    </item>
+    <item>
+      <title>Singleton Design Pattern in Java</title>
+      <link>http://jrphub.github.io/jrpwilt//blog/2013/Singleton-Design-pattern-in-java.html</link>
+      <pubDate>Fri, 27 Sep 2013 00:00:00 +0530</pubDate>
+      <guid isPermaLink="false">blog/2013/Singleton-Design-pattern-in-java.html</guid>
+      	<description>
+	&lt;p&gt; singleton is simply a class which is instatiated once per JVM initialisation.
+There are many ways to achieve it.&lt;/p&gt;
+&lt;b&gt;&lt;u&gt;Eager initialisation&lt;/u&gt;&lt;/b&gt;
+&lt;p&gt;&lt;/p&gt;
+&lt;pre class=&quot;prettyprint&quot;&gt;
+&lt;code&gt;
+public class EagerSingleton {
+	private static volatile EagerSingleton instance = new EagerSingleton();
+
+	// private constructor
+	private EagerSingleton() {
+	}
+
+	public static EagerSingleton getInstance() {
+		return instance;
+	}
+}
+&lt;/code&gt;
+&lt;/pre&gt;
+&lt;b&gt;Drawback:&lt;/b&gt;Instance is created irrespective of it is required in runtime or not
+&lt;p&gt;&lt;/p&gt;
+&lt;b&gt;&lt;u&gt;Lazy Initialization&lt;/u&gt;&lt;/b&gt;
+&lt;p&gt;&lt;/p&gt;
+&lt;pre class=&quot;prettyprint&quot;&gt;
+&lt;code&gt;
+public final class LazySingleton {
+	private static volatile LazySingleton instance = null;
+
+	// private constructor
+	private LazySingleton() {
+	}
+
+	public static LazySingleton getInstance() {
+		if (instance == null) {
+			synchronized (LazySingleton.class) {
+				instance = new LazySingleton();
+			}
+		}
+		return instance;
+	}
+}
+&lt;/code&gt;
+&lt;/pre&gt;
+&lt;b&gt;Drawback:&lt;/b&gt;
+&lt;br/&gt;
+Suppose there are two threads T1 and T2. Both comes to create instance and execute instance=null, 
+now both threads have identified instance variable to null thus assume they must create an instance. 
+They sequentially goes to synchronized block and create the instances. At the end, 
+we have two instances in our application.
+&lt;p&gt;&lt;/p&gt;
+&lt;b&gt;&lt;u&gt;Double Checked Locking&lt;/u&gt;&lt;/b&gt;
+&lt;p&gt;&lt;/p&gt;
+&lt;pre class=&quot;prettyprint&quot;&gt;
+&lt;code&gt;
+public class EagerSingleton {
+	private static volatile EagerSingleton instance = null;
+
+	// private constructor
+	private EagerSingleton() {
+	}
+
+	public static EagerSingleton getInstance() {
+		if (instance == null) {
+			synchronized (EagerSingleton.class) {
+				// Double check
+				if (instance == null) {
+					instance = new EagerSingleton();
+				}
+			}
+		}
+		return instance;
+	}
+}
+&lt;/code&gt;
+&lt;/pre&gt;
+&lt;p&gt;Please ensure to use &lt;b&gt;Volatile&lt;/b&gt; keyword with instance variable otherwise you can run into out of order write error scenario, where reference of instance is returned before actually the object is constructed i.e. JVM has only allocated the memory and constructor code is still not executed. In this case, your other thread, which refer to uninitialized object may throw null pointer exception and can even crash the whole application.
+&lt;/p&gt;
+
+&lt;b&gt;&lt;u&gt;Bill pugh Solution&lt;/u&gt;&lt;/b&gt;
+&lt;p&gt;&lt;/p&gt;
+&lt;pre class=&quot;prettyprint&quot;&gt;
+&lt;code&gt;
+public class BillPughSingleton {
+	private BillPughSingleton() {
+	}
+
+	private static class LazyHolder {
+		private static final BillPughSingleton INSTANCE = new BillPughSingleton();
+	}
+
+	public static BillPughSingletongetInstance() {
+		return LazyHolder.INSTANCE;
+	}
+}
+&lt;/code&gt;
+&lt;/pre&gt;
+&lt;p&gt;As you can see, until we need an instance, the LazyHolder class will not be initialized until required and you can still use other static members of BillPughSingleton class&lt;/p&gt;
+&lt;b&gt;&lt;u&gt;Enum&lt;/u&gt;&lt;/b&gt;
+&lt;p&gt;provide implicit support for thread safety and only one instance is guaranteed.Recommended in Effective Java&lt;/p&gt;
+&lt;p&gt;&lt;/p&gt;
+&lt;pre class=&quot;prettyprint&quot;&gt;
+&lt;code&gt;
+public enum EnumSingleton {
+	INSTANCE;
+	public void someMethod(String param) {
+		// some class member
+	}
+}
+&lt;/code&gt;
+&lt;/pre&gt;
+&lt;b&gt;&lt;u&gt;Final way&lt;/u&gt;&lt;/b&gt;
+&lt;p&gt;&lt;/p&gt;
+&lt;pre class=&quot;prettyprint&quot;&gt;
+&lt;code&gt;
+public class DemoSingleton implements Serializable {
+	private static final long serialVersionUID = 1L;
+
+	private DemoSingleton() {
+		// private constructor
+	}
+
+	private static class DemoSingletonHolder {
+		public static final DemoSingleton INSTANCE = new DemoSingleton();
+	}
+
+	public static DemoSingleton getInstance() {
+		return DemoSingletonHolder.INSTANCE;
+	}
+
+	protected Object readResolve() {
+		return getInstance();
+	}
+}
+&lt;/code&gt;
+&lt;/pre&gt;
+
+	</description>
+    </item>
+    <item>
+      <title>Running a thread after completing another thread</title>
+      <link>http://jrphub.github.io/jrpwilt//blog/2013/running-a-thread-after-another-thread.html</link>
+      <pubDate>Sun, 15 Sep 2013 00:00:00 +0530</pubDate>
+      <guid isPermaLink="false">blog/2013/running-a-thread-after-another-thread.html</guid>
+      	<description>
+	&lt;p&gt;The below is a simple code which shows how to make one thread wait till first thread completes its execution&lt;/p&gt;
+&lt;p&gt;&lt;/p&gt;
+
+&lt;b&gt;&lt;u&gt;Origin.java&lt;/u&gt;&lt;/b&gt;
+&lt;pre class=&quot;prettyprint&quot;&gt;
+&lt;code&gt;
+public class Origin {
+
+	public static void main(final String[] args) {
+	
+		Runnable r0;
+		
+		final Runnable r1;
+
+		r0 = new FirstThread();
+
+		Thread t0;
+		final Thread t1;
+
+		t0 = new Thread(r0);
+
+		r1 = new SecondThread(t0); // Passing the 1st Thread instance to 2nd
+									// class to make the second thread wait
+
+		t1 = new Thread(r1);
+
+		t0.start();
+		t1.start();
+		System.out.println(&quot;Example5 : END&quot;);// this line can displayed earlier
+	}
+
+}
+&lt;/code&gt;
+&lt;/pre&gt;
+&lt;b&gt;&lt;u&gt;FirstThread.java&lt;/u&gt;&lt;/b&gt;
+&lt;pre class=&quot;prettyprint&quot;&gt;
+&lt;code&gt;
+public class FirstThread implements Runnable {
+
+	@Override
+	public void run() {
+		System.out.println(&quot;In First Thread : START&quot;);
+		int counter = 0;
+		while (counter &lt; 6) {
+			System.out.println(counter++);
+		}
+		try {
+			Thread.sleep(5000);
+			System.out
+					.println(&quot;We can take rest before starting Second thread&quot;);
+		} catch (final InterruptedException e) {
+			e.printStackTrace();
+			System.out.println(&quot;In exception First Thread&quot;);
+		}
+
+		System.out.println(&quot;First Thread : END&quot;);
+
+	}
+
+}
+&lt;/pre&gt;
+&lt;/code&gt;
+&lt;b&gt;&lt;u&gt;SecondThread.java&lt;/u&gt;&lt;/b&gt;
+&lt;pre class=&quot;prettyprint&quot;&gt;
+&lt;code&gt;
+public class SecondThread implements Runnable {
+
+	private final Thread ts;
+
+	public SecondThread(final Thread t0) {
+		this.ts = t0;
+	}
+
+	@Override
+	public void run() {
+		System.out.println(&quot; In Second Thread : START&quot;);
+		System.out
+				.println(&quot; Second thread is waiting for 1st thread to terminate&quot;);
+		/*
+		 * The above two lines can run before First Thread stops, but the code
+		 * below join() will be processed after 1st thread stops executing
+		 */
+
+		try {
+			ts.join(); // only when 1st thread will complete, second thread will
+						// start processing
+			int count = 102;
+			while (count &lt; 105) {
+				System.out.println(count);
+				count++;
+			}
+			System.out.println(&quot;After Join in Second Thread&quot;);
+
+		} catch (final InterruptedException e) {
+			e.printStackTrace();
+			System.err.println(&quot;In Exception Second Thread&quot;);
+		}
+		System.out.println(&quot; Second Thread : END&quot;);
+
+	}
+}
+&lt;/code&gt;
+&lt;/pre&gt;
+
+
+	</description>
+    </item>
+    <item>
+      <title>How MAVEN builds the project</title>
+      <link>http://jrphub.github.io/jrpwilt//blog/2013/how-maven-builds-project.html</link>
+      <pubDate>Sat, 14 Sep 2013 00:00:00 +0530</pubDate>
+      <guid isPermaLink="false">blog/2013/how-maven-builds-project.html</guid>
+      	<description>
+	Today I got to know , how Maven finds dependency jar and builds the project.
+&lt;ol&gt;
+&lt;li&gt;Project dependencies are declared in pom.xml&lt;/li&gt;
+&lt;li&gt;Apache Maven follows the Repository concept for storing JAR.&lt;br&gt;
+2 kinds of Repository
+&lt;br&gt;
+1. Local&lt;br&gt;
+2. Remote&lt;br&gt;
+&lt;/li&gt;
+
+&lt;li&gt;When we do &quot;mvn install&quot;, Maven searches dependency JAR in local repository.
+ if it is found there it uses, otherwise it goes to remote repository to download corresponding version of JAR file and stores into local repo as well
+&lt;/li&gt;
+
+&lt;li&gt;Type of dependency:&lt;br&gt;
+If you have included a SNAPSHOT JAR e.g. &lt;version&gt;1.2-SNAPSHOT&lt;/version&gt; as part of your dependency, opposite to regular stable version &lt;version&gt;1.2&lt;/version&gt;,
+ than Maven will hit remote repository, even if a relevant JAR file is available in local repository
+&lt;/li&gt;
+&lt;li&gt;
+Main reason of doing this is that, SNAPSHOT builds are unstable and Maven, downloads SNAPSHOT dependency daily. It might not hit remote repository,
+&lt;/li&gt;
+
+&lt;li&gt;In a maven repository, dependency JAR is arranged as per their groupId, artifactId and version, and name of JAR file is combination or artifactId and version mentioned in dependency tag of pom.xml
+&lt;/li&gt;
+ 
+&lt;/ol&gt;
+
+	</description>
+    </item>
+    <item>
+      <title>Garbage Collection in Java</title>
+      <link>http://jrphub.github.io/jrpwilt//blog/2013/garbage-collection-in-java.html</link>
+      <pubDate>Fri, 13 Sep 2013 00:00:00 +0530</pubDate>
+      <guid isPermaLink="false">blog/2013/garbage-collection-in-java.html</guid>
+      	<description>
+	&lt;b&gt;Few Points ...&lt;/b&gt;
+&lt;ol&gt;
+&lt;li&gt;Java Heap is divided into three generation for sake of garbage collection. These are young generation, tenured or old generation and Perm area&lt;/li&gt;
+&lt;li&gt;New objects are created into young generation and subsequently moved to old generation.&lt;/li&gt;
+&lt;li&gt;String pool is created in Perm area of Heap, garbage collection can occur in perm space but depends upon JVM to JVM&lt;/li&gt;
+&lt;li&gt;Minor garbage collection is used to move object from Eden space to Survivor 1 and Survivor 2 space and Major collection is used to move object from young to tenured generation.&lt;/li&gt;
+&lt;li&gt;Whenever Major garbage collection occurs application threads stops during that period which will reduce application performance and throughput&lt;/li&gt;
+&lt;li&gt;There are few performance improvement has been applied in garbage collection in java 6 and we usually use JRE 1.6.20 for running our application.&lt;/li&gt;
+&lt;li&gt;JVM command line options -Xmx and -Xms is used to setup starting and max size for Java Heap. Ideal ratio of this parameter is either 1:1 or 1:1.5 based upon my experience for example you can have either both –Xmx and –Xms as 1GB or –Xms 1.2 GB and 1.8 GB.&lt;/li&gt;
+&lt;li&gt;There is no manual way of doing garbage collection in Java.There are methods like System.gc () and Runtime.gc () which is used to send request of Garbage collection to JVM but it’s not guaranteed that garbage collection will happen. Garbage Collection in Java is carried by a daemon thread called Garbage Collector.&lt;/li&gt;
+&lt;li&gt;Concurrent garbage collector in java uses a single garbage collector thread that runs concurrently with the application threads with the goal of completing the collection of the tenured generation before it becomes full&lt;/li&gt;
+&lt;li&gt;If there is no memory space for creating new object in Heap Java Virtual Machine throws OutOfMemoryError or java.lang.OutOfMemoryError heap space&lt;/li&gt;
+&lt;li&gt;J2SE 5(Java 2 Standard Edition) adds a new feature called Ergonomics goal of ergonomics is to provide good performance from the JVM with minimum of command line tuning.&lt;/li&gt;
+&lt;/ol&gt;
+
+	</description>
+    </item>
+
+  </channel> 
+</rss>

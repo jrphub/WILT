@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    <title>Use static Factory Method over Constructor</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="A blog or note on Java development, Best Practices, tips & tricks.">
+    <meta name="author" content="Jyoti Ranjan Pattnaik">
+    <meta name="keywords" content="java, concepts, tips and tricks, best practices, simple explanation, notes">
+    <meta name="generator" content="JBake">
+
+    <!-- Le styles -->
+    <link href="../../css/bootstrap.min.css" rel="stylesheet">
+    <link href="../../css/asciidoctor.css" rel="stylesheet">
+    <link href="../../css/base.css" rel="stylesheet">
+    <link href="../../css/prettify.css" rel="stylesheet">
+    <link href="../../css/kickstart-grid.css" rel="stylesheet">
+    <link href="../../css/jquery.fancybox-1.3.4.css" rel="stylesheet">
+    <link href="../../css/kickstart-slideshow.css" rel="stylesheet">
+    <link href="../../css/kickstart.css" rel="stylesheet">
+    
+
+    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="../../js/html5shiv.min.js"></script>
+    <![endif]-->
+
+    <!-- Fav and touch icons -->
+    <!--<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../assets/ico/apple-touch-icon-144-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="../assets/ico/apple-touch-icon-114-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="../assets/ico/apple-touch-icon-72-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" href="../assets/ico/apple-touch-icon-57-precomposed.png">-->
+    <link rel="shortcut icon" href="../../favicon.ico">
+  </head>
+  <body onload="prettyPrint()">
+    <div id="wrap">
+	
+	<!-- Fixed navbar -->
+    <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="../../index.html">WILT - What I Learnt Today</a>
+        </div>
+        <div class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+            <li><a href="../../index.html">Home</a></li>
+            <li><a href="http://www.iamjrp.com/" target="_blank">About Me</a></li>
+            <li><a href="/archive.html">Index</a></li>
+            <li><a href="../../tags">Tags</a></li>
+            
+            <!--li><a href="../../about.html">About</a></li-->
+            <!--li><a href="../../feed.xml">Subscribe</a></li-->
+            <!--li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <b class="caret"></b></a>
+              <ul class="dropdown-menu">
+                <li><a href="#">Action</a></li>
+                <li><a href="#">Another action</a></li>
+                <li><a href="#">Something else here</a></li>
+                <li class="divider"></li>
+                <li class="dropdown-header">Nav header</li>
+                <li><a href="#">Separated link</a></li>
+                <li><a href="#">One more separated link</a></li>
+              </ul>
+            </li-->
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div>
+    </div>
+    <div class="container">	<div class="grid">
+	<div class="col_9" style="border-right: 1px solid #F2F2F2;height:auto;margin:5px;">
+	<div class="page-header">
+		<h1>Use static Factory Method over Constructor</h1>
+	</div>
+
+	<p><em>28 September 2013</em></p>
+
+	<p><p> Constructor comes with Few Limitations</p>
+<p>The advantage of Static Factory Method over Constructors are.. </p>
+<ol>
+	<li>They can have different names specific to functionality contains, unlike constructors which are always named as the class name</li>
+	<li>They are not required to create a new object each time they are invoked</li>
+	<li>They can return an object of any subtypeof their own type, unlike constructor</li>
+	<li>They reduce the repeatablity of creating parametrized type instance</li>
+</ol>
+<br/>
+<h4><b>Usage</b></h4>
+<p>Before</p>
+<pre class="prettyprint">
+<code>
+// File Class.java 
+public class Class {
+    public Class(String s) {
+        ...
+    }
+}
+
+ // File AnotherClass.java 
+public class AnotherClass {
+    public void method() {
+        Class aClass = new Class("string");
+    }
+}
+</code>
+</pre>
+
+<p>After</p>
+<pre class="prettyprint">
+<code>
+// File Class.java 
+public class Class {
+    private Class(String s) {
+        ...
+    }
+    public static createClass(String s) {
+        return new Class(s);
+    }
+}
+
+ // File AnotherClass.java 
+public class AnotherClass {
+    public void method() {
+        Class aClass = Class.createClass("string");
+    }
+}
+</code>
+</pre>
+
+<b><u>Type Inference</u>(Point 4)</b>
+<p><u>Usual Way</u></p>
+<pre class="prettyprint">
+<code>
+Map<String, List<String>> map = new HashMap<String, List<String>>();
+</code>
+</pre>
+<p>You are repeating the same parameters twice on the same line of code. Wouldn’t it be nice if the right side of the assign could be inferred from the left side?<br/> Well, with static factories it can be</p>
+<pre class="prettyprint">
+<code>
+public static <K, V> HashMap<K, V> newHashMap() {
+  return new HashMap<K, V>();
+}
+</code>
+</pre>
+
+<p><u>Client Code</u></p>
+<pre class="prettyprint">
+<code>
+Map<String, List<String>> map = Maps.newHashMap();
+</code>
+</pre>
+
+<p><u>In Java 7</u><p>
+<pre class="prettyprint">
+Map<String, List<String>> map = new HashMap<>();
+{%endhighlight%}
+<br/>
+<h4><b>References:</b></h4>
+<ol>
+<li><a href="http://sourcemaking.com/refactoring/replace-constructor-with-factory-method" target="_blank">For useful Scenario understanding</a></li>
+<li><a href="http://jlordiales.wordpress.com/2012/12/26/static-factory-methods-vs-traditional-constructors/" target="_blank">For Constructor's limitaion and point 4</a></li>
+</ol>
+	
+
+</p>
+
+	<hr />
+	<p id="last"></p>
+	</div>
+	<div class="col_3" style="margin:2.5em 0.833333%;">
+		<h3>Blog Archive</h3>
+	<hr/>
+	
+	<!--<ul>-->
+			<h4>March 2014</h4>
+			<ul>
+		
+		<li>03 - <a href="/blog/2014/inner-classes-in-java.html">Inner classes in java</a></li>
+				</ul>
+				<h4>February 2014</h4>
+				<ul>
+		
+		<li>21 - <a href="/blog/2014/overriding-equals.html">Overriding Equals</a></li>
+		
+		<li>20 - <a href="/blog/2014/scenario-display-words-by-count.html">Scenario: Display words by their count in a file</a></li>
+		
+		<li>19 - <a href="/blog/2014/string-to-date.html">String to date Conversion in Java</a></li>
+		
+		<li>14 - <a href="/blog/2014/Java-overview.html">Java Overview</a></li>
+		
+		<li>06 - <a href="/blog/2014/Comparator-in-java.html">Comparator in Java explained with simple examples</a></li>
+		
+		<li>05 - <a href="/blog/2014/Comparable-in-Java.html">A simple example of Comparable in Java</a></li>
+		
+		<li>04 - <a href="/blog/2014/tree-set-example.html">TreeSet - basic operations</a></li>
+				</ul>
+				<h4>January 2014</h4>
+				<ul>
+		
+		<li>26 - <a href="/blog/2014/notes-on-java-collection.html">Notes on Java Collection</a></li>
+		
+		<li>11 - <a href="/blog/2014/string-concatenation-performance.html">String Concatenation Performance</a></li>
+				</ul>
+				<h4>December 2013</h4>
+				<ul>
+		
+		<li>22 - <a href="/blog/2013/serialization-in-java.html">Serialization and Deserialization in Java</a></li>
+				</ul>
+				<h4>October 2013</h4>
+				<ul>
+		
+		<li>11 - <a href="/blog/2013/JDBC-in-short.html">JDBC in short</a></li>
+		
+		<li>06 - <a href="/blog/2013/eclipse-out-of-memory.html">Solving Out of memory error in Eclipse startup</a></li>
+				</ul>
+				<h4>September 2013</h4>
+				<ul>
+		
+		<li>28 - <a href="/blog/2013/use-factory-method-over-constructor.html">Use static Factory Method over Constructor</a></li>
+		
+		<li>27 - <a href="/blog/2013/Singleton-Design-pattern-in-java.html">Singleton Design Pattern in Java</a></li>
+		
+		<li>15 - <a href="/blog/2013/running-a-thread-after-another-thread.html">Running a thread after completing another thread</a></li>
+		
+		<li>14 - <a href="/blog/2013/how-maven-builds-project.html">How MAVEN builds the project</a></li>
+		
+		<li>13 - <a href="/blog/2013/garbage-collection-in-java.html">Garbage Collection in Java</a></li>
+	</ul>
+	</div>
+	</div>
+	<div id="slidebox-eop">
+	    <a class="close"></a>
+	    <p>Next</p>
+		    		<h2><a href="/blog/2013/Singleton-Design-pattern-in-java.html">Singleton Design Pattern in Java</a></h2>
+		    		<a class="more" href="/blog/2013/Singleton-Design-pattern-in-java.html">Read More >></a></p>
+	</div>
+	
+
+<br/>
+<div class="col_9">
+	 <div id="disqus_thread"></div>
+	 
+		
+    	<script type="text/javascript">
+    var disqus_shortname = 'Jyotiranjan'; // Required - Replace example with your forum shortname
+    var disqus_identifier = 'blog/2013/use-factory-method-over-constructor.html';
+    var disqus_title = "Use static Factory Method over Constructor";
+    var disqus_url = 'http://jrphub.github.io/jrpwilt/blog/2013/use-factory-method-over-constructor.html';
+
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+
+
+    </div>
+    <div class="col_3">
+    </div>
+		</div>
+		<div id="push"></div>
+    </div>
+    
+    <!--div id="footer">
+      <div class="container">
+        <p class="muted credit">&copy; 2014 | A blog by Jyotiranjan</p>
+      </div>
+    </div-->
+    <div class="container">
+    <p class="muted credit">&copy; 2014 | A blog by Jyotiranjan</p>
+    </div>
+    
+    <!-- Le javascript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="../../js/jquery-1.11.1.min.js"></script>
+    <script src="../../js/bootstrap.min.js"></script>
+    <script src="../../js/prettify.js"></script>
+    <script src="../../js/kickstart.js"></script>
+    
+  </body>
+</html><script type="text/javascript">
+$(function() {
+    $(window).scroll(function(){
+        var distanceTop = $('#last').offset().top - $(window).height();
+ 
+        if  ($(window).scrollTop() > distanceTop)
+            $('#slidebox-eop').animate({'right':'0px'},300);
+        else
+            $('#slidebox-eop').stop(true).animate({'right':'-430px'},100);
+    });
+ 
+    $('#slidebox-eop .close').bind('click',function(){
+        $(this).parent().remove();
+    });
+});
+</script>

@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    <title>Overriding Equals</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="A blog or note on Java development, Best Practices, tips & tricks.">
+    <meta name="author" content="Jyoti Ranjan Pattnaik">
+    <meta name="keywords" content="java, concepts, tips and tricks, best practices, simple explanation, notes">
+    <meta name="generator" content="JBake">
+
+    <!-- Le styles -->
+    <link href="../../css/bootstrap.min.css" rel="stylesheet">
+    <link href="../../css/asciidoctor.css" rel="stylesheet">
+    <link href="../../css/base.css" rel="stylesheet">
+    <link href="../../css/prettify.css" rel="stylesheet">
+    <link href="../../css/kickstart-grid.css" rel="stylesheet">
+    <link href="../../css/jquery.fancybox-1.3.4.css" rel="stylesheet">
+    <link href="../../css/kickstart-slideshow.css" rel="stylesheet">
+    <link href="../../css/kickstart.css" rel="stylesheet">
+    
+
+    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="../../js/html5shiv.min.js"></script>
+    <![endif]-->
+
+    <!-- Fav and touch icons -->
+    <!--<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../assets/ico/apple-touch-icon-144-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="../assets/ico/apple-touch-icon-114-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="../assets/ico/apple-touch-icon-72-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" href="../assets/ico/apple-touch-icon-57-precomposed.png">-->
+    <link rel="shortcut icon" href="../../favicon.ico">
+  </head>
+  <body onload="prettyPrint()">
+    <div id="wrap">
+	
+	<!-- Fixed navbar -->
+    <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="../../index.html">WILT - What I Learnt Today</a>
+        </div>
+        <div class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+            <li><a href="../../index.html">Home</a></li>
+            <li><a href="http://www.iamjrp.com/" target="_blank">About Me</a></li>
+            <li><a href="/archive.html">Index</a></li>
+            <li><a href="../../tags">Tags</a></li>
+            
+            <!--li><a href="../../about.html">About</a></li-->
+            <!--li><a href="../../feed.xml">Subscribe</a></li-->
+            <!--li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <b class="caret"></b></a>
+              <ul class="dropdown-menu">
+                <li><a href="#">Action</a></li>
+                <li><a href="#">Another action</a></li>
+                <li><a href="#">Something else here</a></li>
+                <li class="divider"></li>
+                <li class="dropdown-header">Nav header</li>
+                <li><a href="#">Separated link</a></li>
+                <li><a href="#">One more separated link</a></li>
+              </ul>
+            </li-->
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div>
+    </div>
+    <div class="container">	<div class="grid">
+	<div class="col_9" style="border-right: 1px solid #F2F2F2;height:auto;margin:5px;">
+	<div class="page-header">
+		<h1>Overriding Equals</h1>
+	</div>
+
+	<p><em>21 February 2014</em></p>
+
+	<p><p>As we know,</p>
+<p><b> Two equal objects MUST have same hash code, but two objects having same hashcode MAY NOT BE EQUAL</b></p>
+<p>From Javadoc</p>
+<b><u>equals</u></b>
+<pre class="prettyprint">
+<code>
+public boolean equals(Object obj)
+</code>
+</pre>
+<p>Indicates whether some other object is "equal to" this one.</p>
+<p>The equals method implements an equivalence relation on non-null object references:</p>
+<ol>
+<li>It is reflexive: for any non-null reference value x, x.equals(x) should return true.</li>
+<li>It is symmetric: for any non-null reference values x and y, x.equals(y) should return true if and only if y.equals(x) returns true.</li>
+<li>It is transitive: for any non-null reference values x, y, and z, if x.equals(y) returns true and y.equals(z) returns true, then x.equals(z) should return true.</li>
+<li>It is consistent: for any non-null reference values x and y, multiple invocations of x.equals(y) consistently return true or consistently return false, provided no information used in equals comparisons on the objects is modified.</li>
+<li>For any non-null reference value x, x.equals(null) should return false.</li>
+
+<li>The equals method for class Object implements the most discriminating possible equivalence relation on objects; that is, for any non-null reference values x and y, this method returns true if and only if x and y refer to the same object (x == y has the value true).</li>
+</ol>
+<b>Note that it is generally necessary to override the hashCode method whenever this method is overridden, so as to maintain the general contract for the hashCode method, which states that equal objects must have equal hash codes.</b>
+<p></p>
+<h5><b><u>Hashcode</u></b></h5>
+<p>Returns a hash code value for the object. This method is supported for the benefit of hash tables such as those provided by HashMap.</p>
+<p>The general contract of hashCode is:</p>
+<ol>
+<li>Whenever it is invoked on the same object more than once during an execution of a Java application, the hashCode method must consistently return the same integer, provided no information used in equals comparisons on the object is modified. This integer need not remain consistent from one execution of an application to another execution of the same application.</li>
+<li>If two objects are equal according to the equals(Object) method, then calling the hashCode method on each of the two objects must produce the same integer result.</li>
+<li>It is not required that if two objects are unequal according to the equals(java.lang.Object) method, then calling the hashCode method on each of the two objects must produce distinct integer results. However, the programmer should be aware that producing distinct integer results for unequal objects may improve the performance of hash tables.
+As much as is reasonably practical, the hashCode method defined by class Object does return distinct integers for distinct objects. </li>
+</ol>
+
+<p>Enough Theory!!!</p>
+<p>Now how to follow this contract , if we are over riding equals()</p>
+<p>Here, I am explaining a simple scenario. The code is self explanatory</p>
+<b><u>Songs.java</u></b>
+<pre class="prettyprint">
+<code>
+public class Songs {
+    private String music;
+    private String lyrics;
+    private String singer;
+
+    public Songs(String music, String lyrics, String singer) {
+	this.setMusic(music);
+	this.setLyrics(lyrics);
+	this.setSinger(singer);
+    }
+
+    public String getMusic() {
+	return music;
+    }
+
+    public void setMusic(String music) {
+	this.music = music;
+    }
+
+    public String getLyrics() {
+	return lyrics;
+    }
+
+    public void setLyrics(String lyrics) {
+	this.lyrics = lyrics;
+    }
+
+    public String getSinger() {
+	return singer;
+    }
+
+    public void setSinger(String singer) {
+	this.singer = singer;
+    }
+
+    // If music and lyrics of both the songs are equal, we will say the songs
+    // are same irrespective of singer who has sung the song
+
+    @Override
+    public boolean equals(Object object) {
+	boolean result = false;
+	if (object == null || object.getClass() != getClass()) {
+	    result = false;
+	} else {
+	    Songs song = (Songs) object;
+	    if (this.getMusic() == song.getMusic()
+		    && this.getLyrics() == song.getLyrics()) {
+		result = true;
+	    }
+	}
+
+	return result;
+    }
+
+    // As per the contract, if equals() is overridden, hashcode() has to be
+    // overridden
+    // why?
+    /*
+     * Reason: Default implementation given is hashCode() method in Object class
+     * uses the internal address of the object and converts it into integer and
+     * returns it. This is the lowest form of equality implementation and
+     * provides guaranteed results for hastables implementation. When we
+     * override equals() and change the meaning of equality for an object then
+     * the same should be reflected by overriding the hashCode method.
+     */
+
+    @Override
+    public int hashCode() {
+	int hash = 3;
+	hash = 7 * hash + this.music.hashCode();
+	hash = 7 * hash + this.lyrics.hashCode();
+	return hash;
+    }
+</code>
+</pre>
+<b><u>OverridingEquals.java</u></b>
+<pre class="prettyprint">
+<code>
+public class OverridingEquals {
+
+    public static void main(String[] args) {
+	Songs song1 = new Songs("Yo Yo", "Sunny Sunny", "Yo Yo");
+	Songs song2 = new Songs("Yo Yo", "Sunny Sunny", "Sunny Leone");
+	Songs song3 = new Songs("Yo Yo", "Blue Eyes", "Yo Yo");
+
+	System.out.println("song1 and song2 are equal?" + song1.equals(song2)); // true
+	System.out.println("song1 and song3 are equal?" + song1.equals(song3)); // false
+
+	System.out.println("Hash code of song1:" + song1.hashCode()); // -1547358271
+	System.out.println("Hash code of song2:" + song2.hashCode()); // -1547358271
+	System.out.println("Hash Code of song3:" + song3.hashCode()); // 197801883
+    }
+
+}
+</code>
+</pre>
+<p>Hope, now you got the basic idea </p>
+</p>
+
+	<hr />
+	<p id="last"></p>
+	</div>
+	<div class="col_3" style="margin:2.5em 0.833333%;">
+		<h3>Blog Archive</h3>
+	<hr/>
+	
+	<!--<ul>-->
+			<h4>March 2014</h4>
+			<ul>
+		
+		<li>03 - <a href="/blog/2014/inner-classes-in-java.html">Inner classes in java</a></li>
+				</ul>
+				<h4>February 2014</h4>
+				<ul>
+		
+		<li>21 - <a href="/blog/2014/overriding-equals.html">Overriding Equals</a></li>
+		
+		<li>20 - <a href="/blog/2014/scenario-display-words-by-count.html">Scenario: Display words by their count in a file</a></li>
+		
+		<li>19 - <a href="/blog/2014/string-to-date.html">String to date Conversion in Java</a></li>
+		
+		<li>14 - <a href="/blog/2014/Java-overview.html">Java Overview</a></li>
+		
+		<li>06 - <a href="/blog/2014/Comparator-in-java.html">Comparator in Java explained with simple examples</a></li>
+		
+		<li>05 - <a href="/blog/2014/Comparable-in-Java.html">A simple example of Comparable in Java</a></li>
+		
+		<li>04 - <a href="/blog/2014/tree-set-example.html">TreeSet - basic operations</a></li>
+				</ul>
+				<h4>January 2014</h4>
+				<ul>
+		
+		<li>26 - <a href="/blog/2014/notes-on-java-collection.html">Notes on Java Collection</a></li>
+		
+		<li>11 - <a href="/blog/2014/string-concatenation-performance.html">String Concatenation Performance</a></li>
+				</ul>
+				<h4>December 2013</h4>
+				<ul>
+		
+		<li>22 - <a href="/blog/2013/serialization-in-java.html">Serialization and Deserialization in Java</a></li>
+				</ul>
+				<h4>October 2013</h4>
+				<ul>
+		
+		<li>11 - <a href="/blog/2013/JDBC-in-short.html">JDBC in short</a></li>
+		
+		<li>06 - <a href="/blog/2013/eclipse-out-of-memory.html">Solving Out of memory error in Eclipse startup</a></li>
+				</ul>
+				<h4>September 2013</h4>
+				<ul>
+		
+		<li>28 - <a href="/blog/2013/use-factory-method-over-constructor.html">Use static Factory Method over Constructor</a></li>
+		
+		<li>27 - <a href="/blog/2013/Singleton-Design-pattern-in-java.html">Singleton Design Pattern in Java</a></li>
+		
+		<li>15 - <a href="/blog/2013/running-a-thread-after-another-thread.html">Running a thread after completing another thread</a></li>
+		
+		<li>14 - <a href="/blog/2013/how-maven-builds-project.html">How MAVEN builds the project</a></li>
+		
+		<li>13 - <a href="/blog/2013/garbage-collection-in-java.html">Garbage Collection in Java</a></li>
+	</ul>
+	</div>
+	</div>
+	<div id="slidebox-eop">
+	    <a class="close"></a>
+	    <p>Next</p>
+		    		<h2><a href="/blog/2014/scenario-display-words-by-count.html">Scenario: Display words by their count in a file</a></h2>
+		    		<a class="more" href="/blog/2014/scenario-display-words-by-count.html">Read More >></a></p>
+	</div>
+	
+
+<br/>
+<div class="col_9">
+	 <div id="disqus_thread"></div>
+	 
+		
+    	<script type="text/javascript">
+    var disqus_shortname = 'Jyotiranjan'; // Required - Replace example with your forum shortname
+    var disqus_identifier = 'blog/2014/overriding-equals.html';
+    var disqus_title = "Overriding Equals";
+    var disqus_url = 'http://jrphub.github.io/jrpwilt/blog/2014/overriding-equals.html';
+
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+
+
+    </div>
+    <div class="col_3">
+    </div>
+		</div>
+		<div id="push"></div>
+    </div>
+    
+    <!--div id="footer">
+      <div class="container">
+        <p class="muted credit">&copy; 2014 | A blog by Jyotiranjan</p>
+      </div>
+    </div-->
+    <div class="container">
+    <p class="muted credit">&copy; 2014 | A blog by Jyotiranjan</p>
+    </div>
+    
+    <!-- Le javascript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="../../js/jquery-1.11.1.min.js"></script>
+    <script src="../../js/bootstrap.min.js"></script>
+    <script src="../../js/prettify.js"></script>
+    <script src="../../js/kickstart.js"></script>
+    
+  </body>
+</html><script type="text/javascript">
+$(function() {
+    $(window).scroll(function(){
+        var distanceTop = $('#last').offset().top - $(window).height();
+ 
+        if  ($(window).scrollTop() > distanceTop)
+            $('#slidebox-eop').animate({'right':'0px'},300);
+        else
+            $('#slidebox-eop').stop(true).animate({'right':'-430px'},100);
+    });
+ 
+    $('#slidebox-eop .close').bind('click',function(){
+        $(this).parent().remove();
+    });
+});
+</script>

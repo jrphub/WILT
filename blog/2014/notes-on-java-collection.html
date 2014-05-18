@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    <title>Notes on Java Collection</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="A blog or note on Java development, Best Practices, tips & tricks.">
+    <meta name="author" content="Jyoti Ranjan Pattnaik">
+    <meta name="keywords" content="java, concepts, tips and tricks, best practices, simple explanation, notes">
+    <meta name="generator" content="JBake">
+
+    <!-- Le styles -->
+    <link href="../../css/bootstrap.min.css" rel="stylesheet">
+    <link href="../../css/asciidoctor.css" rel="stylesheet">
+    <link href="../../css/base.css" rel="stylesheet">
+    <link href="../../css/prettify.css" rel="stylesheet">
+    <link href="../../css/kickstart-grid.css" rel="stylesheet">
+    <link href="../../css/jquery.fancybox-1.3.4.css" rel="stylesheet">
+    <link href="../../css/kickstart-slideshow.css" rel="stylesheet">
+    <link href="../../css/kickstart.css" rel="stylesheet">
+    
+
+    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="../../js/html5shiv.min.js"></script>
+    <![endif]-->
+
+    <!-- Fav and touch icons -->
+    <!--<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../assets/ico/apple-touch-icon-144-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="../assets/ico/apple-touch-icon-114-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="../assets/ico/apple-touch-icon-72-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" href="../assets/ico/apple-touch-icon-57-precomposed.png">-->
+    <link rel="shortcut icon" href="../../favicon.ico">
+  </head>
+  <body onload="prettyPrint()">
+    <div id="wrap">
+	
+	<!-- Fixed navbar -->
+    <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="../../index.html">WILT - What I Learnt Today</a>
+        </div>
+        <div class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+            <li><a href="../../index.html">Home</a></li>
+            <li><a href="http://www.iamjrp.com/" target="_blank">About Me</a></li>
+            <li><a href="/archive.html">Index</a></li>
+            <li><a href="../../tags">Tags</a></li>
+            
+            <!--li><a href="../../about.html">About</a></li-->
+            <!--li><a href="../../feed.xml">Subscribe</a></li-->
+            <!--li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <b class="caret"></b></a>
+              <ul class="dropdown-menu">
+                <li><a href="#">Action</a></li>
+                <li><a href="#">Another action</a></li>
+                <li><a href="#">Something else here</a></li>
+                <li class="divider"></li>
+                <li class="dropdown-header">Nav header</li>
+                <li><a href="#">Separated link</a></li>
+                <li><a href="#">One more separated link</a></li>
+              </ul>
+            </li-->
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div>
+    </div>
+    <div class="container">	<div class="grid">
+	<div class="col_9" style="border-right: 1px solid #F2F2F2;height:auto;margin:5px;">
+	<div class="page-header">
+		<h1>Notes on Java Collection</h1>
+	</div>
+
+	<p><em>26 January 2014</em></p>
+
+	<p><p>This note contains the points, I often forget. It's just a quick reference and I will add to this note when I learn something new on Java Collection</p>
+<b>Collection Framework</b>
+<img class="caption" title="Collection framework" src="/images/collection/collection_framework.PNG" width="400" height="350" />
+<p></p>
+<b>The methods in Collection Interface</b>
+<br/>
+<img class="caption" title="Methods in Collection Interface" src="/images/collection/collection_methods.PNG" width="400" height="350" />
+<br/>
+<b>How to iterate through collection</b>
+<img class="caption" title="Iterating through Collection" src="/images/collection/Iterator.PNG" width="400" height="350" />
+
+<b>Iterator is fail-fast, how? </b>
+<img class="caption" title="Iterator is fail-fast, how? " src="/images/collection/iterator_fail_fast.PNG" width="400" height="350" />
+
+<b>Collections is an utility class and it involves following methods</b>
+<img class="caption" title="Collections" src="/images/collection/Collections.PNG" width="400" height="350" />
+
+<b>The methods for linked list with their return type</b>
+<ul>
+<li>getFirst():E</li>
+<li>getLast() : E</li>
+<li>addFirst() : void</li>
+<li>addLast() : void</li>
+<li>removeFirst : E</li>
+<li>removeLast :  E</li>
+</ul>
+<br/>
+<img class="caption" title="ArrayList vs LinkedList" src="/images/collection/arraylist-vs-linkedlist.png" width="400" height="350" />
+<p>Two equal objects MUST have same hash code, but two objects having same hashcode MAY NOT BE EQUAL</p>
+<pre class="prettyprint">
+<code>
+Map<K,V> map = new HahMap<K,V>(0.75f);
+</code>
+</pre>s
+<p>This means if 75% of buckets are filled , bucket size increases and rehashing takes place</p>
+<b>Traversing a map using advanced for loop</b>
+<img class="caption" title="Traversing Map" src="/images/collection/traversing_map.PNG" width="400" height="350" />
+
+<b>Queue</b>
+<img class="caption" title="Queue" src="/images/collection/Queue.PNG" width="400" height="350" />
+
+<b>Methods in Queue </b>
+<img class="caption" title="Methods in Queue" src="/images/collection/Queue_methods.PNG" width="400" height="350" />
+
+<b>Special Collection Methods</b>
+<img class="caption" title="Special Collection Methods" src="/images/collection/Special_collection_methods.PNG" width="400" height="350" />
+
+<b>Collection for multi-threading application</b>
+<img class="caption" title="Collection for multi-threading application" src="/images/collection/Collection_for_multithreading.PNG" width="400" height="350" />
+
+<b>How to choose the right collection for your problem </b>
+<img class="caption" title="Choose the right" src="/images/collection/how _to_choose_collection.PNG" width="400" height="350" />
+
+<p><b>Complexity</b></p>
+<ul>
+<li>ArrayList : Adding/Removing an element at rear end : O(1)</li>
+<li>ArrayList : Adding/Removing an element at any position : O(n)</li>
+<li>ArrayList : Searching an element : O(n)</li>
+<li>HashSet (Storage method is Hash Table) : Adding/Removing/contains an element : O(1)</li>
+<li>TreeSet (Storage method is red black Tree) : Adding/Removing/contains an element : O(logn)</li>
+<li>LinkedHashSet ( implemented as a hash table with a linked list running through it) : Adding/Removing/contains an element : O(1) </li>
+<li>HashMap : Adding/removing an element : O(1)</li>
+<li>TreeMap : Adding/Removing an element : O(logn)</li>
+</ul>
+
+<b>More Coming soon...</b>
+</p>
+
+	<hr />
+	<p id="last"></p>
+	</div>
+	<div class="col_3" style="margin:2.5em 0.833333%;">
+		<h3>Blog Archive</h3>
+	<hr/>
+	
+	<!--<ul>-->
+			<h4>March 2014</h4>
+			<ul>
+		
+		<li>03 - <a href="/blog/2014/inner-classes-in-java.html">Inner classes in java</a></li>
+				</ul>
+				<h4>February 2014</h4>
+				<ul>
+		
+		<li>21 - <a href="/blog/2014/overriding-equals.html">Overriding Equals</a></li>
+		
+		<li>20 - <a href="/blog/2014/scenario-display-words-by-count.html">Scenario: Display words by their count in a file</a></li>
+		
+		<li>19 - <a href="/blog/2014/string-to-date.html">String to date Conversion in Java</a></li>
+		
+		<li>14 - <a href="/blog/2014/Java-overview.html">Java Overview</a></li>
+		
+		<li>06 - <a href="/blog/2014/Comparator-in-java.html">Comparator in Java explained with simple examples</a></li>
+		
+		<li>05 - <a href="/blog/2014/Comparable-in-Java.html">A simple example of Comparable in Java</a></li>
+		
+		<li>04 - <a href="/blog/2014/tree-set-example.html">TreeSet - basic operations</a></li>
+				</ul>
+				<h4>January 2014</h4>
+				<ul>
+		
+		<li>26 - <a href="/blog/2014/notes-on-java-collection.html">Notes on Java Collection</a></li>
+		
+		<li>11 - <a href="/blog/2014/string-concatenation-performance.html">String Concatenation Performance</a></li>
+				</ul>
+				<h4>December 2013</h4>
+				<ul>
+		
+		<li>22 - <a href="/blog/2013/serialization-in-java.html">Serialization and Deserialization in Java</a></li>
+				</ul>
+				<h4>October 2013</h4>
+				<ul>
+		
+		<li>11 - <a href="/blog/2013/JDBC-in-short.html">JDBC in short</a></li>
+		
+		<li>06 - <a href="/blog/2013/eclipse-out-of-memory.html">Solving Out of memory error in Eclipse startup</a></li>
+				</ul>
+				<h4>September 2013</h4>
+				<ul>
+		
+		<li>28 - <a href="/blog/2013/use-factory-method-over-constructor.html">Use static Factory Method over Constructor</a></li>
+		
+		<li>27 - <a href="/blog/2013/Singleton-Design-pattern-in-java.html">Singleton Design Pattern in Java</a></li>
+		
+		<li>15 - <a href="/blog/2013/running-a-thread-after-another-thread.html">Running a thread after completing another thread</a></li>
+		
+		<li>14 - <a href="/blog/2013/how-maven-builds-project.html">How MAVEN builds the project</a></li>
+		
+		<li>13 - <a href="/blog/2013/garbage-collection-in-java.html">Garbage Collection in Java</a></li>
+	</ul>
+	</div>
+	</div>
+	<div id="slidebox-eop">
+	    <a class="close"></a>
+	    <p>Next</p>
+		    		<h2><a href="/blog/2014/string-concatenation-performance.html">String Concatenation Performance</a></h2>
+		    		<a class="more" href="/blog/2014/string-concatenation-performance.html">Read More >></a></p>
+	</div>
+	
+
+<br/>
+<div class="col_9">
+	 <div id="disqus_thread"></div>
+	 
+		
+    	<script type="text/javascript">
+    var disqus_shortname = 'Jyotiranjan'; // Required - Replace example with your forum shortname
+    var disqus_identifier = 'blog/2014/notes-on-java-collection.html';
+    var disqus_title = "Notes on Java Collection";
+    var disqus_url = 'http://jrphub.github.io/jrpwilt/blog/2014/notes-on-java-collection.html';
+
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+
+
+    </div>
+    <div class="col_3">
+    </div>
+		</div>
+		<div id="push"></div>
+    </div>
+    
+    <!--div id="footer">
+      <div class="container">
+        <p class="muted credit">&copy; 2014 | A blog by Jyotiranjan</p>
+      </div>
+    </div-->
+    <div class="container">
+    <p class="muted credit">&copy; 2014 | A blog by Jyotiranjan</p>
+    </div>
+    
+    <!-- Le javascript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="../../js/jquery-1.11.1.min.js"></script>
+    <script src="../../js/bootstrap.min.js"></script>
+    <script src="../../js/prettify.js"></script>
+    <script src="../../js/kickstart.js"></script>
+    
+  </body>
+</html><script type="text/javascript">
+$(function() {
+    $(window).scroll(function(){
+        var distanceTop = $('#last').offset().top - $(window).height();
+ 
+        if  ($(window).scrollTop() > distanceTop)
+            $('#slidebox-eop').animate({'right':'0px'},300);
+        else
+            $('#slidebox-eop').stop(true).animate({'right':'-430px'},100);
+    });
+ 
+    $('#slidebox-eop .close').bind('click',function(){
+        $(this).parent().remove();
+    });
+});
+</script>
