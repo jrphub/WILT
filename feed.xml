@@ -2,16 +2,16 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>JBake</title>
-    <link>http://jrphub.github.io/jrpwilt/</link>
-    <atom:link href="http://jrphub.github.io/jrpwilt//feed.xml" rel="self" type="application/rss+xml" />
+    <link>http://wilt.iamjrp.com/</link>
+    <atom:link href="http://wilt.iamjrp.com//feed.xml" rel="self" type="application/rss+xml" />
     <description>JBake Bootstrap Template</description>
     <language>en-gb</language>
-    <pubDate>Sun, 18 May 2014 20:56:45 +0530</pubDate>
-    <lastBuildDate>Sun, 18 May 2014 20:56:45 +0530</lastBuildDate>
+    <pubDate>Sun, 18 May 2014 23:39:32 +0530</pubDate>
+    <lastBuildDate>Sun, 18 May 2014 23:39:32 +0530</lastBuildDate>
 
     <item>
       <title>Inner classes in java</title>
-      <link>http://jrphub.github.io/jrpwilt//blog/2014/inner-classes-in-java.html</link>
+      <link>http://wilt.iamjrp.com//blog/2014/inner-classes-in-java.html</link>
       <pubDate>Mon, 3 Mar 2014 00:00:00 +0530</pubDate>
       <guid isPermaLink="false">blog/2014/inner-classes-in-java.html</guid>
       	<description>
@@ -218,7 +218,7 @@ class ParentStaticNestedClassTwo {
     </item>
     <item>
       <title>Overriding Equals</title>
-      <link>http://jrphub.github.io/jrpwilt//blog/2014/overriding-equals.html</link>
+      <link>http://wilt.iamjrp.com//blog/2014/overriding-equals.html</link>
       <pubDate>Fri, 21 Feb 2014 00:00:00 +0530</pubDate>
       <guid isPermaLink="false">blog/2014/overriding-equals.html</guid>
       	<description>
@@ -362,7 +362,7 @@ public class OverridingEquals {
     </item>
     <item>
       <title>Scenario: Display words by their count in a file</title>
-      <link>http://jrphub.github.io/jrpwilt//blog/2014/scenario-display-words-by-count.html</link>
+      <link>http://wilt.iamjrp.com//blog/2014/scenario-display-words-by-count.html</link>
       <pubDate>Thu, 20 Feb 2014 00:00:00 +0530</pubDate>
       <guid isPermaLink="false">blog/2014/scenario-display-words-by-count.html</guid>
       	<description>
@@ -463,7 +463,7 @@ one two ka four four four four four two ka one one one two
     </item>
     <item>
       <title>String to date Conversion in Java</title>
-      <link>http://jrphub.github.io/jrpwilt//blog/2014/string-to-date.html</link>
+      <link>http://wilt.iamjrp.com//blog/2014/string-to-date.html</link>
       <pubDate>Wed, 19 Feb 2014 00:00:00 +0530</pubDate>
       <guid isPermaLink="false">blog/2014/string-to-date.html</guid>
       	<description>
@@ -510,7 +510,7 @@ Mon Monday,11 11 Nov November, 11 11, 13 13 2013, 11:32:34 AM IST----&gt;Mon Nov
     </item>
     <item>
       <title>Java Overview</title>
-      <link>http://jrphub.github.io/jrpwilt//blog/2014/Java-overview.html</link>
+      <link>http://wilt.iamjrp.com//blog/2014/Java-overview.html</link>
       <pubDate>Fri, 14 Feb 2014 00:00:00 +0530</pubDate>
       <guid isPermaLink="false">blog/2014/Java-overview.html</guid>
       	<description>
@@ -558,7 +558,7 @@ Mon Monday,11 11 Nov November, 11 11, 13 13 2013, 11:32:34 AM IST----&gt;Mon Nov
     </item>
     <item>
       <title>Comparator in Java explained with simple examples</title>
-      <link>http://jrphub.github.io/jrpwilt//blog/2014/Comparator-in-java.html</link>
+      <link>http://wilt.iamjrp.com//blog/2014/Comparator-in-java.html</link>
       <pubDate>Thu, 6 Feb 2014 00:00:00 +0530</pubDate>
       <guid isPermaLink="false">blog/2014/Comparator-in-java.html</guid>
       	<description>
@@ -671,7 +671,7 @@ public class SizeComparator implements Comparator&lt;HDTV&gt;{
     </item>
     <item>
       <title>A simple example of Comparable in Java</title>
-      <link>http://jrphub.github.io/jrpwilt//blog/2014/Comparable-in-Java.html</link>
+      <link>http://wilt.iamjrp.com//blog/2014/Comparable-in-Java.html</link>
       <pubDate>Wed, 5 Feb 2014 00:00:00 +0530</pubDate>
       <guid isPermaLink="false">blog/2014/Comparable-in-Java.html</guid>
       	<description>
@@ -795,7 +795,7 @@ public class ComparableTreeSet {
     </item>
     <item>
       <title>TreeSet - basic operations</title>
-      <link>http://jrphub.github.io/jrpwilt//blog/2014/tree-set-example.html</link>
+      <link>http://wilt.iamjrp.com//blog/2014/tree-set-example.html</link>
       <pubDate>Tue, 4 Feb 2014 00:00:00 +0530</pubDate>
       <guid isPermaLink="false">blog/2014/tree-set-example.html</guid>
       	<description>
@@ -873,7 +873,7 @@ Tree is empty
     </item>
     <item>
       <title>Notes on Java Collection</title>
-      <link>http://jrphub.github.io/jrpwilt//blog/2014/notes-on-java-collection.html</link>
+      <link>http://wilt.iamjrp.com//blog/2014/notes-on-java-collection.html</link>
       <pubDate>Sun, 26 Jan 2014 00:00:00 +0530</pubDate>
       <guid isPermaLink="false">blog/2014/notes-on-java-collection.html</guid>
       	<description>
@@ -948,7 +948,7 @@ Map&lt;K,V&gt; map = new HahMap&lt;K,V&gt;(0.75f);
     </item>
     <item>
       <title>String Concatenation Performance</title>
-      <link>http://jrphub.github.io/jrpwilt//blog/2014/string-concatenation-performance.html</link>
+      <link>http://wilt.iamjrp.com//blog/2014/string-concatenation-performance.html</link>
       <pubDate>Sat, 11 Jan 2014 00:00:00 +0530</pubDate>
       <guid isPermaLink="false">blog/2014/string-concatenation-performance.html</guid>
       	<description>
@@ -994,7 +994,7 @@ String result = temp.toString();
     </item>
     <item>
       <title>Serialization and Deserialization in Java</title>
-      <link>http://jrphub.github.io/jrpwilt//blog/2013/serialization-in-java.html</link>
+      <link>http://wilt.iamjrp.com//blog/2013/serialization-in-java.html</link>
       <pubDate>Sun, 22 Dec 2013 00:00:00 +0530</pubDate>
       <guid isPermaLink="false">blog/2013/serialization-in-java.html</guid>
       	<description>
@@ -1141,7 +1141,7 @@ public class SerializationDemo {
     </item>
     <item>
       <title>JDBC in short</title>
-      <link>http://jrphub.github.io/jrpwilt//blog/2013/JDBC-in-short.html</link>
+      <link>http://wilt.iamjrp.com//blog/2013/JDBC-in-short.html</link>
       <pubDate>Fri, 11 Oct 2013 00:00:00 +0530</pubDate>
       <guid isPermaLink="false">blog/2013/JDBC-in-short.html</guid>
       	<description>
@@ -1362,7 +1362,7 @@ con.commit(); //transaction block end
     </item>
     <item>
       <title>Solving Out of memory error in Eclipse startup</title>
-      <link>http://jrphub.github.io/jrpwilt//blog/2013/eclipse-out-of-memory.html</link>
+      <link>http://wilt.iamjrp.com//blog/2013/eclipse-out-of-memory.html</link>
       <pubDate>Sun, 6 Oct 2013 00:00:00 +0530</pubDate>
       <guid isPermaLink="false">blog/2013/eclipse-out-of-memory.html</guid>
       	<description>
@@ -1409,7 +1409,7 @@ or
     </item>
     <item>
       <title>Use static Factory Method over Constructor</title>
-      <link>http://jrphub.github.io/jrpwilt//blog/2013/use-factory-method-over-constructor.html</link>
+      <link>http://wilt.iamjrp.com//blog/2013/use-factory-method-over-constructor.html</link>
       <pubDate>Sat, 28 Sep 2013 00:00:00 +0530</pubDate>
       <guid isPermaLink="false">blog/2013/use-factory-method-over-constructor.html</guid>
       	<description>
@@ -1504,7 +1504,7 @@ Map&lt;String, List&lt;String&gt;&gt; map = new HashMap&lt;&gt;();
     </item>
     <item>
       <title>Singleton Design Pattern in Java</title>
-      <link>http://jrphub.github.io/jrpwilt//blog/2013/Singleton-Design-pattern-in-java.html</link>
+      <link>http://wilt.iamjrp.com//blog/2013/Singleton-Design-pattern-in-java.html</link>
       <pubDate>Fri, 27 Sep 2013 00:00:00 +0530</pubDate>
       <guid isPermaLink="false">blog/2013/Singleton-Design-pattern-in-java.html</guid>
       	<description>
@@ -1648,7 +1648,7 @@ public class DemoSingleton implements Serializable {
     </item>
     <item>
       <title>Running a thread after completing another thread</title>
-      <link>http://jrphub.github.io/jrpwilt//blog/2013/running-a-thread-after-another-thread.html</link>
+      <link>http://wilt.iamjrp.com//blog/2013/running-a-thread-after-another-thread.html</link>
       <pubDate>Sun, 15 Sep 2013 00:00:00 +0530</pubDate>
       <guid isPermaLink="false">blog/2013/running-a-thread-after-another-thread.html</guid>
       	<description>
@@ -1761,7 +1761,7 @@ public class SecondThread implements Runnable {
     </item>
     <item>
       <title>How MAVEN builds the project</title>
-      <link>http://jrphub.github.io/jrpwilt//blog/2013/how-maven-builds-project.html</link>
+      <link>http://wilt.iamjrp.com//blog/2013/how-maven-builds-project.html</link>
       <pubDate>Sat, 14 Sep 2013 00:00:00 +0530</pubDate>
       <guid isPermaLink="false">blog/2013/how-maven-builds-project.html</guid>
       	<description>
@@ -1796,7 +1796,7 @@ Main reason of doing this is that, SNAPSHOT builds are unstable and Maven, downl
     </item>
     <item>
       <title>Garbage Collection in Java</title>
-      <link>http://jrphub.github.io/jrpwilt//blog/2013/garbage-collection-in-java.html</link>
+      <link>http://wilt.iamjrp.com//blog/2013/garbage-collection-in-java.html</link>
       <pubDate>Fri, 13 Sep 2013 00:00:00 +0530</pubDate>
       <guid isPermaLink="false">blog/2013/garbage-collection-in-java.html</guid>
       	<description>

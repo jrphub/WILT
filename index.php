@@ -1,4 +1,4 @@
 <?php
-  header( 'Location: http://mywilt.herokuapp.com/index.html' );
+  header( 'Location: http://wilt.iamjrp.com/' );
   exit();
 ?>
