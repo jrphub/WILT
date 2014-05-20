@@ -6,8 +6,8 @@
     <atom:link href="http://wilt.iamjrp.com//feed.xml" rel="self" type="application/rss+xml" />
     <description>JBake Bootstrap Template</description>
     <language>en-gb</language>
-    <pubDate>Tue, 20 May 2014 23:25:54 +0530</pubDate>
-    <lastBuildDate>Tue, 20 May 2014 23:25:54 +0530</lastBuildDate>
+    <pubDate>Wed, 21 May 2014 00:11:42 +0530</pubDate>
+    <lastBuildDate>Wed, 21 May 2014 00:11:42 +0530</lastBuildDate>
 
     <item>
       <title>How Synchronization works</title>
@@ -172,6 +172,81 @@ class Client {
 	
 	&lt;/ul&gt;
 	&lt;p&gt; It is a relation on memory operations such as reads/writes of shared resources.&lt;/p&gt;
+
+	</description>
+    </item>
+    <item>
+      <title>try..catch..finally or try..finally..catch ?</title>
+      <link>http://wilt.iamjrp.com//blog/2014/exception-handling-best-practice.html</link>
+      <pubDate>Mon, 19 May 2014 00:00:00 +0530</pubDate>
+      <guid isPermaLink="false">blog/2014/exception-handling-best-practice.html</guid>
+      	<description>
+	&lt;p&gt;If a method handles all of the checked exceptions that may be thrown by its implementation, then an interesting variation is to nest a try..finally within a try..catch. This style is particularly useful when the finally block throws the same exceptions as the rest of the code (which is common with java.io operations.) Although this style may seem slightly complex, it appears to be superior to alternative styles:&lt;/p&gt;
+
+&lt;h4&gt;What we usually do&lt;/h4&gt;
+&lt;pre class=&quot;prettyprint&quot;&gt;
+&lt;code&gt;
+public class FileIO {
+    private static BufferedReader bfr = null;
+
+    public static void main(String[] args) {
+	try {
+	    bfr = new BufferedReader(new FileReader(&quot;resources/abc.txt&quot;));
+	    String line = null;
+	    try {
+		while ((line = bfr.readLine()) != null) {
+		    System.out.println(line);
+		}
+	    } catch (IOException e) {
+		e.printStackTrace();
+	    }
+	} catch (FileNotFoundException e) {
+	    e.printStackTrace();
+	} finally {
+	    if (bfr != null) {
+		try {
+		    bfr.close();
+		} catch (IOException e) {
+		    e.printStackTrace();
+		}
+	    }
+	}
+    }
+}
+
+&lt;/code&gt;
+&lt;/pre&gt;
+
+&lt;h4&gt;What we should do&lt;/h4&gt;
+&lt;pre class=&quot;prettyprint&quot;&gt;
+&lt;code&gt;
+public class FileIO2 {
+    private static BufferedReader bfr = null;
+
+    public static void main(String[] args) {
+	try {
+	    // If the constructor throws an exception, the finally block will
+	    // NOT execute
+	    bfr = new BufferedReader(new FileReader(&quot;resources/abc.txt&quot;));
+	    String line = null;
+	    try {
+		while ((line = bfr.readLine()) != null) {
+		    System.out.println(line);
+		}
+	    } finally {
+		// no need to check for null
+		// any exceptions thrown here will be caught by
+		// the outer catch block
+		bfr.close();
+	    }
+	} catch (IOException e) {
+	    e.printStackTrace();
+	}
+
+    }
+}
+&lt;/code&gt;
+&lt;/pre&gt;
 
 	</description>
     </item>

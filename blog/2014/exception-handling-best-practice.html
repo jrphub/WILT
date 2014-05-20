@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8"/>
-    <title>WILT by jyotiranjan</title>
+    <title>try..catch..finally or try..finally..catch ?</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="A blog or note on Java development, Best Practices, tips & tricks.">
     <meta name="author" content="Jyoti Ranjan Pattnaik">
@@ -10,17 +10,19 @@
     <meta name="generator" content="JBake">
 
     <!-- Le styles -->
-    <link href="/css/bootstrap.min.css" rel="stylesheet">
-    <link href="/css/asciidoctor.css" rel="stylesheet">
-    <link href="/css/base.css" rel="stylesheet">
-    <link href="/css/prettify.css" rel="stylesheet">
-    <link href="/css/kickstart-grid.css" rel="stylesheet">
-    <link href="/css/jquery.fancybox-1.3.4.css" rel="stylesheet">
-    <link href="/css/kickstart-slideshow.css" rel="stylesheet">
+    <link href="../../css/bootstrap.min.css" rel="stylesheet">
+    <link href="../../css/asciidoctor.css" rel="stylesheet">
+    <link href="../../css/base.css" rel="stylesheet">
+    <link href="../../css/prettify.css" rel="stylesheet">
+    <link href="../../css/kickstart-grid.css" rel="stylesheet">
+    <link href="../../css/jquery.fancybox-1.3.4.css" rel="stylesheet">
+    <link href="../../css/kickstart-slideshow.css" rel="stylesheet">
+    <link href="../../css/kickstart.css" rel="stylesheet">
+    
 
     <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
     <!--[if lt IE 9]>
-      <script src="js/html5shiv.min.js"></script>
+      <script src="../../js/html5shiv.min.js"></script>
     <![endif]-->
 
     <!-- Fav and touch icons -->
@@ -28,11 +30,12 @@
     <link rel="apple-touch-icon-precomposed" sizes="114x114" href="../assets/ico/apple-touch-icon-114-precomposed.png">
     <link rel="apple-touch-icon-precomposed" sizes="72x72" href="../assets/ico/apple-touch-icon-72-precomposed.png">
     <link rel="apple-touch-icon-precomposed" href="../assets/ico/apple-touch-icon-57-precomposed.png">-->
-    <link rel="shortcut icon" href="favicon.ico">
+    <link rel="shortcut icon" href="../../favicon.ico">
   </head>
   <body onload="prettyPrint()">
     <div id="wrap">
-    	<!-- Fixed navbar -->
+	
+	<!-- Fixed navbar -->
     <div class="navbar navbar-default navbar-fixed-top" role="navigation">
       <div class="container">
         <div class="navbar-header">
@@ -42,16 +45,17 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="/index.html">WILT - What I Learnt Today</a>
+          <a class="navbar-brand" href="../../index.html">WILT - What I Learnt Today</a>
         </div>
         <div class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
-            <li><a href="/index.html">Home</a></li>
+            <li><a href="../../index.html">Home</a></li>
             <li><a href="http://www.iamjrp.com/" target="_blank">About Me</a></li>
             <li><a href="/archive.html">Index</a></li>
-            <li><a href="/tags/tags.html">Tags</a></li>
-            <!--li><a href="about.html">About</a></li-->
-            <!--li><a href="feed.xml">Subscribe</a></li-->
+            <li><a href="../../tags/tags.html">Tags</a></li>
+            
+            <!--li><a href="../../about.html">About</a></li-->
+            <!--li><a href="../../feed.xml">Subscribe</a></li-->
             <!--li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <b class="caret"></b></a>
               <ul class="dropdown-menu">
@@ -68,41 +72,92 @@
         </div><!--/.nav-collapse -->
       </div>
     </div>
-    <div class="container">
-   
-	<!--#include "header.ftl"-->
-	<!--#include "menu.ftl"-->
-	<div class="grid">
+    <div class="container">	<div class="grid">
 	<div class="col_9" style="border-right: 1px solid #F2F2F2;height:auto;margin:5px;">
 	<div class="page-header">
-		<h1>Tag: Best Practices</h1>
+		<h1>try..catch..finally or try..finally..catch ?</h1>
 	</div>
-	
-	<!--<ul>-->
-			<h4>May 2014</h4>
-			<ul>
-		
-		<li>19 - <a href="/blog/2014/exception-handling-best-practice.html">try..catch..finally or try..finally..catch ?</a></li>
-				</ul>
-				<h4>January 2014</h4>
-				<ul>
-		
-		<li>11 - <a href="/blog/2014/string-concatenation-performance.html">String Concatenation Performance</a></li>
-				</ul>
-				<h4>September 2013</h4>
-				<ul>
-		
-		<li>28 - <a href="/blog/2013/use-factory-method-over-constructor.html">Use static Factory Method over Constructor</a></li>
-	</ul>
+
+	<p><em>19 May 2014</em></p>
+
+	<p><p>If a method handles all of the checked exceptions that may be thrown by its implementation, then an interesting variation is to nest a try..finally within a try..catch. This style is particularly useful when the finally block throws the same exceptions as the rest of the code (which is common with java.io operations.) Although this style may seem slightly complex, it appears to be superior to alternative styles:</p>
+
+<h4>What we usually do</h4>
+<pre class="prettyprint">
+<code>
+public class FileIO {
+    private static BufferedReader bfr = null;
+
+    public static void main(String[] args) {
+	try {
+	    bfr = new BufferedReader(new FileReader("resources/abc.txt"));
+	    String line = null;
+	    try {
+		while ((line = bfr.readLine()) != null) {
+		    System.out.println(line);
+		}
+	    } catch (IOException e) {
+		e.printStackTrace();
+	    }
+	} catch (FileNotFoundException e) {
+	    e.printStackTrace();
+	} finally {
+	    if (bfr != null) {
+		try {
+		    bfr.close();
+		} catch (IOException e) {
+		    e.printStackTrace();
+		}
+	    }
+	}
+    }
+}
+
+</code>
+</pre>
+
+<h4>What we should do</h4>
+<pre class="prettyprint">
+<code>
+public class FileIO2 {
+    private static BufferedReader bfr = null;
+
+    public static void main(String[] args) {
+	try {
+	    // If the constructor throws an exception, the finally block will
+	    // NOT execute
+	    bfr = new BufferedReader(new FileReader("resources/abc.txt"));
+	    String line = null;
+	    try {
+		while ((line = bfr.readLine()) != null) {
+		    System.out.println(line);
+		}
+	    } finally {
+		// no need to check for null
+		// any exceptions thrown here will be caught by
+		// the outer catch block
+		bfr.close();
+	    }
+	} catch (IOException e) {
+	    e.printStackTrace();
+	}
+
+    }
+}
+</code>
+</pre>
+</p>
+
+	<hr />
+	<p id="last"></p>
 	</div>
 	<div class="col_3" style="margin:2.5em 0.833333%;">
 		<h3>Blog Archive</h3>
 	<hr/>
 	
 	<!--<ul>-->
-				</ul>
-				<h4>May 2014</h4>
-				<ul>
+			<h4>May 2014</h4>
+			<ul>
 		
 		<li>20 - <a href="/blog/2014/synchronization-and-lock.html">How Synchronization works</a></li>
 		
@@ -161,27 +216,75 @@
 		<li>14 - <a href="/blog/2013/how-maven-builds-project.html">How MAVEN builds the project</a></li>
 		
 		<li>13 - <a href="/blog/2013/garbage-collection-in-java.html">Garbage Collection in Java</a></li>
-	</ul>
+	
 	</div>
 	</div>
-<!--#include "footer.ftl"-->
+	<div id="slidebox-eop">
+	    <a class="close"></a>
+	    <p>Next</p>
+		    		<h2><a href="/blog/2014/inner-classes-in-java.html">Inner classes in java</a></h2>
+		    		<a class="more" href="/blog/2014/inner-classes-in-java.html">Read More >></a></p>
+	</div>
+	
+
+<br/>
+<div class="col_9">
+	 <div id="disqus_thread"></div>
+	 
+		
+    	<script type="text/javascript">
+    var disqus_shortname = 'jrpwilt'; // Required - Replace example with your forum shortname
+    var disqus_identifier = 'blog/2014/exception-handling-best-practice.html';
+    var disqus_title = "try..catch..finally or try..finally..catch ?";
+    var disqus_url = 'http://wilt.iamjrp.com/blog/2014/exception-handling-best-practice.html';
+
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+
+
+    </div>
+    <div class="col_3">
+    </div>
 		</div>
 		<div id="push"></div>
     </div>
     
-    <div id="footer">
+    <!--div id="footer">
       <div class="container">
         <p class="muted credit">&copy; 2014 | A blog by Jyotiranjan</p>
       </div>
+    </div-->
+    <div class="container">
+    <p class="muted credit">&copy; 2014 | A blog by Jyotiranjan</p>
     </div>
     
     <!-- Le javascript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
-    <script src="js/jquery-1.11.1.min.js"></script>
-    <script src="js/bootstrap.min.js"></script>
-    <script src="js/prettify.js"></script>
-    <script src="js/kickstart.js"></script>
+    <script src="../../js/jquery-1.11.1.min.js"></script>
+    <script src="../../js/bootstrap.min.js"></script>
+    <script src="../../js/prettify.js"></script>
+    <script src="../../js/kickstart.js"></script>
     
   </body>
-</html>
+</html><script type="text/javascript">
+$(function() {
+    $(window).scroll(function(){
+        var distanceTop = $('#last').offset().top - $(window).height();
+ 
+        if  ($(window).scrollTop() > distanceTop)
+            $('#slidebox-eop').animate({'right':'0px'},300);
+        else
+            $('#slidebox-eop').stop(true).animate({'right':'-430px'},100);
+    });
+ 
+    $('#slidebox-eop .close').bind('click',function(){
+        $(this).parent().remove();
+    });
+});
+</script>
