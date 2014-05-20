@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8"/>
-    <title>String to date Conversion in Java</title>
+    <title>Scheduling task using Quartz(Cron)</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="A blog or note on Java development, Best Practices, tips & tricks.">
     <meta name="author" content="Jyoti Ranjan Pattnaik">
@@ -75,49 +75,49 @@
     <div class="container">	<div class="grid">
 	<div class="col_9" style="border-right: 1px solid #F2F2F2;height:auto;margin:5px;">
 	<div class="page-header">
-		<h1>String to date Conversion in Java</h1>
+		<h1>Scheduling task using Quartz(Cron)</h1>
 	</div>
 
-	<p><em>19 February 2014</em></p>
+	<p><em>18 May 2014</em></p>
 
-	<p><b>String to date conversion</b>
+	<p><p>To achieve this, you can follow the working code at <a href="http://www.mkyong.com/java/quartz-2-scheduler-tutorial/">MKYoung</a></p>
+
+<p>Now, check this <a href="http://quartz-scheduler.org/documentation/quartz-2.x/cookbook/DailyTrigger">official link</a> to know different implementation of the same.</p>
+<p><b>For Example</b></p>
 <pre class="prettyprint">
 <code>
-public class StringToDate {
+trigger = newTrigger()
+    .withIdentity("trigger3", "group1")
+    .startNow()
+    .withSchedule(dailyAtHourAndMinute(15, 0)) // fire every day at 15:00
+    .build();
 
-	public static void main(String[] args) {
-		String dateStr1 = "Mon Monday,11 11 Nov November, 11 11, 13 13 2013, 11:32:34 AM IST";
-		SimpleDateFormat date1 = new SimpleDateFormat("E EEEE,MM M MMM MMMM, d dd, y yy yyyy, h:m:s a z" , Locale.ENGLISH);
-		try {
-			Date formattedDate1 = date1.parse(dateStr1);
-			System.out.println(dateStr1+"---->"+formattedDate1);
-		} catch (ParseException e) {
-			e.printStackTrace();
-		}
-
-	}
-
-}
-/*SimpleDateFormat can be used to control the date/time display format:
-E (day of week): 3E or fewer (in text xxx), >3E (in full text)
-M (month): M (in number), MM (in number with leading zero)
-3M: (in text xxx), >3M: (in full text full)
-d or dd for date of month
-y or yy for 2 digit year, yyyy for 4 digit year
-h (hour): h, hh (with leading zero)
-m (minute)
-s (second)
-a (AM/PM)
-H (hour in 0 to 23)
-z (time zone)*/
 </code>
 </pre>
-<b>Output</b>
-<pre class="prettyprint">
-<code>
-Mon Monday,11 11 Nov November, 11 11, 13 13 2013, 11:32:34 AM IST---->Mon Nov 11 11:32:34 IST 2013
-</code>
-</pre>
+
+<p>I prefer Cron Job expression to schedule for a particular time to inbuilt funtions.</p>
+<p>The below is the rule and some examples</p>
+<h3>Cron Job Expression</h3>
+<ol>
+	<li>Seconds</li>
+	<li>Minutes</li>
+	<li>Hours</li>
+	<li>Day-of-month</li>
+	<li>Month</li>
+	<li>Day-of-week</li>
+	<li>Year (Optional)</li>
+</ol>
+<b>Examples</b>
+<ol>
+<li>An expression to create a trigger that simply fires every 5 minutes - "0 0/5 * * * ?"</li>
+<li>An expression to create a trigger that fires every 5 minutes, at 10 seconds after the minute (i.e. 10:00:10 am, 10:05:10 am, etc.) - "10 0/5 * * * ?"</li>
+<li>An expression to create a trigger that fires at 10:30, 11:30, 12:30, and 13:30, on every Wednesday and Friday - "0 30 10-13 ? * WED,FRI"</li>
+<li>An expression to create a trigger that fires every half hour between the hours of 8 am and 10 am on the 5th and 20th of every month. Note that the trigger will NOT fire at 10:00 am, just at 8:00, 8:30, 9:00 and 9:30 - "0 0/30 8-9 5,20 * ?"</li>
+<li>An expression to create a trigger that fires in every 1 hr between 3pm - 9 pm - "0 5 15-21 * * ?"</li>
+<li>Build a trigger that will fire every other minute, between 8am and 5pm, every day - "0 0/2 8,17 * * ?"</li>
+<li>Build a trigger that will fire daily at 10:42 am - "0 42 10 * * ?"</li>
+<li>Build a trigger that will fire on Wednesdays at 10:42 am, in a TimeZone other than the system's default - "0 42 10 ? * wed"</li>
+</ol>
 </p>
 
 	<hr />
@@ -196,8 +196,8 @@ Mon Monday,11 11 Nov November, 11 11, 13 13 2013, 11:32:34 AM IST---->Mon Nov 11
 	<div id="slidebox-eop">
 	    <a class="close"></a>
 	    <p>Next</p>
-		    		<h2><a href="/blog/2014/Java-overview.html">Java Overview</a></h2>
-		    		<a class="more" href="/blog/2014/Java-overview.html">Read More >></a></p>
+		    		<h2><a href="/blog/2014/inner-classes-in-java.html">Inner classes in java</a></h2>
+		    		<a class="more" href="/blog/2014/inner-classes-in-java.html">Read More >></a></p>
 	</div>
 	
 
@@ -208,9 +208,9 @@ Mon Monday,11 11 Nov November, 11 11, 13 13 2013, 11:32:34 AM IST---->Mon Nov 11
 		
     	<script type="text/javascript">
     var disqus_shortname = 'jrpwilt'; // Required - Replace example with your forum shortname
-    var disqus_identifier = 'blog/2014/string-to-date.html';
-    var disqus_title = "String to date Conversion in Java";
-    var disqus_url = 'http://wilt.iamjrp.com/blog/2014/string-to-date.html';
+    var disqus_identifier = 'blog/2014/scheduling-task-using-cron.html';
+    var disqus_title = "Scheduling task using Quartz(Cron)";
+    var disqus_url = 'http://wilt.iamjrp.com/blog/2014/scheduling-task-using-cron.html';
 
     /* * * DON'T EDIT BELOW THIS LINE * * */
     (function() {

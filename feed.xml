@@ -6,8 +6,8 @@
     <atom:link href="http://wilt.iamjrp.com//feed.xml" rel="self" type="application/rss+xml" />
     <description>JBake Bootstrap Template</description>
     <language>en-gb</language>
-    <pubDate>Wed, 21 May 2014 00:11:42 +0530</pubDate>
-    <lastBuildDate>Wed, 21 May 2014 00:11:42 +0530</lastBuildDate>
+    <pubDate>Wed, 21 May 2014 00:36:23 +0530</pubDate>
+    <lastBuildDate>Wed, 21 May 2014 00:36:23 +0530</lastBuildDate>
 
     <item>
       <title>How Synchronization works</title>
@@ -247,6 +247,53 @@ public class FileIO2 {
 }
 &lt;/code&gt;
 &lt;/pre&gt;
+
+	</description>
+    </item>
+    <item>
+      <title>Scheduling task using Quartz(Cron)</title>
+      <link>http://wilt.iamjrp.com//blog/2014/scheduling-task-using-cron.html</link>
+      <pubDate>Sun, 18 May 2014 00:00:00 +0530</pubDate>
+      <guid isPermaLink="false">blog/2014/scheduling-task-using-cron.html</guid>
+      	<description>
+	&lt;p&gt;To achieve this, you can follow the working code at &lt;a href=&quot;http://www.mkyong.com/java/quartz-2-scheduler-tutorial/&quot;&gt;MKYoung&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;Now, check this &lt;a href=&quot;http://quartz-scheduler.org/documentation/quartz-2.x/cookbook/DailyTrigger&quot;&gt;official link&lt;/a&gt; to know different implementation of the same.&lt;/p&gt;
+&lt;p&gt;&lt;b&gt;For Example&lt;/b&gt;&lt;/p&gt;
+&lt;pre class=&quot;prettyprint&quot;&gt;
+&lt;code&gt;
+trigger = newTrigger()
+    .withIdentity(&quot;trigger3&quot;, &quot;group1&quot;)
+    .startNow()
+    .withSchedule(dailyAtHourAndMinute(15, 0)) // fire every day at 15:00
+    .build();
+
+&lt;/code&gt;
+&lt;/pre&gt;
+
+&lt;p&gt;I prefer Cron Job expression to schedule for a particular time to inbuilt funtions.&lt;/p&gt;
+&lt;p&gt;The below is the rule and some examples&lt;/p&gt;
+&lt;h3&gt;Cron Job Expression&lt;/h3&gt;
+&lt;ol&gt;
+	&lt;li&gt;Seconds&lt;/li&gt;
+	&lt;li&gt;Minutes&lt;/li&gt;
+	&lt;li&gt;Hours&lt;/li&gt;
+	&lt;li&gt;Day-of-month&lt;/li&gt;
+	&lt;li&gt;Month&lt;/li&gt;
+	&lt;li&gt;Day-of-week&lt;/li&gt;
+	&lt;li&gt;Year (Optional)&lt;/li&gt;
+&lt;/ol&gt;
+&lt;b&gt;Examples&lt;/b&gt;
+&lt;ol&gt;
+&lt;li&gt;An expression to create a trigger that simply fires every 5 minutes - &quot;0 0/5 * * * ?&quot;&lt;/li&gt;
+&lt;li&gt;An expression to create a trigger that fires every 5 minutes, at 10 seconds after the minute (i.e. 10:00:10 am, 10:05:10 am, etc.) - &quot;10 0/5 * * * ?&quot;&lt;/li&gt;
+&lt;li&gt;An expression to create a trigger that fires at 10:30, 11:30, 12:30, and 13:30, on every Wednesday and Friday - &quot;0 30 10-13 ? * WED,FRI&quot;&lt;/li&gt;
+&lt;li&gt;An expression to create a trigger that fires every half hour between the hours of 8 am and 10 am on the 5th and 20th of every month. Note that the trigger will NOT fire at 10:00 am, just at 8:00, 8:30, 9:00 and 9:30 - &quot;0 0/30 8-9 5,20 * ?&quot;&lt;/li&gt;
+&lt;li&gt;An expression to create a trigger that fires in every 1 hr between 3pm - 9 pm - &quot;0 5 15-21 * * ?&quot;&lt;/li&gt;
+&lt;li&gt;Build a trigger that will fire every other minute, between 8am and 5pm, every day - &quot;0 0/2 8,17 * * ?&quot;&lt;/li&gt;
+&lt;li&gt;Build a trigger that will fire daily at 10:42 am - &quot;0 42 10 * * ?&quot;&lt;/li&gt;
+&lt;li&gt;Build a trigger that will fire on Wednesdays at 10:42 am, in a TimeZone other than the system&apos;s default - &quot;0 42 10 ? * wed&quot;&lt;/li&gt;
+&lt;/ol&gt;
 
 	</description>
     </item>
