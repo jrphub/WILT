@@ -6,9 +6,175 @@
     <atom:link href="http://wilt.iamjrp.com//feed.xml" rel="self" type="application/rss+xml" />
     <description>JBake Bootstrap Template</description>
     <language>en-gb</language>
-    <pubDate>Tue, 20 May 2014 22:30:54 +0530</pubDate>
-    <lastBuildDate>Tue, 20 May 2014 22:30:54 +0530</lastBuildDate>
+    <pubDate>Tue, 20 May 2014 23:06:08 +0530</pubDate>
+    <lastBuildDate>Tue, 20 May 2014 23:06:08 +0530</lastBuildDate>
 
+    <item>
+      <title>How Synchronization works</title>
+      <link>http://wilt.iamjrp.com//blog/2014/synchronization-and-lock.html</link>
+      <pubDate>Tue, 20 May 2014 00:00:00 +0530</pubDate>
+      <guid isPermaLink="false">blog/2014/synchronization-and-lock.html</guid>
+      	<description>
+	&lt;p&gt;
+	From &lt;a href=&quot;http://docs.oracle.com/javase/tutorial/index.html&quot;&gt;Java
+		Official Tutorial&lt;/a&gt;, It is worth mentioning about this lesson.
+&lt;/p&gt;
+&lt;h3&gt;Intrinsic Locks and Synchronization&lt;/h3&gt;
+&lt;p&gt;Synchronization is built around an internal entity known as the
+	intrinsic lock or monitor lock. (The API specification often refers to
+	this entity simply as a &quot;monitor.&quot;) Intrinsic locks play a role in both
+	aspects of synchronization: enforcing exclusive access to an object&apos;s
+	state and establishing &lt;b&gt;happens-before&lt;/b&gt; relationships that are essential
+	to visibility.&lt;/p&gt;
+&lt;p&gt;Every object has an intrinsic lock associated with it. By
+	convention, a thread that needs exclusive and consistent access to an
+	object&apos;s fields has to acquire the object&apos;s intrinsic lock before
+	accessing them, and then release the intrinsic lock when it&apos;s done with
+	them. A thread is said to own the intrinsic lock between the time it
+	has acquired the lock and released the lock. As long as a thread owns
+	an intrinsic lock, no other thread can acquire the same lock. The other
+	thread will block when it attempts to acquire the lock.&lt;/p&gt;
+
+&lt;p&gt;When a thread releases an intrinsic lock, a happens-before
+	relationship is established between that action and any subsequent
+	acquistion of the same lock.&lt;/p&gt;
+
+&lt;h3&gt;Locks In Synchronized Methods&lt;/h3&gt;
+&lt;p&gt;When a thread invokes a synchronized method, it automatically
+	acquires the intrinsic lock for that method&apos;s object and releases it
+	when the method returns. The lock release occurs even if the return was
+	caused by an uncaught exception.&lt;/p&gt;
+
+&lt;p&gt;&lt;b&gt;You might wonder what happens when a static synchronized method
+	is invoked, since a static method is associated with a class, not an
+	object. In this case, the thread acquires the intrinsic lock for the
+	Class object associated with the class. Thus access to class&apos;s static
+	fields is controlled by a lock that&apos;s distinct from the lock for any
+	instance of the class.&lt;/b&gt;&lt;/p&gt;
+
+&lt;h3&gt;Synchronized Statements&lt;/h3&gt;
+&lt;p&gt;Another way to create synchronized code is with synchronized
+	statements. Unlike synchronized methods, synchronized statements must
+	specify the object that provides the intrinsic lock:&lt;/p&gt;
+&lt;pre class=&quot;prettyprint&quot;&gt;
+	&lt;code&gt;
+public void addName(String name) {
+	
+   synchronized(this) {
+       lastName = name;
+
+       nameCount++;
+   }
+
+   nameList.add(name);
+}
+	&lt;/code&gt;
+&lt;/pre&gt;
+
+&lt;p&gt;
+	In this example, the addName method needs to synchronize changes to
+	lastName and nameCount, but also needs to avoid synchronizing
+	invocations of other objects&apos; methods. (Invoking other objects&apos; methods
+	from synchronized code can create problems that are described in the
+	section on &lt;a
+		href=&quot;http://docs.oracle.com/javase/tutorial/essential/concurrency/liveness.html&quot;&gt;Liveness&lt;/a&gt;.)
+	Without synchronized statements, there would have to be a separate,
+	unsynchronized method for the sole purpose of invoking &lt;i&gt;nameList.add&lt;/i&gt;.
+&lt;/p&gt;
+
+&lt;p&gt;Synchronized statements are also useful for improving concurrency
+	with fine-grained synchronization. Suppose, for example, class MsLunch
+	has two instance fields, c1 and c2, that are never used together. All
+	updates of these fields must be synchronized, but there&apos;s no reason to
+	prevent an update of c1 from being interleaved with an update of c2 
+	and doing so reduces concurrency by creating unnecessary blocking.
+	Instead of using synchronized methods or otherwise using the lock
+	associated with this, we create two objects solely to provide locks.&lt;/p&gt;
+
+&lt;pre class=&quot;prettyprint&quot;&gt;
+	&lt;code&gt;
+public class MsLunch {
+   private long c1 = 0;
+   private long c2 = 0;
+   private Object lock1 = new Object();
+   private Object lock2 = new Object();
+
+ 
+   public void inc1() {
+       synchronized(lock1) {
+           c1++;
+       }
+   }
+
+   public void inc2() {
+       synchronized(lock2) {
+           c2++;
+       }
+   }
+}
+	&lt;/code&gt;
+	&lt;/pre&gt;
+
+&lt;p&gt;Use this idiom with extreme care. You must be absolutely sure
+	that it really is safe to interleave access of the affected fields.&lt;/p&gt;
+
+&lt;h3&gt;Reentrant Synchronization&lt;/h3&gt;
+&lt;p&gt;Recall that a thread cannot acquire a lock owned by another
+	thread. But a thread can acquire a lock that it already owns. Allowing
+	a thread to acquire the same lock more than once enables reentrant
+	synchronization. This describes a situation where synchronized code,
+	directly or indirectly, invokes a method that also contains
+	synchronized code, and both sets of code use the same lock. Without
+	reentrant synchronization, synchronized code would have to take many
+	additional precautions to avoid having a thread cause itself to block.&lt;/p&gt;
+	
+&lt;pre class=&quot;prettyprint&quot;&gt;
+	&lt;code&gt;
+class MyReentrant {
+	public synchronized void m() {
+	n();
+	System.out.println(&quot;This is m()&quot;);
+	}
+	
+	public Synchronized void n() {
+		System.out.println(&quot;This is n()&quot;)
+	}
+}
+
+class Client {
+	public Static void main (String[] args) {
+		MyReentrant re = new MyReentrant();
+		
+		Thread t1 = new Thread () {
+			public void run() {
+				re.m();
+			}
+		};
+		
+		t1.start();
+	}
+}
+
+	&lt;/code&gt;
+	&lt;/pre&gt;	
+
+	&lt;h3&gt;Why to use Synchronization&lt;/h3&gt;
+	&lt;ul&gt;
+		&lt;li&gt;To overcome Thread Interference&lt;/li&gt;
+		&lt;li&gt;To overcome Memory Consistency problem&lt;/li&gt;
+	&lt;/ul&gt;
+	&lt;p&gt;&quot;happens-before&quot; relationship can be achieved by 3 ways&lt;/p&gt;
+	&lt;ul&gt;
+		&lt;li&gt;Join()&lt;/li&gt;
+		&lt;li&gt;Synchronization&lt;/li&gt;
+		&lt;li&gt;Making the variable volatile&lt;/li&gt;
+	
+	
+	&lt;/ul&gt;
+	&lt;p&gt; It is a relation on memory operations such as reads/writes of shared resources.&lt;/p&gt;
+
+	</description>
+    </item>
     <item>
       <title>Inner classes in java</title>
       <link>http://wilt.iamjrp.com//blog/2014/inner-classes-in-java.html</link>

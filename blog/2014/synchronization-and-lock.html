@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8"/>
-    <title>A simple example of Comparable in Java</title>
+    <title>How Synchronization works</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="A blog or note on Java development, Best Practices, tips & tricks.">
     <meta name="author" content="Jyoti Ranjan Pattnaik">
@@ -75,126 +75,168 @@
     <div class="container">	<div class="grid">
 	<div class="col_9" style="border-right: 1px solid #F2F2F2;height:auto;margin:5px;">
 	<div class="page-header">
-		<h1>A simple example of Comparable in Java</h1>
+		<h1>How Synchronization works</h1>
 	</div>
 
-	<p><em>05 February 2014</em></p>
+	<p><em>20 May 2014</em></p>
 
-	<p><p><b>HDTV.java</b></p>
+	<p><p>
+	From <a href="http://docs.oracle.com/javase/tutorial/index.html">Java
+		Official Tutorial</a>, It is worth mentioning about this lesson.
+</p>
+<h3>Intrinsic Locks and Synchronization</h3>
+<p>Synchronization is built around an internal entity known as the
+	intrinsic lock or monitor lock. (The API specification often refers to
+	this entity simply as a "monitor.") Intrinsic locks play a role in both
+	aspects of synchronization: enforcing exclusive access to an object's
+	state and establishing <b>happens-before</b> relationships that are essential
+	to visibility.</p>
+<p>Every object has an intrinsic lock associated with it. By
+	convention, a thread that needs exclusive and consistent access to an
+	object's fields has to acquire the object's intrinsic lock before
+	accessing them, and then release the intrinsic lock when it's done with
+	them. A thread is said to own the intrinsic lock between the time it
+	has acquired the lock and released the lock. As long as a thread owns
+	an intrinsic lock, no other thread can acquire the same lock. The other
+	thread will block when it attempts to acquire the lock.</p>
+
+<p>When a thread releases an intrinsic lock, a happens-before
+	relationship is established between that action and any subsequent
+	acquistion of the same lock.</p>
+
+<h3>Locks In Synchronized Methods</h3>
+<p>When a thread invokes a synchronized method, it automatically
+	acquires the intrinsic lock for that method's object and releases it
+	when the method returns. The lock release occurs even if the return was
+	caused by an uncaught exception.</p>
+
+<p><b>You might wonder what happens when a static synchronized method
+	is invoked, since a static method is associated with a class, not an
+	object. In this case, the thread acquires the intrinsic lock for the
+	Class object associated with the class. Thus access to class's static
+	fields is controlled by a lock that's distinct from the lock for any
+	instance of the class.</b></p>
+
+<h3>Synchronized Statements</h3>
+<p>Another way to create synchronized code is with synchronized
+	statements. Unlike synchronized methods, synchronized statements must
+	specify the object that provides the intrinsic lock:</p>
 <pre class="prettyprint">
-<code>
-package com.java.comparable;
+	<code>
+public void addName(String name) {
+	
+   synchronized(this) {
+       lastName = name;
 
-public class HDTV implements Comparable<HDTV> {
+       nameCount++;
+   }
 
-	private String name;
-	private int size;
-
-	// Constructor
-	public HDTV(String name, int size) {
-		this.name = name;
-		this.size = size;
-	}
-
-	// getter/setter
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public int getSize() {
-		return size;
-	}
-
-	public void setSize(int size) {
-		this.size = size;
-	}
-
-	// Now when we compare two HDTV objects, both should be compared wrt. their
-	// size
-	@Override
-	public int compareTo(HDTV tv) {
-
-		return this.size - tv.size;
-
-		// Alternative way
-		/*
-		 * if (this.size > tv.size) { return 1; } else if (this.size < tv.size)
-		 * { return -1; } else { return 0; }
-		 */
-	}
-
+   nameList.add(name);
 }
-</code>
+	</code>
 </pre>
 
-<p><b>TestComparable.java</b></p>
+<p>
+	In this example, the addName method needs to synchronize changes to
+	lastName and nameCount, but also needs to avoid synchronizing
+	invocations of other objects' methods. (Invoking other objects' methods
+	from synchronized code can create problems that are described in the
+	section on <a
+		href="http://docs.oracle.com/javase/tutorial/essential/concurrency/liveness.html">Liveness</a>.)
+	Without synchronized statements, there would have to be a separate,
+	unsynchronized method for the sole purpose of invoking <i>nameList.add</i>.
+</p>
+
+<p>Synchronized statements are also useful for improving concurrency
+	with fine-grained synchronization. Suppose, for example, class MsLunch
+	has two instance fields, c1 and c2, that are never used together. All
+	updates of these fields must be synchronized, but there's no reason to
+	prevent an update of c1 from being interleaved with an update of c2 
+	and doing so reduces concurrency by creating unnecessary blocking.
+	Instead of using synchronized methods or otherwise using the lock
+	associated with this, we create two objects solely to provide locks.</p>
+
 <pre class="prettyprint">
-<code>
-package com.java.comparable;
+	<code>
+public class MsLunch {
+   private long c1 = 0;
+   private long c2 = 0;
+   private Object lock1 = new Object();
+   private Object lock2 = new Object();
 
-/*
- * Comparable is implemented by a class in order to be able to comparing object of itself with some other objects. 
- * The class itself must implement the interface in order to be able to compare its instance(s). 
- * The method required for implementation is compareTo().
- */
-public class TestComparable {
+ 
+   public void inc1() {
+       synchronized(lock1) {
+           c1++;
+       }
+   }
 
-	public static void main(String[] args) {
-		HDTV tv1 = new HDTV("Sony", 55);
-		HDTV tv2 = new HDTV("Samsung", 45);
-		if (tv1.compareTo(tv2) > 0) {
-			System.out.println("Sony is better");
-		} else if (tv1.compareTo(tv2) < 0) {
-			System.out.println("Samsung is better");
-		} else {
-			System.out.println("Both Sony and Samsung are equal");
-		}
+   public void inc2() {
+       synchronized(lock2) {
+           c2++;
+       }
+   }
+}
+	</code>
+	</pre>
+
+<p>Use this idiom with extreme care. You must be absolutely sure
+	that it really is safe to interleave access of the affected fields.</p>
+
+<h3>Reentrant Synchronization</h3>
+<p>Recall that a thread cannot acquire a lock owned by another
+	thread. But a thread can acquire a lock that it already owns. Allowing
+	a thread to acquire the same lock more than once enables reentrant
+	synchronization. This describes a situation where synchronized code,
+	directly or indirectly, invokes a method that also contains
+	synchronized code, and both sets of code use the same lock. Without
+	reentrant synchronization, synchronized code would have to take many
+	additional precautions to avoid having a thread cause itself to block.</p>
+	
+<pre class="prettyprint">
+	<code>
+class MyReentrant {
+	public synchronized void m() {
+	n();
+	System.out.println("This is m()");
+	}
+	
+	public Synchronized void n() {
+		System.out.println("This is n()")
 	}
 }
 
-//Output:
-//Sony is better
-</code>
-</pre>
-
-<p>Now Let's do one more task. How comparable behaves in Treeset</p>
-<pre class="prettyprint">
-<code>
-package com.java.comparable;
-
-import java.util.Iterator;
-import java.util.TreeSet;
-
-public class ComparableTreeSet {
-
-	static HDTV hdtvObj= null;
-	public static void main(String[] args) {
-		TreeSet<HDTV> tvTree = new TreeSet<>();
-		tvTree.add(new HDTV("Samsung", 15));
-		tvTree.add(new HDTV("Sony", 20));
-		tvTree.add(new HDTV("Onida", 15));
-		tvTree.add(new HDTV("Samsung", 15));
+class Client {
+	public Static void main (String[] args) {
+		MyReentrant re = new MyReentrant();
 		
-		Iterator<HDTV> iter = tvTree.iterator();
+		Thread t1 = new Thread () {
+			public void run() {
+				re.m();
+			}
+		};
 		
-		while (iter.hasNext()) {
-			hdtvObj =  iter.next();
-			System.out.println(hdtvObj.getName()+"("+hdtvObj.getSize()+")");
-			
-		}
+		t1.start();
 	}
-
 }
 
-//Output : 
-//Samsung(15)
-//Sony(20)
-</code>
-</pre>
+	</code>
+	</pre>	
+
+	<h3>Why to use Synchronization</h3>
+	<ul>
+		<li>To overcome Thread Interference</li>
+		<li>To overcome Memory Consistency problem</li>
+	</ul>
+	<p>"happens-before" relationship can be achieved by 3 ways</p>
+	<ul>
+		<li>Join()</li>
+		<li>Synchronization</li>
+		<li>Making the variable volatile</li>
+	
+	
+	</ul>
+	<p> It is a relation on memory operations such as reads/writes of shared resources.</p>
 </p>
 
 	<hr />
@@ -269,8 +311,8 @@ public class ComparableTreeSet {
 	<div id="slidebox-eop">
 	    <a class="close"></a>
 	    <p>Next</p>
-		    		<h2><a href="/blog/2014/tree-set-example.html">TreeSet - basic operations</a></h2>
-		    		<a class="more" href="/blog/2014/tree-set-example.html">Read More >></a></p>
+		    		<h2><a href="/blog/2014/inner-classes-in-java.html">Inner classes in java</a></h2>
+		    		<a class="more" href="/blog/2014/inner-classes-in-java.html">Read More >></a></p>
 	</div>
 	
 
@@ -281,9 +323,9 @@ public class ComparableTreeSet {
 		
     	<script type="text/javascript">
     var disqus_shortname = 'jrpwilt'; // Required - Replace example with your forum shortname
-    var disqus_identifier = 'blog/2014/Comparable-in-Java.html';
-    var disqus_title = "A simple example of Comparable in Java";
-    var disqus_url = 'http://wilt.iamjrp.com/blog/2014/Comparable-in-Java.html';
+    var disqus_identifier = 'blog/2014/synchronization-and-lock.html';
+    var disqus_title = "How Synchronization works";
+    var disqus_url = 'http://wilt.iamjrp.com/blog/2014/synchronization-and-lock.html';
 
     /* * * DON'T EDIT BELOW THIS LINE * * */
     (function() {
