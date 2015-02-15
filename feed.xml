@@ -6,8 +6,8 @@
     <atom:link href="http://wilt.iamjrp.com//feed.xml" rel="self" type="application/rss+xml" />
     <description>JBake Bootstrap Template</description>
     <language>en-gb</language>
-    <pubDate>Sun, 15 Feb 2015 23:27:44 +0530</pubDate>
-    <lastBuildDate>Sun, 15 Feb 2015 23:27:44 +0530</lastBuildDate>
+    <pubDate>Sun, 15 Feb 2015 23:46:12 +0530</pubDate>
+    <lastBuildDate>Sun, 15 Feb 2015 23:46:12 +0530</lastBuildDate>
 
     <item>
       <title>How Synchronization works</title>
@@ -21,7 +21,7 @@
 &lt;/p&gt;
 &lt;h3&gt;Intrinsic Locks and Synchronization&lt;/h3&gt;
 &lt;p&gt;Synchronization is built around an internal entity known as the
-	intrinsic lock or monitor lock. (The API specification often refers to
+	&lt;b&gt;intrinsic lock or monitor lock &lt;/b&gt;. (The API specification often refers to
 	this entity simply as a &quot;monitor.&quot;) Intrinsic locks play a role in both
 	aspects of synchronization: enforcing exclusive access to an object&apos;s
 	state and establishing &lt;b&gt;happens-before&lt;/b&gt; relationships that are essential
