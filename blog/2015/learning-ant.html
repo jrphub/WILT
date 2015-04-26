@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    <title>A day with Ant</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="A blog or note on Java development, Best Practices, tips & tricks.">
+    <meta name="author" content="Jyoti Ranjan Pattnaik">
+    <meta name="keywords" content="java, concepts, tips and tricks, best practices, simple explanation, notes">
+    <meta name="generator" content="JBake">
+
+    <!-- Le styles -->
+    <link href="../../css/bootstrap.min.css" rel="stylesheet">
+    <link href="../../css/asciidoctor.css" rel="stylesheet">
+    <link href="../../css/base.css" rel="stylesheet">
+    <link href="../../css/prettify.css" rel="stylesheet">
+    <link href="../../css/kickstart-grid.css" rel="stylesheet">
+    <link href="../../css/jquery.fancybox-1.3.4.css" rel="stylesheet">
+    <link href="../../css/kickstart-slideshow.css" rel="stylesheet">
+    <link href="../../css/kickstart.css" rel="stylesheet">
+    <link href="../../css/font-awesome.min.css" rel="stylesheet">
+    <link href="../../css/font-awesome-ie7.min.css" rel="stylesheet">
+    
+
+    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="../../js/html5shiv.min.js"></script>
+    <![endif]-->
+
+    <!-- Fav and touch icons -->
+    <!--<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../assets/ico/apple-touch-icon-144-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="../assets/ico/apple-touch-icon-114-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="../assets/ico/apple-touch-icon-72-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" href="../assets/ico/apple-touch-icon-57-precomposed.png">-->
+    <link rel="shortcut icon" href="../../favicon.ico">
+  </head>
+  <body onload="prettyPrint()">
+    <div id="wrap">
+	
+	<!-- Fixed navbar -->
+    <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="../../index.html">WILT - What I Learnt Today</a>
+        </div>
+        <div class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+            <li><a href="../../index.html">Home</a></li>
+            <li><a href="http://www.iamjrp.com/" target="_blank">About Me</a></li>
+            <li><a href="/archive.html">Index</a></li>
+            <li><a href="../../tags/tags.html">Tags</a></li>
+            
+            <!--li><a href="../../about.html">About</a></li-->
+            <!--li><a href="../../feed.xml">Subscribe</a></li-->
+            <!--li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <b class="caret"></b></a>
+              <ul class="dropdown-menu">
+                <li><a href="#">Action</a></li>
+                <li><a href="#">Another action</a></li>
+                <li><a href="#">Something else here</a></li>
+                <li class="divider"></li>
+                <li class="dropdown-header">Nav header</li>
+                <li><a href="#">Separated link</a></li>
+                <li><a href="#">One more separated link</a></li>
+              </ul>
+            </li-->
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div>
+    </div>
+    <div class="container">	<div class="grid">
+	<div class="col_9" style="border-right: 1px solid #F2F2F2;height:auto;margin:5px;">
+	<div class="page-header">
+		<h1>A day with Ant</h1>
+	</div>
+
+	<p><em>27 April 2015</em></p>
+	<p><p>ANT stands for Another Neat Tool</p>
+
+<p>Steps people follow while deploying the  application</p>
+<ol>
+	<li>Compiling the code</li>
+	<li>Packaging the binaries</li>
+	<li>Deploying the binaries to the test server</li>
+	<li>Testing the changes</li>
+	<li>Copying the code from one location to another</li>
+</ol>
+<p>Installing ANT-</p>
+<ol>
+	<li>download binary file</li>
+	<li>extract to a path</li>
+	<li>Set ANT_HOME to the extracted folder</li>
+	<li>Add ANT_HOME/bin to PATH</li>
+</ol>
+<p>To verify :> ant -version</p>
+
+<p>A target is a collection of tasks that you want to run as one unit</p>
+
+<p>Targets can have dependencies on other targets. For example, a deploy target may have a dependency on the package target, the package target may have a dependency on the compile target and so forth. Dependencies are denoted using the depends attribute</p>p>
+<p>The following data types are provided by Apache Ant.</p>
+<ol>
+	<li>Fileset</li>
+		<p>The fileset data types represents a collection of files. It is used as a filter to include or exclude files that match a particular pattern.</p>
+		<p>The case-sensitive filter is applied to the fileset</p>
+<pre class="prettyprint">
+<code>
+		<fileset dir="${src}" casesensitive="yes">
+		   <include name="**/*.java"/>
+		   <exclude name="**/*Stub*"/>
+		</fileset>
+</code>
+</pre>
+
+		<p> ? - Matches one character only.</p>
+		<p> * - Matches zero or many characters. </p>
+		<p> ** - Matches zero or many directories recursively.</p>
+
+	<li>Fileset</li>
+		<p>The patternset can then be reused with a fileset as follows:</p>
+<pre class="prettyprint">
+<code>	
+		<fileset dir="${src}" casesensitive="yes">
+		   <patternset refid="java.files.without.stubs"/>
+		</fileset>
+</code>
+</pre>
+		<p>The filelist data type is similar to the file set except the following differences:</p>
+			<p>1. filelist contains explicitly named lists of files and it does not support wild cards </p>
+			<p>2. filelist data type can be applied for existing or non-existing files.</p>
+<pre class="prettyprint">
+<code>
+		<filelist id="config.files" dir="${webapp.src.folder}">
+		   <file name="applicationConfig.xml"/>
+		   <file name="faces-config.xml"/>
+		   <file name="web.xml"/>
+		   <file name="portlet.xml"/>
+		</filelist>
+</code>
+</pre>
+	<li>Filter set</li>
+		<p>Using a filterset data type along with the copy task, you can replace certain text in all files that matches the pattern with a replacement value.</p>
+<pre class="prettyprint">
+<code>
+		<copy todir="${output.dir}">
+		   <fileset dir="${releasenotes.dir}" includes="**/*.txt"/>
+		   <filterset>
+		      <filter token="VERSION" value="${current.version}"/>
+		   </filterset>
+		</copy>
+</code>
+</pre>
+	<li>Path</li>
+		<p>The path data type is commonly used to represent a class-path. Entries in the path are separated using semicolons or colons. However, these characters are replaced at the run-time by the executing system's path separator character.</p>
+<pre class="prettyprint">
+<code>
+		<path id="build.classpath.jar">
+		   <pathelement path="${env.J2EE_HOME}/${j2ee.jar}"/>
+		   <fileset dir="lib">
+		      <include name="**/*.jar"/>
+		   </fileset>
+		</path>
+</code>
+</pre>		
+</ol>
+		<p>The deploy target copies the files from the web directory to the deploy directory preserving the last modified date time stamp. This is useful when deploying to a server that supports hot deployment.</p>
+
+		<p>The deploywar target builds the war file and then copies the war file to the deploy directory of the application server.</p>
+
+		<p>Applications in Tomcat can be stopped and started using the Tomcat manager application. The URL for the manager application, username and password are also specified in the build.properties file. Next, we declare a new CLASSPATH that contains the catalina-ant.jar. This jar file is required to execute Tomcat tasks through Apache Ant.</p>
+
+		<p>The catalina-ant.jar provides the following tasks:</p>
+<table>
+  <tr>
+    <th>Properties</th>
+    <th>Description</th>
+  </tr>
+  <tr>
+    <td>InstallTask</td>
+    <td>Installs a web application. Class Name: org.apache.catalina.ant.InstallTask</td>
+  </tr>
+  <tr>
+    <td>ReloadTask</td>
+    <td>Reload a web application. Class Name: org.apache.catalina.ant.ReloadTask</td>
+  </tr>
+  <tr>
+    <td>ListTask</td>
+    <td>Lists all web applications. Class Name: org.apache.catalina.ant.ListTask</td>
+  </tr>
+  <tr>
+    <td>StartTask</td>
+    <td>Starts a web application. Class Name: org.apache.catalina.ant.StartTask</td>
+  </tr>
+  <tr>
+    <td>StopTask</td>
+    <td>Stops a web application. Class Name: org.apache.catalina.ant.StopTask</td>
+  </tr>
+  <tr>
+    <td>ReloadTask</td>
+    <td>Row 1: Col 2Reloads a web application without stopping. Class Name: org.apache.catalina.ant.ReloadTask</td>
+  </tr>
+</table>
+	
+	<p>The reload task requires the following additional parameters:</p>
+		<p>1. URL to the manager application</p>
+		<p>2. Username to restart the web application</p>
+		<p>3. Password to restart the web application</p>
+		<p>4. Name of the web application to be restarted</p>
+
+</p>
+
+	<hr />
+	<div class="col_12" style="text-align:center;">
+	<a href="http://www.facebook.com/sharer.php?u=http://wilt.iamjrp.com/blog/2015/learning-ant.html&amp;t=A day with Ant"  style="color:#3B5998;" title="Share this page!" target="_blank"><i class="icon-facebook icon-3x icon-border"></i></a>
+	<a href="http://plus.google.com/share?url=http://wilt.iamjrp.com/blog/2015/learning-ant.html" title="Share this page!" style="color:#CA4242;" target="_blank"><i class="icon-google-plus icon-3x icon-border"></i></a>
+	<a href="https://twitter.com/share?url=http://wilt.iamjrp.com/blog/2015/learning-ant.html"  title="Tweet this page!" style="color:#55ACEE;" target="_blank"><i class="icon-twitter icon-3x icon-border"></i></a>
+	</div>
+	<hr/>
+	<p id="last"></p>
+	</div>
+	<div class="col_3" style="margin:2.5em 0.833333%;">
+		<h3>Blog Archive</h3>
+	<hr/>
+	
+	<!--<ul>-->
+			<h4>April 2015</h4>
+			<ul>
+		
+		<li>27 - <a href="/blog/2015/learning-ant.html">A day with Ant</a></li>
+				</ul>
+				<h4>May 2014</h4>
+				<ul>
+		
+		<li>20 - <a href="/blog/2014/synchronization-and-lock.html">How Synchronization works</a></li>
+		
+		<li>19 - <a href="/blog/2014/exception-handling-best-practice.html">try..catch..finally or try..finally..catch ?</a></li>
+		
+		<li>18 - <a href="/blog/2014/scheduling-task-using-cron.html">Scheduling task using Quartz(Cron)</a></li>
+				</ul>
+				<h4>March 2014</h4>
+				<ul>
+		
+		<li>03 - <a href="/blog/2014/inner-classes-in-java.html">Inner classes in java</a></li>
+				</ul>
+				<h4>February 2014</h4>
+				<ul>
+		
+		<li>21 - <a href="/blog/2014/overriding-equals.html">Overriding Equals</a></li>
+		
+		<li>20 - <a href="/blog/2014/scenario-display-words-by-count.html">Scenario: Display words by their count in a file</a></li>
+		
+		<li>19 - <a href="/blog/2014/string-to-date.html">String to date Conversion in Java</a></li>
+		
+		<li>14 - <a href="/blog/2014/Java-overview.html">Java Overview</a></li>
+		
+		<li>06 - <a href="/blog/2014/Comparator-in-java.html">Comparator in Java explained with simple examples</a></li>
+		
+		<li>05 - <a href="/blog/2014/Comparable-in-Java.html">A simple example of Comparable in Java</a></li>
+		
+		<li>04 - <a href="/blog/2014/tree-set-example.html">TreeSet - basic operations</a></li>
+				</ul>
+				<h4>January 2014</h4>
+				<ul>
+		
+		<li>26 - <a href="/blog/2014/notes-on-java-collection.html">Notes on Java Collection</a></li>
+		
+		<li>11 - <a href="/blog/2014/string-concatenation-performance.html">String Concatenation Performance</a></li>
+				</ul>
+				<h4>December 2013</h4>
+				<ul>
+		
+		<li>22 - <a href="/blog/2013/serialization-in-java.html">Serialization and Deserialization in Java</a></li>
+				</ul>
+				<h4>October 2013</h4>
+				<ul>
+		
+		<li>11 - <a href="/blog/2013/JDBC-in-short.html">JDBC in short</a></li>
+		
+		<li>06 - <a href="/blog/2013/eclipse-out-of-memory.html">Solving Out of memory error in Eclipse startup</a></li>
+				</ul>
+				<h4>September 2013</h4>
+				<ul>
+		
+		<li>28 - <a href="/blog/2013/use-factory-method-over-constructor.html">Use static Factory Method over Constructor</a></li>
+		
+		<li>27 - <a href="/blog/2013/Singleton-Design-pattern-in-java.html">Singleton Design Pattern in Java</a></li>
+		
+		<li>15 - <a href="/blog/2013/running-a-thread-after-another-thread.html">Running a thread after completing another thread</a></li>
+		
+		<li>14 - <a href="/blog/2013/how-maven-builds-project.html">How MAVEN builds the project</a></li>
+		
+		<li>13 - <a href="/blog/2013/garbage-collection-in-java.html">Garbage Collection in Java</a></li>
+	
+	</div>
+	</div>
+	<div id="slidebox-eop">
+	    <a class="close"></a>
+	    <p>Next</p>
+		    		<h2><a href="/blog/2014/synchronization-and-lock.html">How Synchronization works</a></h2>
+		    		<a class="more" href="/blog/2014/synchronization-and-lock.html">Read More >></a></p>
+	</div>
+	
+
+<br/>
+<div class="col_9">
+	 <div id="disqus_thread"></div>
+	 
+		
+    	<script type="text/javascript">
+    var disqus_shortname = 'jrpwilt'; // Required - Replace example with your forum shortname
+    var disqus_identifier = 'blog/2015/learning-ant.html';
+    var disqus_title = "A day with Ant";
+    var disqus_url = 'http://wilt.iamjrp.com/blog/2015/learning-ant.html';
+
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+
+
+    </div>
+    <div class="col_3">
+    </div>
+		</div>
+		<div id="push"></div>
+    </div>
+    
+    <!--div id="footer">
+      <div class="container">
+        <p class="muted credit">&copy; 2014 | A blog by Jyotiranjan</p>
+      </div>
+    </div-->
+    <div class="container">
+    <p class="muted credit">&copy; 2014 | A blog by Jyotiranjan</p>
+    </div>
+    
+    <!-- Le javascript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="../../js/jquery-1.11.1.min.js"></script>
+    <script src="../../js/bootstrap.min.js"></script>
+    <script src="../../js/prettify.js"></script>
+    <script src="../../js/kickstart.js"></script>
+    
+  </body>
+</html><script type="text/javascript">
+$(function() {
+    $(window).scroll(function(){
+        var distanceTop = $('#last').offset().top - $(window).height();
+ 
+        if  ($(window).scrollTop() > distanceTop)
+            $('#slidebox-eop').animate({'right':'0px'},300);
+        else
+            $('#slidebox-eop').stop(true).animate({'right':'-430px'},100);
+    });
+ 
+    $('#slidebox-eop .close').bind('click',function(){
+        $(this).parent().remove();
+    });
+});
+</script>
