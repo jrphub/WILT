@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8"/>
-    <title>A day with Ant</title>
+    <title>A day with Ant </title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="A blog or note on Java development, Best Practices, tips & tricks.">
     <meta name="author" content="Jyoti Ranjan Pattnaik">
@@ -77,13 +77,13 @@
     <div class="container">	<div class="grid">
 	<div class="col_9" style="border-right: 1px solid #F2F2F2;height:auto;margin:5px;">
 	<div class="page-header">
-		<h1>A day with Ant</h1>
+		<h1>A day with Ant </h1>
 	</div>
 
-	<p><em>27 April 2015</em></p>
+	<p><em>14 May 2016</em></p>
 	<p><p>ANT stands for Another Neat Tool</p>
 
-<p>Steps people follow while deploying the  application</p>
+<p>Steps people follow while deploying the application</p>
 <ol>
 	<li>Compiling the code</li>
 	<li>Packaging the binaries</li>
@@ -100,123 +100,151 @@
 </ol>
 <p>To verify :> ant -version</p>
 
-<p>A target is a collection of tasks that you want to run as one unit</p>
+<p>A target is a collection of tasks that you want to run as one
+	unit</p>
 
-<p>Targets can have dependencies on other targets. For example, a deploy target may have a dependency on the package target, the package target may have a dependency on the compile target and so forth. Dependencies are denoted using the depends attribute</p>p>
+<p>Targets can have dependencies on other targets. For example, a
+	deploy target may have a dependency on the package target, the package
+	target may have a dependency on the compile target and so forth.
+	Dependencies are denoted using the depends attribute</p>
 <p>The following data types are provided by Apache Ant.</p>
 <ol>
 	<li>Fileset</li>
-		<p>The fileset data types represents a collection of files. It is used as a filter to include or exclude files that match a particular pattern.</p>
-		<p>The case-sensitive filter is applied to the fileset</p>
-<pre class="prettyprint">
-<code>
-		<fileset dir="${src}" casesensitive="yes">
-		   <include name="**/*.java"/>
-		   <exclude name="**/*Stub*"/>
-		</fileset>
-</code>
-</pre>
+	<p>The fileset data types represents a collection of files. It is
+		used as a filter to include or exclude files that match a particular
+		pattern.</p>
+	<p>The case-sensitive filter is applied to the fileset</p>
+	<pre class="prettyprint">
+	<code>
+		&lt;?xml version="1.0"?&gt;
+		&lt;fileset dir="${src}" casesensitive="yes"&gt;
+		    &lt;include name="**/*.java" /&gt;
+		    &lt;exclude name="**/*Stub*" /&gt;
+		&lt;/fileset&gt;
+	</code>
+	</pre>
 
-		<p> ? - Matches one character only.</p>
-		<p> * - Matches zero or many characters. </p>
-		<p> ** - Matches zero or many directories recursively.</p>
+	<p>? - Matches one character only.</p>
+	<p>* - Matches zero or many characters.</p>
+	<p>** - Matches zero or many directories recursively.</p>
 
-	<li>Fileset</li>
-		<p>The patternset can then be reused with a fileset as follows:</p>
-<pre class="prettyprint">
-<code>	
-		<fileset dir="${src}" casesensitive="yes">
-		   <patternset refid="java.files.without.stubs"/>
-		</fileset>
-</code>
-</pre>
-		<p>The filelist data type is similar to the file set except the following differences:</p>
-			<p>1. filelist contains explicitly named lists of files and it does not support wild cards </p>
-			<p>2. filelist data type can be applied for existing or non-existing files.</p>
-<pre class="prettyprint">
-<code>
-		<filelist id="config.files" dir="${webapp.src.folder}">
-		   <file name="applicationConfig.xml"/>
-		   <file name="faces-config.xml"/>
-		   <file name="web.xml"/>
-		   <file name="portlet.xml"/>
-		</filelist>
-</code>
-</pre>
+	<li>PatternSet</li>
+	<p>The patternset can then be reused with a fileset as follows:</p>
+	<pre class="prettyprint">
+	<code>
+			&lt;fileset dir="${src}" casesensitive="yes"&gt;
+			   &lt;patternset refid="java.files.without.stubs" /&gt;
+			&lt;/fileset&gt;
+	</code>
+	</pre>
+	<p>The filelist data type is similar to the file set except the
+		following differences:</p>
+	<p>1. filelist contains explicitly named lists of files and it does
+		not support wild cards</p>
+	<p>2. filelist data type can be applied for existing or
+		non-existing files.</p>
+	<pre class="prettyprint">
+	<code>
+			&lt;filelist id="config.files" dir="${webapp.src.folder}"&gt;
+			   &lt;file name="applicationConfig.xml" /&gt;
+			   &lt;file name="faces-config.xml" /&gt;
+			   &lt;file name="web.xml" /&gt;
+			   &lt;file name="portlet.xml" /&gt;
+			&lt;/filelist&gt;
+	</code>
+	</pre>
 	<li>Filter set</li>
-		<p>Using a filterset data type along with the copy task, you can replace certain text in all files that matches the pattern with a replacement value.</p>
-<pre class="prettyprint">
-<code>
-		<copy todir="${output.dir}">
-		   <fileset dir="${releasenotes.dir}" includes="**/*.txt"/>
-		   <filterset>
-		      <filter token="VERSION" value="${current.version}"/>
-		   </filterset>
-		</copy>
-</code>
-</pre>
+	<p>Using a filterset data type along with the copy task, you can
+		replace certain text in all files that matches the pattern with a
+		replacement value.</p>
+	<pre class="prettyprint">
+	<code>
+			&lt;copy todir="${output.dir}"&gt;
+			   &lt;fileset dir="${releasenotes.dir}" includes="**/*.txt" /&gt;
+			   &lt;filterset&gt;
+			      &lt;filter token="VERSION" value="${current.version}" /&gt;
+			   &lt;/filterset&gt;
+			&lt;/copy&gt;
+	</code>
+	</pre>
 	<li>Path</li>
-		<p>The path data type is commonly used to represent a class-path. Entries in the path are separated using semicolons or colons. However, these characters are replaced at the run-time by the executing system's path separator character.</p>
-<pre class="prettyprint">
-<code>
-		<path id="build.classpath.jar">
-		   <pathelement path="${env.J2EE_HOME}/${j2ee.jar}"/>
-		   <fileset dir="lib">
-		      <include name="**/*.jar"/>
-		   </fileset>
-		</path>
-</code>
-</pre>		
+	<p>The path data type is commonly used to represent a class-path.
+		Entries in the path are separated using semicolons or colons. However,
+		these characters are replaced at the run-time by the executing
+		system's path separator character.</p>
+	<pre class="prettyprint">
+	<code>
+			&lt;path id="build.classpath.jar"&gt;
+			   &lt;pathelement path="${env.J2EE_HOME}/${j2ee.jar}" /&gt;
+			   &lt;fileset dir="lib"&gt;
+			      &lt;include name="**/*.jar" /&gt;
+			   &lt;/fileset&gt;
+			&lt;/path&gt;
+	</code>
+	</pre>
 </ol>
-		<p>The deploy target copies the files from the web directory to the deploy directory preserving the last modified date time stamp. This is useful when deploying to a server that supports hot deployment.</p>
+<p>The deploy target copies the files from the web directory to the
+	deploy directory preserving the last modified date time stamp. This is
+	useful when deploying to a server that supports hot deployment.</p>
 
-		<p>The deploywar target builds the war file and then copies the war file to the deploy directory of the application server.</p>
+<p>The deploywar target builds the war file and then copies the war
+	file to the deploy directory of the application server.</p>
 
-		<p>Applications in Tomcat can be stopped and started using the Tomcat manager application. The URL for the manager application, username and password are also specified in the build.properties file. Next, we declare a new CLASSPATH that contains the catalina-ant.jar. This jar file is required to execute Tomcat tasks through Apache Ant.</p>
+<p>Applications in Tomcat can be stopped and started using the
+	Tomcat manager application. The URL for the manager application,
+	username and password are also specified in the build.properties file.
+	Next, we declare a new CLASSPATH that contains the catalina-ant.jar.
+	This jar file is required to execute Tomcat tasks through Apache Ant.</p>
 
-		<p>The catalina-ant.jar provides the following tasks:</p>
-<table>
-  <tr>
-    <th>Properties</th>
-    <th>Description</th>
-  </tr>
-  <tr>
-    <td>InstallTask</td>
-    <td>Installs a web application. Class Name: org.apache.catalina.ant.InstallTask</td>
-  </tr>
-  <tr>
-    <td>ReloadTask</td>
-    <td>Reload a web application. Class Name: org.apache.catalina.ant.ReloadTask</td>
-  </tr>
-  <tr>
-    <td>ListTask</td>
-    <td>Lists all web applications. Class Name: org.apache.catalina.ant.ListTask</td>
-  </tr>
-  <tr>
-    <td>StartTask</td>
-    <td>Starts a web application. Class Name: org.apache.catalina.ant.StartTask</td>
-  </tr>
-  <tr>
-    <td>StopTask</td>
-    <td>Stops a web application. Class Name: org.apache.catalina.ant.StopTask</td>
-  </tr>
-  <tr>
-    <td>ReloadTask</td>
-    <td>Row 1: Col 2Reloads a web application without stopping. Class Name: org.apache.catalina.ant.ReloadTask</td>
-  </tr>
+<p>The catalina-ant.jar provides the following tasks:</p>
+<table style="border: 1px">
+	<tr>
+		<th>Properties</th>
+		<th>Description</th>
+	</tr>
+	<tr>
+		<td>InstallTask</td>
+		<td>Installs a web application. Class Name:
+			org.apache.catalina.ant.InstallTask</td>
+	</tr>
+	<tr>
+		<td>ReloadTask</td>
+		<td>Reload a web application. Class Name:
+			org.apache.catalina.ant.ReloadTask</td>
+	</tr>
+	<tr>
+		<td>ListTask</td>
+		<td>Lists all web applications. Class Name:
+			org.apache.catalina.ant.ListTask</td>
+	</tr>
+	<tr>
+		<td>StartTask</td>
+		<td>Starts a web application. Class Name:
+			org.apache.catalina.ant.StartTask</td>
+	</tr>
+	<tr>
+		<td>StopTask</td>
+		<td>Stops a web application. Class Name:
+			org.apache.catalina.ant.StopTask</td>
+	</tr>
+	<tr>
+		<td>ReloadTask</td>
+		<td>Row 1: Col 2Reloads a web application without stopping. Class
+			Name: org.apache.catalina.ant.ReloadTask</td>
+	</tr>
 </table>
-	
-	<p>The reload task requires the following additional parameters:</p>
-		<p>1. URL to the manager application</p>
-		<p>2. Username to restart the web application</p>
-		<p>3. Password to restart the web application</p>
-		<p>4. Name of the web application to be restarted</p>
+
+<p>The reload task requires the following additional parameters:</p>
+<p>1. URL to the manager application</p>
+<p>2. Username to restart the web application</p>
+<p>3. Password to restart the web application</p>
+<p>4. Name of the web application to be restarted</p>
 
 </p>
 
 	<hr />
 	<div class="col_12" style="text-align:center;">
-	<a href="http://www.facebook.com/sharer.php?u=http://wilt.iamjrp.com/blog/2015/learning-ant.html&amp;t=A day with Ant"  style="color:#3B5998;" title="Share this page!" target="_blank"><i class="icon-facebook icon-3x icon-border"></i></a>
+	<a href="http://www.facebook.com/sharer.php?u=http://wilt.iamjrp.com/blog/2015/learning-ant.html&amp;t=A day with Ant "  style="color:#3B5998;" title="Share this page!" target="_blank"><i class="icon-facebook icon-3x icon-border"></i></a>
 	<a href="http://plus.google.com/share?url=http://wilt.iamjrp.com/blog/2015/learning-ant.html" title="Share this page!" style="color:#CA4242;" target="_blank"><i class="icon-google-plus icon-3x icon-border"></i></a>
 	<a href="https://twitter.com/share?url=http://wilt.iamjrp.com/blog/2015/learning-ant.html"  title="Tweet this page!" style="color:#55ACEE;" target="_blank"><i class="icon-twitter icon-3x icon-border"></i></a>
 	</div>
@@ -228,10 +256,10 @@
 	<hr/>
 	
 	<!--<ul>-->
-			<h4>April 2015</h4>
+			<h4>May 2016</h4>
 			<ul>
 		
-		<li>27 - <a href="/blog/2015/learning-ant.html">A day with Ant</a></li>
+		<li>14 - <a href="/blog/2015/learning-ant.html">A day with Ant </a></li>
 				</ul>
 				<h4>May 2014</h4>
 				<ul>
@@ -295,6 +323,8 @@
 		<li>14 - <a href="/blog/2013/how-maven-builds-project.html">How MAVEN builds the project</a></li>
 		
 		<li>13 - <a href="/blog/2013/garbage-collection-in-java.html">Garbage Collection in Java</a></li>
+		
+		<li>12 - <a href="/blog/2014/initialisation-of-class-in-java.html">When a class is loaded and initialized in JVM</a></li>
 	
 	</div>
 	</div>
@@ -314,7 +344,7 @@
     	<script type="text/javascript">
     var disqus_shortname = 'jrpwilt'; // Required - Replace example with your forum shortname
     var disqus_identifier = 'blog/2015/learning-ant.html';
-    var disqus_title = "A day with Ant";
+    var disqus_title = "A day with Ant ";
     var disqus_url = 'http://wilt.iamjrp.com/blog/2015/learning-ant.html';
 
     /* * * DON'T EDIT BELOW THIS LINE * * */

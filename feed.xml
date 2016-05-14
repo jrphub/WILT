@@ -6,9 +6,177 @@
     <atom:link href="http://wilt.iamjrp.com//feed.xml" rel="self" type="application/rss+xml" />
     <description>JBake Bootstrap Template</description>
     <language>en-gb</language>
-    <pubDate>Sun, 15 Feb 2015 23:46:12 +0530</pubDate>
-    <lastBuildDate>Sun, 15 Feb 2015 23:46:12 +0530</lastBuildDate>
+    <pubDate>Sat, 14 May 2016 14:32:02 +0530</pubDate>
+    <lastBuildDate>Sat, 14 May 2016 14:32:02 +0530</lastBuildDate>
 
+    <item>
+      <title>A day with Ant </title>
+      <link>http://wilt.iamjrp.com//blog/2015/learning-ant.html</link>
+      <pubDate>Sat, 14 May 2016 00:00:00 +0530</pubDate>
+      <guid isPermaLink="false">blog/2015/learning-ant.html</guid>
+      	<description>
+	&lt;p&gt;ANT stands for Another Neat Tool&lt;/p&gt;
+
+&lt;p&gt;Steps people follow while deploying the application&lt;/p&gt;
+&lt;ol&gt;
+	&lt;li&gt;Compiling the code&lt;/li&gt;
+	&lt;li&gt;Packaging the binaries&lt;/li&gt;
+	&lt;li&gt;Deploying the binaries to the test server&lt;/li&gt;
+	&lt;li&gt;Testing the changes&lt;/li&gt;
+	&lt;li&gt;Copying the code from one location to another&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;Installing ANT-&lt;/p&gt;
+&lt;ol&gt;
+	&lt;li&gt;download binary file&lt;/li&gt;
+	&lt;li&gt;extract to a path&lt;/li&gt;
+	&lt;li&gt;Set ANT_HOME to the extracted folder&lt;/li&gt;
+	&lt;li&gt;Add ANT_HOME/bin to PATH&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;To verify :&gt; ant -version&lt;/p&gt;
+
+&lt;p&gt;A target is a collection of tasks that you want to run as one
+	unit&lt;/p&gt;
+
+&lt;p&gt;Targets can have dependencies on other targets. For example, a
+	deploy target may have a dependency on the package target, the package
+	target may have a dependency on the compile target and so forth.
+	Dependencies are denoted using the depends attribute&lt;/p&gt;
+&lt;p&gt;The following data types are provided by Apache Ant.&lt;/p&gt;
+&lt;ol&gt;
+	&lt;li&gt;Fileset&lt;/li&gt;
+	&lt;p&gt;The fileset data types represents a collection of files. It is
+		used as a filter to include or exclude files that match a particular
+		pattern.&lt;/p&gt;
+	&lt;p&gt;The case-sensitive filter is applied to the fileset&lt;/p&gt;
+	&lt;pre class=&quot;prettyprint&quot;&gt;
+	&lt;code&gt;
+		&amp;lt;?xml version=&quot;1.0&quot;?&amp;gt;
+		&amp;lt;fileset dir=&quot;${src}&quot; casesensitive=&quot;yes&quot;&amp;gt;
+		    &amp;lt;include name=&quot;**/*.java&quot; /&amp;gt;
+		    &amp;lt;exclude name=&quot;**/*Stub*&quot; /&amp;gt;
+		&amp;lt;/fileset&amp;gt;
+	&lt;/code&gt;
+	&lt;/pre&gt;
+
+	&lt;p&gt;? - Matches one character only.&lt;/p&gt;
+	&lt;p&gt;* - Matches zero or many characters.&lt;/p&gt;
+	&lt;p&gt;** - Matches zero or many directories recursively.&lt;/p&gt;
+
+	&lt;li&gt;PatternSet&lt;/li&gt;
+	&lt;p&gt;The patternset can then be reused with a fileset as follows:&lt;/p&gt;
+	&lt;pre class=&quot;prettyprint&quot;&gt;
+	&lt;code&gt;
+			&amp;lt;fileset dir=&quot;${src}&quot; casesensitive=&quot;yes&quot;&amp;gt;
+			   &amp;lt;patternset refid=&quot;java.files.without.stubs&quot; /&amp;gt;
+			&amp;lt;/fileset&amp;gt;
+	&lt;/code&gt;
+	&lt;/pre&gt;
+	&lt;p&gt;The filelist data type is similar to the file set except the
+		following differences:&lt;/p&gt;
+	&lt;p&gt;1. filelist contains explicitly named lists of files and it does
+		not support wild cards&lt;/p&gt;
+	&lt;p&gt;2. filelist data type can be applied for existing or
+		non-existing files.&lt;/p&gt;
+	&lt;pre class=&quot;prettyprint&quot;&gt;
+	&lt;code&gt;
+			&amp;lt;filelist id=&quot;config.files&quot; dir=&quot;${webapp.src.folder}&quot;&amp;gt;
+			   &amp;lt;file name=&quot;applicationConfig.xml&quot; /&amp;gt;
+			   &amp;lt;file name=&quot;faces-config.xml&quot; /&amp;gt;
+			   &amp;lt;file name=&quot;web.xml&quot; /&amp;gt;
+			   &amp;lt;file name=&quot;portlet.xml&quot; /&amp;gt;
+			&amp;lt;/filelist&amp;gt;
+	&lt;/code&gt;
+	&lt;/pre&gt;
+	&lt;li&gt;Filter set&lt;/li&gt;
+	&lt;p&gt;Using a filterset data type along with the copy task, you can
+		replace certain text in all files that matches the pattern with a
+		replacement value.&lt;/p&gt;
+	&lt;pre class=&quot;prettyprint&quot;&gt;
+	&lt;code&gt;
+			&amp;lt;copy todir=&quot;${output.dir}&quot;&amp;gt;
+			   &amp;lt;fileset dir=&quot;${releasenotes.dir}&quot; includes=&quot;**/*.txt&quot; /&amp;gt;
+			   &amp;lt;filterset&amp;gt;
+			      &amp;lt;filter token=&quot;VERSION&quot; value=&quot;${current.version}&quot; /&amp;gt;
+			   &amp;lt;/filterset&amp;gt;
+			&amp;lt;/copy&amp;gt;
+	&lt;/code&gt;
+	&lt;/pre&gt;
+	&lt;li&gt;Path&lt;/li&gt;
+	&lt;p&gt;The path data type is commonly used to represent a class-path.
+		Entries in the path are separated using semicolons or colons. However,
+		these characters are replaced at the run-time by the executing
+		system&apos;s path separator character.&lt;/p&gt;
+	&lt;pre class=&quot;prettyprint&quot;&gt;
+	&lt;code&gt;
+			&amp;lt;path id=&quot;build.classpath.jar&quot;&amp;gt;
+			   &amp;lt;pathelement path=&quot;${env.J2EE_HOME}/${j2ee.jar}&quot; /&amp;gt;
+			   &amp;lt;fileset dir=&quot;lib&quot;&amp;gt;
+			      &amp;lt;include name=&quot;**/*.jar&quot; /&amp;gt;
+			   &amp;lt;/fileset&amp;gt;
+			&amp;lt;/path&amp;gt;
+	&lt;/code&gt;
+	&lt;/pre&gt;
+&lt;/ol&gt;
+&lt;p&gt;The deploy target copies the files from the web directory to the
+	deploy directory preserving the last modified date time stamp. This is
+	useful when deploying to a server that supports hot deployment.&lt;/p&gt;
+
+&lt;p&gt;The deploywar target builds the war file and then copies the war
+	file to the deploy directory of the application server.&lt;/p&gt;
+
+&lt;p&gt;Applications in Tomcat can be stopped and started using the
+	Tomcat manager application. The URL for the manager application,
+	username and password are also specified in the build.properties file.
+	Next, we declare a new CLASSPATH that contains the catalina-ant.jar.
+	This jar file is required to execute Tomcat tasks through Apache Ant.&lt;/p&gt;
+
+&lt;p&gt;The catalina-ant.jar provides the following tasks:&lt;/p&gt;
+&lt;table style=&quot;border: 1px&quot;&gt;
+	&lt;tr&gt;
+		&lt;th&gt;Properties&lt;/th&gt;
+		&lt;th&gt;Description&lt;/th&gt;
+	&lt;/tr&gt;
+	&lt;tr&gt;
+		&lt;td&gt;InstallTask&lt;/td&gt;
+		&lt;td&gt;Installs a web application. Class Name:
+			org.apache.catalina.ant.InstallTask&lt;/td&gt;
+	&lt;/tr&gt;
+	&lt;tr&gt;
+		&lt;td&gt;ReloadTask&lt;/td&gt;
+		&lt;td&gt;Reload a web application. Class Name:
+			org.apache.catalina.ant.ReloadTask&lt;/td&gt;
+	&lt;/tr&gt;
+	&lt;tr&gt;
+		&lt;td&gt;ListTask&lt;/td&gt;
+		&lt;td&gt;Lists all web applications. Class Name:
+			org.apache.catalina.ant.ListTask&lt;/td&gt;
+	&lt;/tr&gt;
+	&lt;tr&gt;
+		&lt;td&gt;StartTask&lt;/td&gt;
+		&lt;td&gt;Starts a web application. Class Name:
+			org.apache.catalina.ant.StartTask&lt;/td&gt;
+	&lt;/tr&gt;
+	&lt;tr&gt;
+		&lt;td&gt;StopTask&lt;/td&gt;
+		&lt;td&gt;Stops a web application. Class Name:
+			org.apache.catalina.ant.StopTask&lt;/td&gt;
+	&lt;/tr&gt;
+	&lt;tr&gt;
+		&lt;td&gt;ReloadTask&lt;/td&gt;
+		&lt;td&gt;Row 1: Col 2Reloads a web application without stopping. Class
+			Name: org.apache.catalina.ant.ReloadTask&lt;/td&gt;
+	&lt;/tr&gt;
+&lt;/table&gt;
+
+&lt;p&gt;The reload task requires the following additional parameters:&lt;/p&gt;
+&lt;p&gt;1. URL to the manager application&lt;/p&gt;
+&lt;p&gt;2. Username to restart the web application&lt;/p&gt;
+&lt;p&gt;3. Password to restart the web application&lt;/p&gt;
+&lt;p&gt;4. Name of the web application to be restarted&lt;/p&gt;
+
+
+	</description>
+    </item>
     <item>
       <title>How Synchronization works</title>
       <link>http://wilt.iamjrp.com//blog/2014/synchronization-and-lock.html</link>
@@ -2102,6 +2270,39 @@ Main reason of doing this is that, SNAPSHOT builds are unstable and Maven, downl
 &lt;li&gt;If there is no memory space for creating new object in Heap Java Virtual Machine throws OutOfMemoryError or java.lang.OutOfMemoryError heap space&lt;/li&gt;
 &lt;li&gt;J2SE 5(Java 2 Standard Edition) adds a new feature called Ergonomics goal of ergonomics is to provide good performance from the JVM with minimum of command line tuning.&lt;/li&gt;
 &lt;/ol&gt;
+
+	</description>
+    </item>
+    <item>
+      <title>When a class is loaded and initialized in JVM</title>
+      <link>http://wilt.iamjrp.com//blog/2014/initialisation-of-class-in-java.html</link>
+      <pubDate>Thu, 12 Sep 2013 00:00:00 +0530</pubDate>
+      <guid isPermaLink="false">blog/2014/initialisation-of-class-in-java.html</guid>
+      	<description>
+	
+&lt;article&gt;Class loading is done by ClassLoaders in Java which can be implemented to eagerly load a class as soon as another class references it 
+or lazy load the class until a need of class initialization occurs&lt;/article&gt;
+
+&lt;p&gt;A Class is initialized in Java when :&lt;/p&gt;
+&lt;ol&gt;
+	&lt;li&gt;An Instance of class is created using either new() keyword or using reflection using class.forName(), 
+		which may throw ClassNotFoundException in Java.&lt;/li&gt;
+	&lt;li&gt;A static method of Class is invoked.&lt;/li&gt;
+	&lt;li&gt;A static field of Class is assigned.&lt;/li&gt;
+	&lt;li&gt;A static field of class is used which is not a constant variable.&lt;/li&gt;
+	&lt;li&gt;If Class is a top level class and an assert statement lexically nested within class is executed.&lt;/li&gt;
+&lt;/ol&gt;
+
+
+
+&lt;b&gt;Observation:&lt;/b&gt;
+&lt;ol&gt;
+	&lt;li&gt;Super class is initialized before sub class in Java.&lt;/li&gt;
+	&lt;li&gt;Static variables or blocks are initialized before non static blocks or fields.&lt;/li&gt;
+	&lt;li&gt;Not used class is not initialized at all because its not been used.
+		&lt;/li&gt;
+&lt;/ol&gt;
+
 
 	</description>
     </item>
